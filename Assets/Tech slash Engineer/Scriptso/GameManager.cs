@@ -71,6 +71,9 @@ public class GameManager : MonoBehaviour
         // Make sure the pause menu is off.
         pauseMenuUI.SetActive(false);
 
+        // At start, ensure the game is not paused bool is false as the game is not paused.
+        gameIsPaused = false;
+
     }
 
     void Update()
@@ -118,6 +121,8 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        // If the R key is pressed, restart the player in the scene they are currently in.
+        // This is very helpful if you want to restart a run or if you fall off into the abyss.
         if (Input.GetKeyDown(KeyCode.R))
         {
             ChangeScene(currentScene);
@@ -211,6 +216,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         isPlayerActive = false;
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         pauseMenuUI.SetActive(true);
         gameIsPaused = true;
     }
