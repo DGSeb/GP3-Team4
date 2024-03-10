@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Tech slash Engineer/MainMenu.unity
     guid: 4b1a1e3fa7a0ba94984942551928f045
+  - enabled: 1
+    path: Assets/Scenes/AveryScene.unity
+    guid: a403435dad5c18846b4a40aead5ef837
   m_configObjects: {}

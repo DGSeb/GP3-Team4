@@ -95,6 +95,14 @@ public class GameManager : MonoBehaviour
         // Set timer text here so it occurs even if there isn't a limit.
         SetTimerText();
 
+        // Run the check input function to see what is being pressed.
+        CheckInput();
+        
+    }
+
+    // Function that checks for different inputs.
+    void CheckInput()
+    {
         // If escape key is pressed, check if the game is paused.
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -108,6 +116,11 @@ public class GameManager : MonoBehaviour
             {
                 Pause();
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ChangeScene(currentScene);
         }
     }
 

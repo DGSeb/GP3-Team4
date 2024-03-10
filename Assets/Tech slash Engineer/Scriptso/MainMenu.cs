@@ -22,4 +22,10 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
         print("SO ANGYYYYY");
     }
+    
+    public void PlayTutorial()
+    {
+        GameManager.isPlayerActive = true;
+        LoadScene("AveryScene");
+    }
 }
