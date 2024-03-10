@@ -487,7 +487,7 @@ MonoBehaviour:
   Emitter: {fileID: 4249757757369868541}
   playerCam: {fileID: 5919125329909046362}
   recoilScript: {fileID: 4005345185967632737}
-  cooldown: 0.1
+  cooldown: 1
   travelSpeedFactor: 0.001
   recoilX: -20
   recoilY: 5
