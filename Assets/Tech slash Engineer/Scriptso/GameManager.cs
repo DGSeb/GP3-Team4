@@ -48,6 +48,11 @@ public class GameManager : MonoBehaviour
     // String to say which scene the player is currently in.
     private string currentScene;
 
+    // Bool that says whether the player is actively playing or not.
+    // Used to stop certain actions from ocurring when the player isn't active.
+    // For example, when paused or when time is stopped.
+    public static bool isPlayerActive = true;
+
     void Start()
     {
         // Add entries to the dictionary for the timer format.
@@ -65,6 +70,9 @@ public class GameManager : MonoBehaviour
 
         // Make sure the pause menu is off.
         pauseMenuUI.SetActive(false);
+
+        // At start, ensure the game is not paused bool is false as the game is not paused.
+        gameIsPaused = false;
 
     }
 
@@ -90,6 +98,14 @@ public class GameManager : MonoBehaviour
         // Set timer text here so it occurs even if there isn't a limit.
         SetTimerText();
 
+        // Run the check input function to see what is being pressed.
+        CheckInput();
+        
+    }
+
+    // Function that checks for different inputs.
+    void CheckInput()
+    {
         // If escape key is pressed, check if the game is paused.
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -103,6 +119,13 @@ public class GameManager : MonoBehaviour
             {
                 Pause();
             }
+        }
+
+        // If the R key is pressed, restart the player in the scene they are currently in.
+        // This is very helpful if you want to restart a run or if you fall off into the abyss.
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ChangeScene(currentScene);
         }
     }
 
@@ -123,13 +146,15 @@ public class GameManager : MonoBehaviour
     // When time limit is reached, run coroutine that resets game.
     IEnumerator TimeLimitReached()
     {
-        // Turn on text telling player the time limit is reached, stop time, wait about a second,
-        // change scene to the one the player is currently in, resume time, and update text displaying player's PB.
+        // Set bool saying player isn't active to false, turn on text telling player the time limit is reached, stop time, wait about a second,
+        // change scene to the one the player is currently in, resume time, set player active bool back to true, and update text displaying player's PB.
+        isPlayerActive = false;
         timeLimitReachedText.SetActive(true);
         Time.timeScale = 0f;
         yield return new WaitForSecondsRealtime(1.2f);
         ChangeScene(currentScene);
         Time.timeScale = 1.0f;
+        isPlayerActive = true;
         UpdatePBText();
     }
 
@@ -173,21 +198,26 @@ public class GameManager : MonoBehaviour
     // Function to resume the game.
     public void Resume()
     {
-        // Lock the cursor, make it not visible, turn off the pause menu UI, set time back to normal, and set gameIsPaused to false as game is no longer paused.
+        // Lock the cursor, make it not visible, turn off the pause menu UI, set time back to normal, set player active bool to true,
+        // and set gameIsPaused to false as game is no longer paused.
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1.0f;
+        isPlayerActive = true;
         gameIsPaused = false;
     }
 
     // Function to pause the game.
     void Pause()
     {
-        // Unlock the cursor so player can click pause menu buttons, turn on the pause menu UI, stop time, and set gameIsPaused to true as game is paused.
-        Cursor.lockState = CursorLockMode.None;
-        pauseMenuUI.SetActive(true);
+        // Stop time, set player active bool to false, unlock player cursor so they can interact with buttons, turn on pause menu UI,
+        // and set gameIsPaused to true as game is now paused.
         Time.timeScale = 0f;
+        isPlayerActive = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        pauseMenuUI.SetActive(true);
         gameIsPaused = true;
     }
 
@@ -196,7 +226,7 @@ public class GameManager : MonoBehaviour
     {
         // Set time back to normal and load main menu scene.
         Time.timeScale = 1.0f;
-        //ChangeScene("MainMenu");
+        ChangeScene("MainMenu");
         Debug.Log("Loading menu...");
     }
 

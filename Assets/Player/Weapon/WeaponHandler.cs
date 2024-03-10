@@ -28,7 +28,7 @@ public class WeaponHandler : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(shootKey) && canFire)
+        if (Input.GetKey(shootKey) && canFire && GameManager.isPlayerActive)
         {
             canFire = false;
             StartCoroutine(Shoot(cooldown));
