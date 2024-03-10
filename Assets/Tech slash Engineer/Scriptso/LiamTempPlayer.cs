@@ -24,6 +24,12 @@ public class LiamTempPlayer : MonoBehaviour
         if (other.name == "End")
         {
             gM.CheckPB();
+            gM.ChangeScene("LiamsHighlyPsychoticJoint");
+        }
+
+        if (other.name == "End2")
+        {
+            gM.CheckPB();
             gM.ChangeScene("LiamsWackyWonderland");
         }
     }

@@ -4,6 +4,9 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -42,6 +45,9 @@ public class GameManager : MonoBehaviour
     // Pause menu bool.
     public static bool gameIsPaused;
 
+    // String to say which scene the player is currently in.
+    private string currentScene;
+
     void Start()
     {
         // Add entries to the dictionary for the timer format.
@@ -50,10 +56,16 @@ public class GameManager : MonoBehaviour
         timeFormats.Add(TimerFormats.HundrethsDecimal, "0.00");
         timeFormats.Add(TimerFormats.ThousandthsDecimal, "0.000");
 
+        // Find the name of the active scene and assign it to the currentScene variable.
+        // Make sure this occurs before running UpdatePBText so it knows which scene it is in.
+        currentScene = SceneManager.GetActiveScene().name;
+
+        // Run the UpdatePBText that updates the text displaying the player's PB.
         UpdatePBText();
 
         // Make sure the pause menu is off.
         pauseMenuUI.SetActive(false);
+
     }
 
     void Update()
@@ -75,15 +87,18 @@ public class GameManager : MonoBehaviour
             StartCoroutine(TimeLimitReached());
         }
 
+        // Set timer text here so it occurs even if there isn't a limit.
         SetTimerText();
 
-        // Pause menu check
+        // If escape key is pressed, check if the game is paused.
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            // If paused, resume the game.
             if (gameIsPaused)
             {
                 Resume();
             }
+            // If not paused, pause the game.
             else
             {
                 Pause();
@@ -108,33 +123,57 @@ public class GameManager : MonoBehaviour
     // When time limit is reached, run coroutine that resets game.
     IEnumerator TimeLimitReached()
     {
-        // Turn on text telling player the time limit is reached, stop time, wait about a second, reload the scene, and resume time.
+        // Turn on text telling player the time limit is reached, stop time, wait about a second,
+        // change scene to the one the player is currently in, resume time, and update text displaying player's PB.
         timeLimitReachedText.SetActive(true);
         Time.timeScale = 0f;
         yield return new WaitForSecondsRealtime(1.2f);
-        ChangeScene("LiamsWackyWonderland");
+        ChangeScene(currentScene);
         Time.timeScale = 1.0f;
         UpdatePBText();
     }
 
-    // Function to check the best time the player achieved.
+    // Function to check the fastest time the player beat the level (PB (Personal Best)).
+    // This function only runs when the player reaches the exit.
     public void CheckPB()
     {
-        if (currentTime < PlayerPrefs.GetFloat("PB", timerLimit))
+        // If currently in the first scene and the current time is lower than the player's PB, the player has a new PB.
+        // Set the player's PB to the currentTime and update the PB text.
+        if (currentScene == "LiamsWackyWonderland" && (currentTime < PlayerPrefs.GetFloat("PB", timerLimit)))
         {
             PlayerPrefs.SetFloat("PB", currentTime);
+            UpdatePBText();            
+        }
+        // If currently in the second scene and the current time is lower than the player's PB, the player has a new PB.
+        // Set the player's PB to the currentTime and update the PB text.
+        else if (currentScene == "LiamsHighlyPsychoticJoint" && (currentTime < PlayerPrefs.GetFloat("PB2", timerLimit)))
+        {
+            PlayerPrefs.SetFloat("PB2", currentTime);
             UpdatePBText();
         }
     }
 
+    // Update text displaying the player's PB.
     void UpdatePBText()
     {
-        pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PB", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PB", timerLimit)}";
+        // If in the first scene, set the PB text to the PB for the 1st level.
+        if (currentScene == "LiamsWackyWonderland")
+        {
+            // If there is a format, use the format. Otherwise, don't use a format for PB text.
+            pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PB", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PB", timerLimit)}";
+        }
+        // If in the second scene, set the PB text to the PB for the 2nd level.
+        else if (currentScene == "LiamsHighlyPsychoticJoint")
+        {
+            // If there is a format, use the format. Otherwise, don't use a format for PB text.
+            pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PB2", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PB2", timerLimit)}";
+        }
     }    
 
-    // Pause menu things
+    // Function to resume the game.
     public void Resume()
     {
+        // Lock the cursor, make it not visible, turn off the pause menu UI, set time back to normal, and set gameIsPaused to false as game is no longer paused.
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         pauseMenuUI.SetActive(false);
@@ -142,22 +181,29 @@ public class GameManager : MonoBehaviour
         gameIsPaused = false;
     }
 
+    // Function to pause the game.
     void Pause()
     {
+        // Unlock the cursor so player can click pause menu buttons, turn on the pause menu UI, stop time, and set gameIsPaused to true as game is paused.
         Cursor.lockState = CursorLockMode.None;
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         gameIsPaused = true;
     }
 
+    // Function to load the menu scene.
     public void LoadMenu()
     {
+        // Set time back to normal and load main menu scene.
         Time.timeScale = 1.0f;
+        //ChangeScene("MainMenu");
         Debug.Log("Loading menu...");
     }
 
+    // Function to quit the game. 
     public void QuitGame()
     {
+        // Quit the application (only works in builds).
         Debug.Log("Quitting game...");
         Application.Quit();
     }
