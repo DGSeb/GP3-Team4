@@ -179,7 +179,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // when to crouch
-        if (Input.GetKeyDown(crouchKey))
+        if (Input.GetKeyDown(crouchKey) && GameManager.isPlayerActive)
         {
             transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
             if (grounded)
@@ -188,7 +188,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyUp(crouchKey))
+        if (Input.GetKeyUp(crouchKey) && GameManager.isPlayerActive)
         {
             transform.localScale = new Vector3(transform.localScale.x, startYscale, transform.localScale.z);
         }
