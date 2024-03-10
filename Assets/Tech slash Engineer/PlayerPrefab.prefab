@@ -31,7 +31,7 @@ Transform:
   - {fileID: 3094453730285038695}
   - {fileID: 6832265137924924172}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2300038191878060768
 GameObject:
@@ -65,7 +65,7 @@ Transform:
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 5069378654099812046}
+  - {fileID: 3819721706506070116}
   m_Father: {fileID: 6832265137924924172}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -610,20 +610,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e7869de43d993245a372ada1540f819, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 7
-  sprintSpeed: 12
-  dashSpeed: 50
-  dashSpeedChangeFactor: 50
-  groundDrag: 5
-  maxYSpeed: 15
-  jumpForce: 15
+  walkSpeed: 5
+  sprintSpeed: 10
+  dashSpeed: 25
+  dashSpeedChangeFactor: 25
+  groundDrag: 2.5
+  maxYSpeed: 10
+  jumpForce: 12
   jumpCooldown: 0.25
   airMultiplier: 0.4
   orientation: {fileID: 6812099268998670808}
   readyToJump: 1
-  crouchSpeed: 5
+  crouchSpeed: 3
   crouchYScale: 0.5
-  arms: {fileID: 5553463539603174516}
+  arms: {fileID: 4488312065405285086}
   camTransform: {fileID: 4058031801216854871}
   playerHeight: 2
   whatIsGround:
@@ -652,10 +652,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orientation: {fileID: 6812099268998670808}
   playerCam: {fileID: 4058031801216854871}
-  dashForce: 50
+  dashForce: 25
   dashUpwardForce: 0
-  maxDashYSpeed: 15
-  dashDuration: 0.25
+  maxDashYSpeed: 7.5
+  dashDuration: 0.1
   cam: {fileID: 7135326000251173354}
   dashFOV: 67
   useCameraForward: 1
@@ -1614,13 +1614,13 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 6008390778190033263}
   m_SourcePrefab: {fileID: 100100000, guid: 5805906b06a4ee04ab5956a68e814efe, type: 3}
---- !u!4 &5069378654099812046 stripped
+--- !u!4 &3819721706506070116 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5805906b06a4ee04ab5956a68e814efe,
     type: 3}
   m_PrefabInstance: {fileID: 3641399833343414159}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5553463539603174516 stripped
+--- !u!1 &4488312065405285086 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5805906b06a4ee04ab5956a68e814efe,
     type: 3}
@@ -1633,7 +1633,7 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5553463539603174516}
+  m_GameObject: {fileID: 4488312065405285086}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 2ac12b5e9eea7dc4092cafa89037c35d, type: 2}
@@ -1653,13 +1653,13 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5553463539603174516}
+  m_GameObject: {fileID: 4488312065405285086}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ecb4c923d5f7c34fb01be747f883604, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponTransform: {fileID: 5069378654099812046}
+  weaponTransform: {fileID: 3819721706506070116}
   player: {fileID: 7837900242843424758}
   rb: {fileID: 3034340408134757125}
   swayAmount: 0.01
@@ -1704,7 +1704,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 5069378654099812046}
+    m_TransformParent: {fileID: 3819721706506070116}
     m_Modifications:
     - target: {fileID: -8740385120093099556, guid: 99f43e47338dcd94787e73b5afa864ef,
         type: 3}
