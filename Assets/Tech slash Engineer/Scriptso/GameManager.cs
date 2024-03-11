@@ -233,6 +233,12 @@ public class GameManager : MonoBehaviour
         {
             ReloadScene();
         }
+
+        // If all these keys are pressed, delete the things saved to player prefs. Don't want this to happen unintentionally.
+        if (Input.GetKey(KeyCode.RightAlt) && Input.GetKey(KeyCode.RightControl) && Input.GetKey(KeyCode.RightShift) && Input.GetKey(KeyCode.P) && Input.GetKey(KeyCode.B))
+        {
+            PlayerPrefs.DeleteAll();
+        }
     }
 
     // Function to set the text of the timer.
@@ -249,6 +255,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
+    // Function to reload the scene the player is currently in / respawn them at the start.
     public void ReloadScene()
     {
         ChangeScene(currentScene);
@@ -273,6 +280,17 @@ public class GameManager : MonoBehaviour
     // This function only runs when the player reaches the exit.
     public void CheckPB()
     {
+        /*
+            If you want to delete a PB, which is stored in PlayerPrefs, there are two ways. The first can be done through script.
+            To delete through script, type PlayerPrefs.DeleteAll() to delete all PlayerPrefs. Here is a Unity doc on it: https://docs.unity3d.com/ScriptReference/PlayerPrefs.DeleteAll.html.
+            Obviously, this can only be done through script so it's good if you want to test from ground zero, but won't work if you have a build and want to reset PB.
+            You can set a function with very specific paramters to do it and to make sure it is very intentionally done.
+
+            The second option requires doing stuff on the computer. 
+            Click windows key, type regedit and open registry editor. Within in here go to file path HKEY_CURRENT_USER\SOFTWARE\Unity\UnityEditor\CompanyName\ProjectName
+            Then choose the player pref string names in there and delete the file.
+        */
+
         // If currently in the first scene and the current time is lower than the player's PB, the player has a new PB.
         // Set the player's PB to the currentTime and update the PB text.
         if (currentScene == "LiamsWackyWonderland" && (currentTime < PlayerPrefs.GetFloat("PB", timerLimit)))
@@ -287,6 +305,8 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetFloat("PB2", currentTime);
             UpdatePBText();
         }
+        // If currently in the tutorial scene and the current time is lower than the player's PB, the player has a new PB.
+        // Set the player's PB to the currentTime and update the PB text.
         else if (currentScene == "AveryScene" && (currentTime < PlayerPrefs.GetFloat("PBTutorial", timerLimit)))
         {
             PlayerPrefs.SetFloat("PBTutorial", currentTime);
@@ -309,7 +329,7 @@ public class GameManager : MonoBehaviour
             // If there is a format, use the format. Otherwise, don't use a format for PB text.
             pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PB2", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PB2", timerLimit)}";
         }
-        // If in the second scene, set the PB text to the PB for the 2nd level.
+        // If in the tutorial scene, set the PB text to the PB for the tutorial level.
         else if (currentScene == "AveryScene")
         {
             // If there is a format, use the format. Otherwise, don't use a format for PB text.

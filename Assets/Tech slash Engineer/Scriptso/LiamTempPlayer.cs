@@ -27,11 +27,13 @@ public class LiamTempPlayer : MonoBehaviour
             gM.CheckPB();
             gM.ChangeScene("LiamsHighlyPsychoticJoint");
         }
+        // If second ending is hit, update pb and change scene.
         else if (other.name == "End2")
         {
             gM.CheckPB();
             gM.ChangeScene("LiamsWackyWonderland");
         }
+        // If tutorial ending is hit, update pb and change scene.
         else if (other.name == "Hulk")
         {
             gM.CheckPB();
@@ -39,9 +41,10 @@ public class LiamTempPlayer : MonoBehaviour
         }
     }
 
-    // Function to check if the playe is out of bounds.
+    // Function to check if the player is out of bounds.
     void BoundaryCheck()
     {
+        // If player is below -50 on the y axis, respawn them.
         if (this.gameObject.transform.position.y < -50)
         {
             gM.ReloadScene();
