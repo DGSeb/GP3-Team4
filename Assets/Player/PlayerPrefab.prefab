@@ -416,7 +416,7 @@ MonoBehaviour:
   walkSpeed: 7
   sprintSpeed: 12
   dashSpeed: 50
-  dashSpeedChangeFactor: 50
+  dashSpeedChangeFactor: 25
   groundDrag: 5
   maxYSpeed: 15
   jumpForce: 15
