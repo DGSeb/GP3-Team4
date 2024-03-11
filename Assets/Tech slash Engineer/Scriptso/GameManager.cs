@@ -7,6 +7,7 @@ using UnityEngine.Rendering;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using System;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -53,7 +54,15 @@ public class GameManager : MonoBehaviour
     // For example, when paused or when time is stopped.
     public static bool isPlayerActive = true;
 
-    void Start()
+    //private Transform entryContainer;
+    //private Transform entryTemplate;
+
+    //private int numberOfEntries = 10;
+    //private float templateHeight = 30f;
+    //private List<Transform> highscoreEntryTransformList;
+
+    // Comment
+    void Awake()
     {
         // Add entries to the dictionary for the timer format.
         timeFormats.Add(TimerFormats.Whole, "0");
@@ -61,6 +70,103 @@ public class GameManager : MonoBehaviour
         timeFormats.Add(TimerFormats.HundrethsDecimal, "0.00");
         timeFormats.Add(TimerFormats.ThousandthsDecimal, "0.000");
 
+
+    //    entryContainer = GameObject.Find("HighscoreEntryContainer").GetComponent<Transform>();
+    //    entryTemplate = GameObject.Find("HighscoreEntryTemplate").GetComponent<Transform>();
+
+    //    entryTemplate.gameObject.SetActive(false);
+
+    //    string jsonString = PlayerPrefs.GetString("PBTimes");
+    //    Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
+
+    //    // Sort list by lowest time on top.
+    //    for (int i = 0; i < highscores.highscoreEntryList.Count; i++)
+    //    {
+    //        for (int j = i + 1; j < highscores.highscoreEntryList.Count; j++)
+    //        {
+    //            if (highscores.highscoreEntryList[j].time < highscores.highscoreEntryList[i].time)
+    //            {
+    //                // Swap
+    //                HighscoreEntry tmp = highscores.highscoreEntryList[i];
+    //                highscores.highscoreEntryList[i] = highscores.highscoreEntryList[j];
+    //                highscores.highscoreEntryList[j] = tmp;
+    //            }
+    //        }
+    //    }
+
+    //    highscoreEntryTransformList = new List<Transform>();
+    //    foreach (HighscoreEntry highscoreEntry in highscores.highscoreEntryList)
+    //    {
+    //        CreateHighscoreEntryTransform(highscoreEntry, entryContainer, highscoreEntryTransformList);
+    //    }
+    //}
+
+    //void CreateHighscoreEntryTransform(HighscoreEntry highscoreEntry, Transform container, List<Transform> transformList)
+    //{
+    //    Transform entryTransform = Instantiate(entryTemplate, container);
+    //    RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
+    //    entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * transformList.Count);
+    //    entryTransform.gameObject.SetActive(true);
+
+    //    int rank = transformList.Count + 1;
+    //    string rankString = rank.ToString();
+    //    entryTransform.Find("PositionTextEntry").GetComponent<TextMeshProUGUI>().text = rankString;
+
+    //    entryTransform.Find("TimeTextEntry").GetComponent<TextMeshProUGUI>().text = highscoreEntry.time.ToString();
+    //        //hasFormat ? $"{PlayerPrefs.GetFloat("PB", timerLimit).ToString(timeFormats[format])}" : $"{PlayerPrefs.GetFloat("PB", timerLimit)}";
+
+    //    string name = highscoreEntry.name;
+    //    entryTransform.Find("NameTextEntry").GetComponent<TextMeshProUGUI>().text = name;
+
+    //    entryTransform.SetParent(entryContainer.transform);
+
+    //    // Set background visible odds and evens.
+    //    entryTransform.Find("Background").gameObject.SetActive(rank % 2 == 1);
+
+    //    if (rank == 1)
+    //    {
+    //        // Highlight first entry
+    //        entryTransform.Find("PositionTextEntry").GetComponent<TextMeshProUGUI>().color = Color.green;
+    //        entryTransform.Find("TimeTextEntry").GetComponent<TextMeshProUGUI>().color = Color.green;
+    //        entryTransform.Find("NameTextEntry").GetComponent<TextMeshProUGUI>().color = Color.green;
+    //    }
+
+    //    transformList.Add(entryTransform);
+    //}
+
+    //private void AddHighscoreEntry(float time, string name)
+    //{
+    //    // Create highscore entry
+    //    HighscoreEntry highscoreEntry = new HighscoreEntry { time = time, name = name };
+
+    //    // Load svaed highscores
+    //    string jsonString = PlayerPrefs.GetString("PBTimes");
+    //    Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
+
+    //    // Add new entry to Highscores.
+    //    highscores.highscoreEntryList.Add(highscoreEntry);
+
+    //    // Save updated Highscores.
+    //    string json = JsonUtility.ToJson(highscores);
+    //    PlayerPrefs.SetString("PBTime", json);
+    //    PlayerPrefs.Save();
+    //}
+
+    //private class Highscores
+    //{
+    //    public List<HighscoreEntry> highscoreEntryList;
+    //}
+
+    //// This represents a single highscore entry.
+    //[System.Serializable]
+    //private class HighscoreEntry
+    //{
+    //    public float time;
+    //    public string name;
+    }
+
+    void Start()
+    {
         // Find the name of the active scene and assign it to the currentScene variable.
         // Make sure this occurs before running UpdatePBText so it knows which scene it is in.
         currentScene = SceneManager.GetActiveScene().name;
