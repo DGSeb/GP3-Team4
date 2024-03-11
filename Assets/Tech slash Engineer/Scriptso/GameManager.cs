@@ -231,7 +231,7 @@ public class GameManager : MonoBehaviour
         // This is very helpful if you want to restart a run or if you fall off into the abyss.
         if (Input.GetKeyDown(KeyCode.R))
         {
-            ChangeScene(currentScene);
+            ReloadScene();
         }
     }
 
@@ -249,6 +249,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
+    public void ReloadScene()
+    {
+        ChangeScene(currentScene);
+    }
+
     // When time limit is reached, run coroutine that resets game.
     IEnumerator TimeLimitReached()
     {
@@ -258,7 +263,7 @@ public class GameManager : MonoBehaviour
         timeLimitReachedText.SetActive(true);
         Time.timeScale = 0f;
         yield return new WaitForSecondsRealtime(1.2f);
-        ChangeScene(currentScene);
+        ReloadScene();
         Time.timeScale = 1.0f;
         isPlayerActive = true;
         UpdatePBText();
@@ -282,6 +287,11 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetFloat("PB2", currentTime);
             UpdatePBText();
         }
+        else if (currentScene == "AveryScene" && (currentTime < PlayerPrefs.GetFloat("PBTutorial", timerLimit)))
+        {
+            PlayerPrefs.SetFloat("PBTutorial", currentTime);
+            UpdatePBText();
+        }
     }
 
     // Update text displaying the player's PB.
@@ -298,6 +308,12 @@ public class GameManager : MonoBehaviour
         {
             // If there is a format, use the format. Otherwise, don't use a format for PB text.
             pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PB2", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PB2", timerLimit)}";
+        }
+        // If in the second scene, set the PB text to the PB for the 2nd level.
+        else if (currentScene == "AveryScene")
+        {
+            // If there is a format, use the format. Otherwise, don't use a format for PB text.
+            pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PBTutorial", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PBTutorial", timerLimit)}";
         }
     }    
 
