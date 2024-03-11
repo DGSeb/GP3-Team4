@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 2158.6926, g: 2261.303, b: 3120.192, a: 1}
+  m_IndirectSpecularColor: {r: 2183.472, g: 2319.8206, b: 3455.2075, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1932,16 +1932,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2545586469566344298, guid: 0df14ca73a9074947a0f137360c4cc8e,
-        type: 3}
-      propertyPath: dashSpeedChangeFactor
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 4027159516958417653, guid: 0df14ca73a9074947a0f137360c4cc8e,
-        type: 3}
-      propertyPath: dashCd
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4548576369504730554, guid: 0df14ca73a9074947a0f137360c4cc8e,
         type: 3}
