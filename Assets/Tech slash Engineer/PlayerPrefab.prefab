@@ -616,7 +616,7 @@ MonoBehaviour:
   dashSpeedChangeFactor: 25
   groundDrag: 2.5
   maxYSpeed: 10
-  jumpForce: 12
+  jumpForce: 12.1
   jumpCooldown: 0.25
   airMultiplier: 0.4
   orientation: {fileID: 6812099268998670808}
