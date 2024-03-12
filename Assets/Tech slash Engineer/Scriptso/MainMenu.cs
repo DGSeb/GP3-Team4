@@ -32,4 +32,11 @@ public class MainMenu : MonoBehaviour
         GameManager.isPlayerActive = true;
         LoadScene("AveryScene");
     }
+
+    // Function to play the old and smaller tutorial.
+    public void PlaySmallTutorial()
+    {
+        GameManager.isPlayerActive = true;
+        LoadScene("Tutorial (Small Version)");
+    }
 }
