@@ -108,7 +108,7 @@ Transform:
   - {fileID: 7381983025445258527}
   - {fileID: 7138508912072643059}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4644995246992761061
 GameObject:
@@ -200,18 +200,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e7869de43d993245a372ada1540f819, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 7
-  sprintSpeed: 12
-  dashSpeed: 50
+  walkSpeed: 5
+  sprintSpeed: 10
+  dashSpeed: 25
   dashSpeedChangeFactor: 25
-  groundDrag: 5
-  maxYSpeed: 15
-  jumpForce: 15
+  groundDrag: 2.5
+  maxYSpeed: 10
+  jumpForce: 12.1
   jumpCooldown: 0.25
   airMultiplier: 0.4
   orientation: {fileID: 8144135747042390168}
   readyToJump: 1
-  crouchSpeed: 5
+  crouchSpeed: 3
   crouchYScale: 0.5
   arms: {fileID: 6403431941939968673}
   camTransform: {fileID: 8018624181223118957}
@@ -242,17 +242,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orientation: {fileID: 8144135747042390168}
   playerCam: {fileID: 8018624181223118957}
-  dashForce: 50
+  dashForce: 25
   dashUpwardForce: 0
-  maxDashYSpeed: 15
-  dashDuration: 0.25
+  maxDashYSpeed: 7.5
+  dashDuration: 0.1
   cam: {fileID: 4005345185967632737}
   dashFOV: 67
   useCameraForward: 1
   allowAllDirections: 1
   disableGravity: 1
   resetVel: 1
-  dashCd: 3
+  dashCd: 1.5
   dashKey: 101
 --- !u!114 &2920454816270228540
 MonoBehaviour:

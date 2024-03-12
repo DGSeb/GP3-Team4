@@ -235,9 +235,19 @@ public class GameManager : MonoBehaviour
         }
 
         // If all these keys are pressed, delete the things saved to player prefs. Don't want this to happen unintentionally.
-        if (Input.GetKey(KeyCode.RightAlt) && Input.GetKey(KeyCode.RightControl) && Input.GetKey(KeyCode.RightShift) && Input.GetKey(KeyCode.P) && Input.GetKey(KeyCode.B))
+        if (Input.GetKey(KeyCode.RightAlt) && Input.GetKey(KeyCode.RightControl) && Input.GetKey(KeyCode.RightShift)
+            && Input.GetKey(KeyCode.B) && Input.GetKeyDown(KeyCode.P))
         {
             PlayerPrefs.DeleteAll();
+        }
+
+        if (Input.GetKey(KeyCode.Equals) && Input.GetKeyDown(KeyCode.T))
+        {
+            timerLimit += 10;
+        }
+        else if(Input.GetKey(KeyCode.Minus) && Input.GetKeyDown(KeyCode.T))
+        {
+            timerLimit -= 10;
         }
     }
 
