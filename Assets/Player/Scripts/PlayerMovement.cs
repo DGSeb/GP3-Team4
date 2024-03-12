@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -49,6 +50,8 @@ public class PlayerMovement : MonoBehaviour
 
     public float horizontalInput;
     public float verticalInput;
+
+    private float velocityCap;
 
     Vector3 moveDirection;
 
@@ -101,6 +104,7 @@ public class PlayerMovement : MonoBehaviour
         {
             state = MovementState.crouching;
             desiredMoveSpeed = crouchSpeed;
+            velocityCap = crouchSpeed;
         }
 
         // Mode - Sprinting
@@ -108,6 +112,7 @@ public class PlayerMovement : MonoBehaviour
         {
             state = MovementState.sprinting;
             desiredMoveSpeed = sprintSpeed;
+            velocityCap = sprintSpeed;
         }
 
         // Mode - Walking
@@ -115,6 +120,7 @@ public class PlayerMovement : MonoBehaviour
         {
             state = MovementState.walking;
             desiredMoveSpeed = walkSpeed;
+            velocityCap = walkSpeed;
         }
 
         // Mode - Air
@@ -123,9 +129,15 @@ public class PlayerMovement : MonoBehaviour
             state = MovementState.air;
 
             if (desiredMoveSpeed < sprintSpeed)
+            {
                 desiredMoveSpeed = walkSpeed;
+                velocityCap = walkSpeed;
+            }
             else
+            {
                 desiredMoveSpeed = sprintSpeed;
+                velocityCap = sprintSpeed;
+            }
         }
 
         bool desiredMoveSpeedHasChanged = desiredMoveSpeed != lastDesiredMoveSpeed;
@@ -306,6 +318,15 @@ public class PlayerMovement : MonoBehaviour
             moveSpeed = Mathf.Lerp(startValue, desiredMoveSpeed, time / difference);
 
             time += Time.deltaTime * boostFactor;
+
+            Vector3 horizontalVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+
+            if (horizontalVelocity.magnitude < velocityCap)
+            {
+                //print("X " + Mathf.Abs(rb.velocity.x)); 
+                //print("Y " + Mathf.Abs(rb.velocity.y));
+                boostFactor = 1000;
+            }
 
             yield return null;
         }
