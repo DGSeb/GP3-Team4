@@ -5,8 +5,8 @@ using DG.Tweening;
 
 public class PlayerCam : MonoBehaviour
 {
-    public float sensX;
-    public float sensY;
+    public static float sensX = 400f;
+    public static float sensY = 400f;
 
     public Transform orientation;
 

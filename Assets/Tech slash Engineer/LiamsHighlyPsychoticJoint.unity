@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 2183.472, g: 2319.8206, b: 3455.2075, a: 1}
+  m_IndirectSpecularColor: {r: 2180.7034, g: 2310.0354, b: 3421.5396, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -123,6 +123,30 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &129817443 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8818886691335669698, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2013892937}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80166830f6a77444e86ef99589ac466b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &129817444 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8803125245356012113, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2013892937}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80166830f6a77444e86ef99589ac466b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &157207112
 GameObject:
   m_ObjectHideFlags: 0
@@ -1399,6 +1423,8 @@ MonoBehaviour:
   timeLimitReachedText: {fileID: 2013892939}
   pBText: {fileID: 2013892938}
   pauseMenuUI: {fileID: 2013892941}
+  pauseScreenOneUI: {fileID: 2013892942}
+  settingsMenuUI: {fileID: 2013892943}
   currentTime: 0
   countDown: 0
   hasLimit: 1
@@ -2254,6 +2280,16 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: QuitGame
       objectReference: {fileID: 0}
+    - target: {fileID: 4741529963497335175, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1332842027}
+    - target: {fileID: 4741529963497335175, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ActivateSettings
+      objectReference: {fileID: 0}
     - target: {fileID: 5549837675337329198, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2369,6 +2405,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7518216299242489009, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 129817444}
+    - target: {fileID: 7518216299242489009, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AdjustXSensitivity
+      objectReference: {fileID: 0}
+    - target: {fileID: 7524964705408709459, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 129817443}
+    - target: {fileID: 7524964705408709459, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AdjustYSensitivity
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2407,6 +2463,18 @@ MonoBehaviour:
 --- !u!1 &2013892941 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5477731133194813958, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2013892937}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2013892942 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6720817833015372172, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2013892937}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2013892943 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4019218187518163984, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
     type: 3}
   m_PrefabInstance: {fileID: 2013892937}
   m_PrefabAsset: {fileID: 0}
