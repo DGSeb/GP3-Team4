@@ -54,10 +54,10 @@ public class GameManager : MonoBehaviour
     // For example, when paused or when time is stopped.
     public static bool isPlayerActive = true;
 
+    //// Leaderboard things.
     //private Transform entryContainer;
     //private Transform entryTemplate;
 
-    //private int numberOfEntries = 10;
     //private float templateHeight = 30f;
     //private List<Transform> highscoreEntryTransformList;
 
@@ -75,6 +75,8 @@ public class GameManager : MonoBehaviour
     //    entryTemplate = GameObject.Find("HighscoreEntryTemplate").GetComponent<Transform>();
 
     //    entryTemplate.gameObject.SetActive(false);
+
+    //    AddHighscoreEntry(15.687f, "Mesah");
 
     //    string jsonString = PlayerPrefs.GetString("PBTimes");
     //    Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
@@ -95,6 +97,7 @@ public class GameManager : MonoBehaviour
     //    }
 
     //    highscoreEntryTransformList = new List<Transform>();
+
     //    foreach (HighscoreEntry highscoreEntry in highscores.highscoreEntryList)
     //    {
     //        CreateHighscoreEntryTransform(highscoreEntry, entryContainer, highscoreEntryTransformList);
@@ -110,10 +113,28 @@ public class GameManager : MonoBehaviour
 
     //    int rank = transformList.Count + 1;
     //    string rankString = rank.ToString();
+
+    //    //// Rank, but with suffixes like 1st, 2nd, 3rd, 4th, 5th, and so on.
+    //    //switch (rank)
+    //    //{
+    //    //    default:
+    //    //        rankString = rank + "TH";
+    //    //        break;
+    //    //    case 1:
+    //    //        rankString = "1ST";
+    //    //        break;
+    //    //    case 2:
+    //    //        rankString = "2ND";
+    //    //        break;
+    //    //    case 3:
+    //    //        rankString = "3RD";
+    //    //        break;
+    //    //}
+
     //    entryTransform.Find("PositionTextEntry").GetComponent<TextMeshProUGUI>().text = rankString;
 
     //    entryTransform.Find("TimeTextEntry").GetComponent<TextMeshProUGUI>().text = highscoreEntry.time.ToString();
-    //        //hasFormat ? $"{PlayerPrefs.GetFloat("PB", timerLimit).ToString(timeFormats[format])}" : $"{PlayerPrefs.GetFloat("PB", timerLimit)}";
+    //    //hasFormat ? $"{PlayerPrefs.GetFloat("PB", timerLimit).ToString(timeFormats[format])}" : $"{PlayerPrefs.GetFloat("PB", timerLimit)}";
 
     //    string name = highscoreEntry.name;
     //    entryTransform.Find("NameTextEntry").GetComponent<TextMeshProUGUI>().text = name;
