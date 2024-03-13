@@ -235,9 +235,19 @@ public class GameManager : MonoBehaviour
         }
 
         // If all these keys are pressed, delete the things saved to player prefs. Don't want this to happen unintentionally.
-        if (Input.GetKey(KeyCode.RightAlt) && Input.GetKey(KeyCode.RightControl) && Input.GetKey(KeyCode.RightShift) && Input.GetKey(KeyCode.P) && Input.GetKey(KeyCode.B))
+        if (Input.GetKey(KeyCode.RightAlt) && Input.GetKey(KeyCode.RightControl) && Input.GetKey(KeyCode.RightShift)
+            && Input.GetKey(KeyCode.B) && Input.GetKeyDown(KeyCode.P))
         {
             PlayerPrefs.DeleteAll();
+        }
+
+        if (Input.GetKey(KeyCode.Equals) && Input.GetKeyDown(KeyCode.T))
+        {
+            timerLimit += 10;
+        }
+        else if(Input.GetKey(KeyCode.Minus) && Input.GetKeyDown(KeyCode.T))
+        {
+            timerLimit -= 10;
         }
     }
 
@@ -312,6 +322,13 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetFloat("PBTutorial", currentTime);
             UpdatePBText();
         }
+        // If currently in the small/old tutorial scene and the current time is lower than the player's PB, the player has a new PB.
+        // Set the player's PB to the currentTime and update the PB text.
+        else if (currentScene == "Tutorial (Small Version)" && (currentTime < PlayerPrefs.GetFloat("PBSmallTutorial", timerLimit)))
+        {
+            PlayerPrefs.SetFloat("PBSmallTutorial", currentTime);
+            UpdatePBText();
+        }
     }
 
     // Update text displaying the player's PB.
@@ -334,6 +351,12 @@ public class GameManager : MonoBehaviour
         {
             // If there is a format, use the format. Otherwise, don't use a format for PB text.
             pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PBTutorial", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PBTutorial", timerLimit)}";
+        }
+        // If in the small/old tutorial scene, set the PB text to the PB for the small/old tutorial level.
+        else if (currentScene == "Tutorial (Small Version)")
+        {
+            // If there is a format, use the format. Otherwise, don't use a format for PB text.
+            pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PBSmallTutorial", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PBSmallTutorial", timerLimit)}";
         }
     }    
 

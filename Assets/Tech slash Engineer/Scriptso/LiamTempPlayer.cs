@@ -34,7 +34,7 @@ public class LiamTempPlayer : MonoBehaviour
             gM.ChangeScene("LiamsWackyWonderland");
         }
         // If tutorial ending is hit, update pb and change scene.
-        else if (other.name == "Hulk")
+        else if (other.name == "Glitch")
         {
             gM.CheckPB();
             gM.ChangeScene("LiamsWackyWonderland");

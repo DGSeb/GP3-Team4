@@ -1,2 +1,2 @@
 # GP3-Team4
-A mind boggling race against the clock or DIE
+A first-person shooter with an emphasis on movement and the time in which a level is completed.
