@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     public GameObject timeLimitReachedText;
     public TextMeshProUGUI pBText;
     [SerializeField] private GameObject pauseMenuUI;
+    [SerializeField] private GameObject pauseScreenOneUI;
+    [SerializeField] private GameObject settingsMenuUI;
 
     // Settings that control time.
     [Header("Timer Settings")]
@@ -54,10 +56,10 @@ public class GameManager : MonoBehaviour
     // For example, when paused or when time is stopped.
     public static bool isPlayerActive = true;
 
+    //// Leaderboard things.
     //private Transform entryContainer;
     //private Transform entryTemplate;
 
-    //private int numberOfEntries = 10;
     //private float templateHeight = 30f;
     //private List<Transform> highscoreEntryTransformList;
 
@@ -75,6 +77,8 @@ public class GameManager : MonoBehaviour
     //    entryTemplate = GameObject.Find("HighscoreEntryTemplate").GetComponent<Transform>();
 
     //    entryTemplate.gameObject.SetActive(false);
+
+    //    AddHighscoreEntry(15.687f, "Mesah");
 
     //    string jsonString = PlayerPrefs.GetString("PBTimes");
     //    Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
@@ -95,6 +99,7 @@ public class GameManager : MonoBehaviour
     //    }
 
     //    highscoreEntryTransformList = new List<Transform>();
+
     //    foreach (HighscoreEntry highscoreEntry in highscores.highscoreEntryList)
     //    {
     //        CreateHighscoreEntryTransform(highscoreEntry, entryContainer, highscoreEntryTransformList);
@@ -110,10 +115,28 @@ public class GameManager : MonoBehaviour
 
     //    int rank = transformList.Count + 1;
     //    string rankString = rank.ToString();
+
+    //    //// Rank, but with suffixes like 1st, 2nd, 3rd, 4th, 5th, and so on.
+    //    //switch (rank)
+    //    //{
+    //    //    default:
+    //    //        rankString = rank + "TH";
+    //    //        break;
+    //    //    case 1:
+    //    //        rankString = "1ST";
+    //    //        break;
+    //    //    case 2:
+    //    //        rankString = "2ND";
+    //    //        break;
+    //    //    case 3:
+    //    //        rankString = "3RD";
+    //    //        break;
+    //    //}
+
     //    entryTransform.Find("PositionTextEntry").GetComponent<TextMeshProUGUI>().text = rankString;
 
     //    entryTransform.Find("TimeTextEntry").GetComponent<TextMeshProUGUI>().text = highscoreEntry.time.ToString();
-    //        //hasFormat ? $"{PlayerPrefs.GetFloat("PB", timerLimit).ToString(timeFormats[format])}" : $"{PlayerPrefs.GetFloat("PB", timerLimit)}";
+    //    //hasFormat ? $"{PlayerPrefs.GetFloat("PB", timerLimit).ToString(timeFormats[format])}" : $"{PlayerPrefs.GetFloat("PB", timerLimit)}";
 
     //    string name = highscoreEntry.name;
     //    entryTransform.Find("NameTextEntry").GetComponent<TextMeshProUGUI>().text = name;
@@ -363,10 +386,11 @@ public class GameManager : MonoBehaviour
     // Function to resume the game.
     public void Resume()
     {
-        // Lock the cursor, make it not visible, turn off the pause menu UI, set time back to normal, set player active bool to true,
+        // Lock the cursor, make it not visible, turn off the settings menu and pause menu UI, set time back to normal, set player active bool to true,
         // and set gameIsPaused to false as game is no longer paused.
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        settingsMenuUI.SetActive(false);
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1.0f;
         isPlayerActive = true;
@@ -376,13 +400,14 @@ public class GameManager : MonoBehaviour
     // Function to pause the game.
     void Pause()
     {
-        // Stop time, set player active bool to false, unlock player cursor so they can interact with buttons, turn on pause menu UI,
+        // Stop time, set player active bool to false, unlock player cursor so they can interact with buttons, turn on pause menu UI and its buttons,
         // and set gameIsPaused to true as game is now paused.
         Time.timeScale = 0f;
         isPlayerActive = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         pauseMenuUI.SetActive(true);
+        pauseScreenOneUI.SetActive(true);
         gameIsPaused = true;
     }
 
@@ -402,4 +427,11 @@ public class GameManager : MonoBehaviour
         Debug.Log("Quitting game...");
         Application.Quit();
     }
+
+    // Function to turn on the settings menu.
+    public void ActivateSettings()
+    {
+        pauseScreenOneUI.SetActive(false);
+        settingsMenuUI.SetActive(true);
+    }    
 }
