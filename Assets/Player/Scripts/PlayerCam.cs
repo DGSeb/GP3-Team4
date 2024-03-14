@@ -5,8 +5,8 @@ using DG.Tweening;
 
 public class PlayerCam : MonoBehaviour
 {
-    public static float sensX = 400f;
-    public static float sensY = 400f;
+    public static float sensX;
+    public static float sensY;
 
     public Transform orientation;
 
@@ -24,6 +24,13 @@ public class PlayerCam : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float snappiness;
     [SerializeField] private float returnSpeed;
+
+    private void Awake()
+    {
+        // Set the X and Y sensitivity floats to the player prefs keys. If no value, set it to 400.
+        sensX = PlayerPrefs.GetFloat("XSensitivity", 400f);
+        sensY = PlayerPrefs.GetFloat("YSensitivity", 400f);
+    }
 
     private void Start()
     {
