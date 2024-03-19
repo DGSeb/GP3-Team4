@@ -6,6 +6,9 @@ public class LiamTempPlayer : MonoBehaviour
 {
     private GameManager gM; // game manager script reference.
 
+    // Array for enemies that will spawn
+    //[SerializeField] private GameObject[] enemyGroups;
+
     void Start()
     {
         // Set reference to game manager script.
@@ -21,23 +24,49 @@ public class LiamTempPlayer : MonoBehaviour
     // Add this to player script so when they reach the end, their PB is updated.
     private void OnTriggerEnter(Collider other)
     {
-        // If player hits the end object, update PB and go to next scene.
-        if (other.name == "End")
+        switch(other.name)
         {
-            gM.CheckPB();
-            gM.ChangeScene("LiamsHighlyPsychoticJoint");
-        }
-        // If second ending is hit, update pb and change scene.
-        else if (other.name == "End2")
-        {
-            gM.CheckPB();
-            gM.ChangeScene("LiamsWackyWonderland");
-        }
-        // If tutorial ending is hit, update pb and change scene.
-        else if (other.name == "Glitch")
-        {
-            gM.CheckPB();
-            gM.ChangeScene("LiamsWackyWonderland");
+            // If player hits the end object, update PB and go to next scene.
+            case "End":
+                gM.CheckPB();
+                gM.ChangeScene("LiamsHighlyPsychoticJoint");
+                break;
+
+            // If second ending is hit, update pb and change scene.
+            case "End2":
+                gM.CheckPB();
+                gM.ChangeScene("LiamsWackyWonderland");
+                break;
+
+            // If tutorial ending is hit, update pb and change scene.
+            case "Glitch":
+                gM.CheckPB();
+                gM.ChangeScene("LiamsWackyWonderland");
+                break;
+
+            //// If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
+            //case "PressurePlate0":
+            //    enemyGroups[0].SetActive(true);
+            //    Destroy(other.gameObject);
+            //    break;
+
+            //// If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
+            //case "PressurePlate1":
+            //    enemyGroups[1].SetActive(true);
+            //    Destroy(other.gameObject);
+            //    break;
+
+            //// If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
+            //case "PressurePlate2":
+            //    enemyGroups[2].SetActive(true);
+            //    Destroy(other.gameObject);
+            //    break;
+
+            //// If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
+            //case "PressurePlate3":
+            //    enemyGroups[3].SetActive(true);
+            //    Destroy(other.gameObject);
+            //    break;
         }
     }
 
