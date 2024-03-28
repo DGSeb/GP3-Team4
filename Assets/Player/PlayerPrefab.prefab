@@ -108,7 +108,7 @@ Transform:
   - {fileID: 7381983025445258527}
   - {fileID: 7138508912072643059}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4644995246992761061
 GameObject:
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 2920454816270228540}
   m_Layer: 7
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -211,6 +211,7 @@ MonoBehaviour:
   airMultiplier: 0.4
   orientation: {fileID: 8144135747042390168}
   readyToJump: 1
+  jumpsRemaining: 2
   crouchSpeed: 3
   crouchYScale: 0.5
   arms: {fileID: 6403431941939968673}
@@ -515,8 +516,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4058ac6db5e424a4a86cc5d139de2c48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensX: 400
-  sensY: 400
   orientation: {fileID: 8144135747042390168}
   snappiness: 5
   returnSpeed: 5
