@@ -70,6 +70,24 @@ public class LiamTempPlayer : MonoBehaviour
                 enemyGroups[3].SetActive(true);
                 Destroy(other.gameObject);
                 break;
+
+            // If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
+            case "PressurePlate4":
+                enemyGroups[4].SetActive(true);
+                Destroy(other.gameObject);
+                break;
+
+            // If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
+            case "PressurePlate5":
+                enemyGroups[5].SetActive(true);
+                Destroy(other.gameObject);
+                break;
+
+            // If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
+            case "PressurePlate6":
+                enemyGroups[6].SetActive(true);
+                Destroy(other.gameObject);
+                break;
         }
     }
 

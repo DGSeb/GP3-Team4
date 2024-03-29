@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 2158.2727, g: 2262.8655, b: 3286.4497, a: 1}
+  m_IndirectSpecularColor: {r: 2182.885, g: 2317.6467, b: 3447.2153, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1448,11 +1448,10 @@ MonoBehaviour:
   hasLimit: 1
   timerLimit: 45
   hasFormat: 1
-  format: 3
+  format: 4
   entryContainer: {fileID: 101764046}
   entryTemplate: {fileID: 101764047}
   leaderboard: {fileID: 176773347}
-  highscoreEntryList: []
 --- !u!1 &1390705899
 GameObject:
   m_ObjectHideFlags: 0

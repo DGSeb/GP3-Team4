@@ -50,6 +50,12 @@ public class WeaponHandler : MonoBehaviour
         {
             Debug.Log(hit.transform.name);
 
+            // If the hit object of the raycast has the enemy tag, run the lose health function from the enemy script to deal damage.
+            if (hit.transform.tag ==  "Enemy")
+            {
+                hit.transform.GetComponent<EnemyBehavior>().LoseHealth();
+            }
+
             aimPosition = hit.point;
 
             GameObject trailInstance = Instantiate(trail, Emitter);
