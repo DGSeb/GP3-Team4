@@ -7,7 +7,7 @@ public class LiamTempPlayer : MonoBehaviour
     private GameManager gM; // game manager script reference.
 
     // Array for enemies that will spawn
-    //[SerializeField] private GameObject[] enemyGroups;
+    [SerializeField] private GameObject[] enemyGroups;
 
     void Start()
     {
@@ -44,29 +44,29 @@ public class LiamTempPlayer : MonoBehaviour
                 gM.ChangeScene("LiamsWackyWonderland");
                 break;
 
-            //// If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
-            //case "PressurePlate0":
-            //    enemyGroups[0].SetActive(true);
-            //    Destroy(other.gameObject);
-            //    break;
+            // If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
+            case "PressurePlate0":
+                enemyGroups[0].SetActive(true);
+                Destroy(other.gameObject);
+                break;
 
-            //// If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
-            //case "PressurePlate1":
-            //    enemyGroups[1].SetActive(true);
-            //    Destroy(other.gameObject);
-            //    break;
+            // If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
+            case "PressurePlate1":
+                enemyGroups[1].SetActive(true);
+                Destroy(other.gameObject);
+                break;
 
-            //// If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
-            //case "PressurePlate2":
-            //    enemyGroups[2].SetActive(true);
-            //    Destroy(other.gameObject);
-            //    break;
+            // If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
+            case "PressurePlate2":
+                enemyGroups[2].SetActive(true);
+                Destroy(other.gameObject);
+                break;
 
-            //// If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
-            //case "PressurePlate3":
-            //    enemyGroups[3].SetActive(true);
-            //    Destroy(other.gameObject);
-            //    break;
+            // If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
+            case "PressurePlate3":
+                enemyGroups[3].SetActive(true);
+                Destroy(other.gameObject);
+                break;
         }
     }
 

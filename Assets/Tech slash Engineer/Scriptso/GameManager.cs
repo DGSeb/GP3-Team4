@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     // Enum for the different formats of the time, such as 1 second or 1.1 seconds or 1.11 seconds or 1.11 seconds.
     public enum TimerFormats
     {
+        None,
         Whole,
         TenthDecimal,
         HundrethsDecimal,
@@ -56,136 +57,161 @@ public class GameManager : MonoBehaviour
     // For example, when paused or when time is stopped.
     public static bool isPlayerActive = true;
 
-    //// Leaderboard things.
-    //private Transform entryContainer;
-    //private Transform entryTemplate;
+    // Leaderboard things.
+    public Transform entryContainer; // Container that stores entries.
+    public Transform entryTemplate; // Template that is used to determine how entries display.
+    public GameObject leaderboard;
 
-    //private float templateHeight = 30f;
-    //private List<Transform> highscoreEntryTransformList;
+    private float templateHeight = 37f; // Y distance between entries.
+    private List<Transform> highscoreEntryTransformList; // List of entry locations.
+
+    // Declared here as it fixes null reference error, but list entries do not persist through scene change, so testing other things.
+    //public List<HighscoreEntry> highscoreEntryList;
 
     // Comment
     void Awake()
     {
         // Add entries to the dictionary for the timer format.
+        timeFormats.Add(TimerFormats.None, "0.000000");
         timeFormats.Add(TimerFormats.Whole, "0");
         timeFormats.Add(TimerFormats.TenthDecimal, "0.0");
         timeFormats.Add(TimerFormats.HundrethsDecimal, "0.00");
         timeFormats.Add(TimerFormats.ThousandthsDecimal, "0.000");
 
+        // Turn off the template of what entries will look like as it's not meant to be seen as an actual entry.
+        entryTemplate.gameObject.SetActive(false);
 
-    //    entryContainer = GameObject.Find("HighscoreEntryContainer").GetComponent<Transform>();
-    //    entryTemplate = GameObject.Find("HighscoreEntryTemplate").GetComponent<Transform>();
+        // Create a string that stores the player prefs PBTimes string. If no string, make an empty JSON object.
+        string jsonString = PlayerPrefs.GetString("PBTimes", "{\"highscoreEntryList\":[]}");
+        
+        // Set highscores variable equal to JSON file found at jsonString indicated above.
+        Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
 
-    //    entryTemplate.gameObject.SetActive(false);
+        // If highscores and the highscoreEntryList exist, do things to display entries.
+        if (highscores != null && highscores.highscoreEntryList != null)
+        {
+            // Sort highscore entries by lowest time on top.
+            for (int i = 0; i < highscores.highscoreEntryList.Count; i++)
+            {
+                for (int j = i + 1; j < highscores.highscoreEntryList.Count; j++)
+                {
+                    if (highscores.highscoreEntryList[j].time < highscores.highscoreEntryList[i].time)
+                    {
+                        // Swap by storing i on tmp variable, then setting i equal to j, then setting j to tmp variable.
+                        // For example, if i equaled 5.6, tmp = 5.6. If j equaled 8.7, i now equals 8.7. Finally, since tmp = 5.6, j is now 5.6.
+                        // This leaves you with i = 8.7 and j = 5.6, the opposite of what it was before.
+                        HighscoreEntry tmp = highscores.highscoreEntryList[i];
+                        highscores.highscoreEntryList[i] = highscores.highscoreEntryList[j];
+                        highscores.highscoreEntryList[j] = tmp;
+                    }
+                }
+            }
 
-    //    AddHighscoreEntry(15.687f, "Mesah");
+            highscoreEntryTransformList = new List<Transform>(); // Set value to list that stores entry transforms.
 
-    //    string jsonString = PlayerPrefs.GetString("PBTimes");
-    //    Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
+            // For each entry in the highscoreEntryList, create an entry on the leaderboard based on the parameters put in the function below.
+            foreach (HighscoreEntry highscoreEntry in highscores.highscoreEntryList)
+            {
+                CreateHighscoreEntryTransform(highscoreEntry, entryContainer, highscoreEntryTransformList);
+            }
+        }
+        // If there is an issue with no highscores data, display this message.
+        else
+        {
+            Debug.LogWarning("No highscores found.");
+        }
+    }
 
-    //    // Sort list by lowest time on top.
-    //    for (int i = 0; i < highscores.highscoreEntryList.Count; i++)
-    //    {
-    //        for (int j = i + 1; j < highscores.highscoreEntryList.Count; j++)
-    //        {
-    //            if (highscores.highscoreEntryList[j].time < highscores.highscoreEntryList[i].time)
-    //            {
-    //                // Swap
-    //                HighscoreEntry tmp = highscores.highscoreEntryList[i];
-    //                highscores.highscoreEntryList[i] = highscores.highscoreEntryList[j];
-    //                highscores.highscoreEntryList[j] = tmp;
-    //            }
-    //        }
-    //    }
+    void CreateHighscoreEntryTransform(HighscoreEntry highscoreEntry, Transform container, List<Transform> transformList)
+    {
+        Transform entryTransform = Instantiate(entryTemplate, container);
+        RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
+        entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * transformList.Count);
+        entryTransform.gameObject.SetActive(true);
 
-    //    highscoreEntryTransformList = new List<Transform>();
+        int rank = transformList.Count + 1;
+        string rankString = rank.ToString();
 
-    //    foreach (HighscoreEntry highscoreEntry in highscores.highscoreEntryList)
-    //    {
-    //        CreateHighscoreEntryTransform(highscoreEntry, entryContainer, highscoreEntryTransformList);
-    //    }
-    //}
+        //// Rank, but with suffixes like 1st, 2nd, 3rd, 4th, 5th, and so on.
+        //switch (rank)
+        //{
+        //    default:
+        //        rankString = rank + "TH";
+        //        break;
+        //    case 1:
+        //        rankString = "1ST";
+        //        break;
+        //    case 2:
+        //        rankString = "2ND";
+        //        break;
+        //    case 3:
+        //        rankString = "3RD";
+        //        break;
+        //}
 
-    //void CreateHighscoreEntryTransform(HighscoreEntry highscoreEntry, Transform container, List<Transform> transformList)
-    //{
-    //    Transform entryTransform = Instantiate(entryTemplate, container);
-    //    RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
-    //    entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * transformList.Count);
-    //    entryTransform.gameObject.SetActive(true);
+        entryTransform.Find("PositionTextEntry").GetComponent<TextMeshProUGUI>().text = rankString;
 
-    //    int rank = transformList.Count + 1;
-    //    string rankString = rank.ToString();
+        entryTransform.Find("TimeTextEntry").GetComponent<TextMeshProUGUI>().text = hasFormat ? $"{highscoreEntry.time.ToString(timeFormats[format])}" : $"{highscoreEntry.time}";
 
-    //    //// Rank, but with suffixes like 1st, 2nd, 3rd, 4th, 5th, and so on.
-    //    //switch (rank)
-    //    //{
-    //    //    default:
-    //    //        rankString = rank + "TH";
-    //    //        break;
-    //    //    case 1:
-    //    //        rankString = "1ST";
-    //    //        break;
-    //    //    case 2:
-    //    //        rankString = "2ND";
-    //    //        break;
-    //    //    case 3:
-    //    //        rankString = "3RD";
-    //    //        break;
-    //    //}
+        string name = highscoreEntry.name;
+        entryTransform.Find("NameTextEntry").GetComponent<TextMeshProUGUI>().text = name;
 
-    //    entryTransform.Find("PositionTextEntry").GetComponent<TextMeshProUGUI>().text = rankString;
+        entryTransform.SetParent(entryContainer.transform);
 
-    //    entryTransform.Find("TimeTextEntry").GetComponent<TextMeshProUGUI>().text = highscoreEntry.time.ToString();
-    //    //hasFormat ? $"{PlayerPrefs.GetFloat("PB", timerLimit).ToString(timeFormats[format])}" : $"{PlayerPrefs.GetFloat("PB", timerLimit)}";
+        // Set background visible odds and evens.
+        entryTransform.Find("Background").gameObject.SetActive(rank % 2 == 1);
 
-    //    string name = highscoreEntry.name;
-    //    entryTransform.Find("NameTextEntry").GetComponent<TextMeshProUGUI>().text = name;
+        if (rank == 1)
+        {
+            // Highlight first entry
+            entryTransform.Find("PositionTextEntry").GetComponent<TextMeshProUGUI>().color = Color.green;
+            entryTransform.Find("TimeTextEntry").GetComponent<TextMeshProUGUI>().color = Color.green;
+            entryTransform.Find("NameTextEntry").GetComponent<TextMeshProUGUI>().color = Color.green;
+        }
 
-    //    entryTransform.SetParent(entryContainer.transform);
+        transformList.Add(entryTransform);
+    }
 
-    //    // Set background visible odds and evens.
-    //    entryTransform.Find("Background").gameObject.SetActive(rank % 2 == 1);
+    private void AddHighscoreEntry(float time, string name)
+    {
+        // Load svaed highscores
+        string jsonString = PlayerPrefs.GetString("PBTimes");
+        Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
 
-    //    if (rank == 1)
-    //    {
-    //        // Highlight first entry
-    //        entryTransform.Find("PositionTextEntry").GetComponent<TextMeshProUGUI>().color = Color.green;
-    //        entryTransform.Find("TimeTextEntry").GetComponent<TextMeshProUGUI>().color = Color.green;
-    //        entryTransform.Find("NameTextEntry").GetComponent<TextMeshProUGUI>().color = Color.green;
-    //    }
+        // If highscores is null, create a new instance of it.
+        if (highscores == null)
+        {
+            highscores = new Highscores();
+        }
+        
+        if(highscores.highscoreEntryList == null)
+        {
+            highscores.highscoreEntryList = new List<HighscoreEntry>();
+        }
 
-    //    transformList.Add(entryTransform);
-    //}
+        // Create highscore entry
+        HighscoreEntry highscoreEntry = new HighscoreEntry { time = time, name = name };
 
-    //private void AddHighscoreEntry(float time, string name)
-    //{
-    //    // Create highscore entry
-    //    HighscoreEntry highscoreEntry = new HighscoreEntry { time = time, name = name };
+        // Add new entry to Highscores.
+        highscores.highscoreEntryList.Add(highscoreEntry);
 
-    //    // Load svaed highscores
-    //    string jsonString = PlayerPrefs.GetString("PBTimes");
-    //    Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
+        // Save updated Highscores.
+        string json = JsonUtility.ToJson(highscores);
+        PlayerPrefs.SetString("PBTimes", json);
+        PlayerPrefs.Save();
+    }
 
-    //    // Add new entry to Highscores.
-    //    highscores.highscoreEntryList.Add(highscoreEntry);
+    private class Highscores
+    {
+        public List<HighscoreEntry> highscoreEntryList;
+    }
 
-    //    // Save updated Highscores.
-    //    string json = JsonUtility.ToJson(highscores);
-    //    PlayerPrefs.SetString("PBTime", json);
-    //    PlayerPrefs.Save();
-    //}
-
-    //private class Highscores
-    //{
-    //    public List<HighscoreEntry> highscoreEntryList;
-    //}
-
-    //// This represents a single highscore entry.
-    //[System.Serializable]
-    //private class HighscoreEntry
-    //{
-    //    public float time;
-    //    public string name;
+    // This represents a single highscore entry.
+    [System.Serializable]
+    private class HighscoreEntry
+    {
+        public float time;
+        public string name;
     }
 
     void Start()
@@ -272,6 +298,16 @@ public class GameManager : MonoBehaviour
         {
             timerLimit -= 10;
         }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            leaderboard.SetActive(!leaderboard.activeSelf);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Backslash))
+        {
+            AddHighscoreEntry(currentTime, "Liam");
+        }
     }
 
     // Function to set the text of the timer.
@@ -328,6 +364,8 @@ public class GameManager : MonoBehaviour
         // Set the player's PB to the currentTime and update the PB text.
         if (currentScene == "LiamsWackyWonderland" && (currentTime < PlayerPrefs.GetFloat("PB", timerLimit)))
         {
+            AddHighscoreEntry(currentTime, "Liam");
+
             PlayerPrefs.SetFloat("PB", currentTime);
             UpdatePBText();            
         }
