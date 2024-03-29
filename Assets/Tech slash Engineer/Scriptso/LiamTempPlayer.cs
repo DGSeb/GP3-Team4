@@ -28,18 +28,21 @@ public class LiamTempPlayer : MonoBehaviour
         {
             // If player hits the end object, update PB and go to next scene.
             case "End":
+                gM.AddLeaderboardEntry();
                 gM.CheckPB();
                 gM.ChangeScene("LiamsHighlyPsychoticJoint");
                 break;
 
             // If second ending is hit, update pb and change scene.
             case "End2":
+                gM.AddLeaderboardEntry();
                 gM.CheckPB();
                 gM.ChangeScene("LiamsWackyWonderland");
                 break;
 
             // If tutorial ending is hit, update pb and change scene.
             case "Glitch":
+                gM.AddLeaderboardEntry();
                 gM.CheckPB();
                 gM.ChangeScene("LiamsWackyWonderland");
                 break;
