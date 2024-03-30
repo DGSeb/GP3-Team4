@@ -350,6 +350,12 @@ public class GameManager : MonoBehaviour
         timerText.text = hasFormat ? currentTime.ToString(timeFormats[format]) : currentTime.ToString();
     }
 
+    // Function called when player is hit by an enemy attack that adds time to the clock.
+    public void ChangeTimer(float timeChange)
+    {
+        currentTime += timeChange;
+    }
+
     // Function to change the scene based on the name inputted when function is called.
     public void ChangeScene(string sceneName)
     {
