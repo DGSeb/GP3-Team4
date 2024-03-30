@@ -65,10 +65,28 @@ public class GameManager : MonoBehaviour
     private float templateHeight = 37f; // Y distance between entries.
     private List<Transform> highscoreEntryTransformList; // List of entry locations.
 
-    // Declared here as it fixes null reference error, but list entries do not persist through scene change, so testing other things.
-    //public List<HighscoreEntry> highscoreEntryList;
+    [Header("Enemy UI")]
+    public TextMeshProUGUI enemiesRemainingUI; // Reference to enemies remaining text element.
+    public TextMeshProUGUI enemiesEliminatedUI; // Reference to enemies eliminated text element.
 
-    // Comment
+    // Level enemy count variables
+    private int levelOneEnemyCount = 32;
+    private int levelTwoEnemyCount = 35;
+    private int levelThreeEnemyCount = 35;
+
+    private int enemiesRemaining;
+    private int enemiesEliminated = 0;
+
+    // Number of enemies needed to be eliminated to interact with the end object and win.
+    private int enemiesToWinLevel = 20;
+
+    // Bool that says whether or not enough enemies have been eliminated for the player to be able to exit the level.
+    [HideInInspector] public bool enoughEnemiesEliminated = false;
+
+    // Amount of time taken off the clock per elimination when the number of enemies needed to win the level has been achieved.
+    private float timeSaved = 1.0f;
+
+
     void Awake()
     {
         // Add entries to the dictionary for the timer format.
@@ -255,6 +273,9 @@ public class GameManager : MonoBehaviour
         // At start, ensure the game is not paused bool is false as the game is not paused.
         gameIsPaused = false;
 
+        // Set the start value of the enemy count values. Enemies remaining is the enemy count of the level.
+        // Enemies eliminated is 0 as no eliminations have occurred yet.
+        EnemyCountVariablesStartValues();
     }
 
     void Update()
@@ -507,5 +528,65 @@ public class GameManager : MonoBehaviour
     {
         pauseScreenOneUI.SetActive(false);
         settingsMenuUI.SetActive(true);
-    }    
+    }  
+    
+    // Set the UI for how many enemies are left and have been eliminated.
+    void SetEnemyUI()
+    {
+        enemiesRemainingUI.text = "Enemies Remaining: " + enemiesRemaining;
+        enemiesEliminatedUI.text = "Enemies Eliminated: " + enemiesEliminated;
+    }
+
+    // Function called in the EnemyBehavior script when the enemy runs out of health.
+    // Decreases the enemies remaining by 1, increases the enemies eliminated by 1, and updates the UI.
+    public void ChangeEnemyCountVariables()
+    {
+        enemiesRemaining--;
+        enemiesEliminated++;
+        SetEnemyUI();
+
+        // If the number of required eliminations has been reached, subtract time from the timer, so the player receives a benefit for eliminating more enemies.
+        if (enemiesEliminated >= enemiesToWinLevel)
+        {
+            currentTime -= timeSaved;
+        }
+
+        // If the number of required eliminations has been reached, set the bool that indicates that to true. 
+        // This is a separate if statement as this only needs to occur once, rather than every time a kill is obtained when the number of required eliminations has already been reached.
+        if (enemiesEliminated == enemiesToWinLevel)
+        {
+            enoughEnemiesEliminated = true;
+        }
+    }
+
+    // Sets the beginning values of the enemy count variables.
+    void EnemyCountVariablesStartValues()
+    {
+        // As levels may differ in the number of enemies, set the beginning number of remaining enemies to the number of enemies based on the level the player is in.
+        switch(currentScene)
+        {
+            case "Level1":
+                enemiesRemaining = levelOneEnemyCount;
+                break;
+
+            case "Level2":
+                enemiesRemaining = levelTwoEnemyCount;
+                break;
+
+            case "Level3":
+                enemiesRemaining = levelThreeEnemyCount;
+                break;
+        }
+
+        // The below items always occur no matter the level.
+
+        // Player hasn't made any elims yet, so make sure it's at 0.
+        enemiesEliminated = 0;
+
+        // As no elims, player hasn't eliminated enough enemies to win, so make sure this is false.
+        enoughEnemiesEliminated = false;
+
+        // Set the UI so it displays the number of enemies in the level and 0 for the number of enemies eliminated.
+        SetEnemyUI();
+    }
 }

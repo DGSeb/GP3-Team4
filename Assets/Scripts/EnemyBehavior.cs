@@ -53,7 +53,6 @@ public class EnemyBehavior : MonoBehaviour
 
     void Update()
     {
-
         // If the distance between the player and the enemy is less than the detection range, the player is in range, so set the bool to true.
         if (Vector3.Distance(transform.position, player.position) < detectionRange)
         {
@@ -160,6 +159,9 @@ public class EnemyBehavior : MonoBehaviour
         // If the enemy is at 0 health or, if it somehow occurs, below 0 health, destroy the enemy object.
         if (enemyHealth <= 0)
         {
+            // Change the enemy count variables by decreasing one from the enemy remaining count and increasing the enemies eliminated count by 1.
+            gM.ChangeEnemyCountVariables();
+
             Destroy(this.gameObject);
         }
     }
@@ -185,7 +187,7 @@ public class EnemyBehavior : MonoBehaviour
         color.a = alpha;
 
         // Debug the current alpha value to ensure that it is changing correctly.
-        Debug.Log("Alpha: "+ alpha);
+        //Debug.Log("Alpha: "+ alpha);
 
         // Set the line renderer material's color to the newly found color above.
         lineRenderer.material.color = color;

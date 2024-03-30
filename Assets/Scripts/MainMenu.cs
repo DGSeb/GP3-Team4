@@ -6,6 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    // Ensure that the player can use their mouse cursor on the main menu.
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
     // Function to load scenes.
     void LoadScene(string sceneName)
     {
@@ -16,7 +23,7 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         GameManager.isPlayerActive = true;
-        LoadScene("LiamsWackyWonderland");
+        LoadScene("Level1");
     }
 
     // Function to exit the game when they are super angry.

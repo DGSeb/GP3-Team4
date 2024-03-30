@@ -42,9 +42,12 @@ public class LiamTempPlayer : MonoBehaviour
 
             // If tutorial ending is hit, update pb and change scene.
             case "Glitch":
-                gM.AddLeaderboardEntry();
-                gM.CheckPB();
-                gM.ChangeScene("LiamsWackyWonderland");
+                if (gM.enoughEnemiesEliminated)
+                {
+                    gM.AddLeaderboardEntry();
+                    gM.CheckPB();
+                    gM.ChangeScene("MainMenu");
+                }
                 break;
 
             // If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
