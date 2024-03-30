@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class EnemyBehavior : MonoBehaviour
 {
@@ -12,14 +13,15 @@ public class EnemyBehavior : MonoBehaviour
 
     // Variables related to firing of weapon.
     private float detectionRange = 25f; // How close player needs to be for detection.
+    private float shootDelayTimer; // Timer that uses delay before enemy shoots at player.
     private float shootDelay = 1.8f; // Delay before enemy shoots at player.
 
     // Speed variables
-    private float bulletSpeed = 1.3f;
+    //private float bulletSpeed = 1.3f;
     private float enemyRotationSpeed = 2.5f;
 
     private bool playerInRange; // Bool that tracks if player is in range.
-    private bool canFire = true; // Bool that determine whether or not the enemy can fire.
+    private bool canFire = false; // Bool that determine whether or not the enemy can fire.
 
     private int enemyHealth = 1; // Int for enemy health.
     public int EnemyHealth
@@ -30,17 +32,11 @@ public class EnemyBehavior : MonoBehaviour
 
     // Variables related to the ray shot by the enemy towards the player.
     [Header("Raycast/Shooting")]
-    private float maxRayAlpha = 1f;
-    private float rayAlphaChangeRate = 0.5f; // Rate at which the ray's alpha changes.
-    private float rayAlpha = 0f;
     private float timeAddition = 2.5f; // Time added to the clock when enemy shoots.
 
-    private LineRenderer lineRenderer;
+    private LineRenderer lineRenderer; // Line that displays when enemy is shooting at player.
 
     private bool canAddTime; // Bool that says whether or not time can be added to the timer.
-
-    public GameObject trail;
-    public Transform emitter;
 
     void Start()
     {
@@ -48,11 +44,13 @@ public class EnemyBehavior : MonoBehaviour
         gM = GameObject.Find("GameManager").GetComponent<GameManager>(); // Set game manager script reference.
         lineRenderer = GetComponent<LineRenderer>(); // Refernece to line renderer component.
         SetAlpha(0f);
+        shootDelayTimer = shootDelay;
 
     }
 
     void Update()
     {
+
         // If the distance between the player and the enemy is less than the detection range, the player is in range, so set the bool to true.
         if (Vector3.Distance(transform.position, player.position) < detectionRange)
         {
@@ -72,15 +70,26 @@ public class EnemyBehavior : MonoBehaviour
                 {
                     canAddTime = true;
                     DrawRay(transform.position, hit.point, Color.red);
-                    IncreaseAlpha();
+
+                    shootDelayTimer -= Time.deltaTime;
+
+                    if (shootDelayTimer <= 0)
+                    {
+                        canFire = true;
+                        shootDelayTimer = 0;
+                    }
+
+                    float alpha = 1.0f - (shootDelayTimer / shootDelay);
+                    alpha = Mathf.Clamp01(alpha);
+                    SetAlpha(alpha);
 
                     if (canFire && playerInRange)
                     {
-                        StartCoroutine(FireWeapon());
+                        FireWeapon();
 
                         // Set can fire to false and begin the cooldown before enemy can shoot again.
                         canFire = false;
-                        StartCoroutine(ResetShootDelay());
+                        shootDelayTimer = shootDelay;
                     }
                 }
                 // If the ray hits an obstacle such as a wall before it hits the player, reset the alpha value for the next shot.
@@ -88,7 +97,12 @@ public class EnemyBehavior : MonoBehaviour
                 {
                     canAddTime = false;
                     DrawRay(transform.position, hit.point, Color.red);
-                    SetAlpha(0f);
+
+                    shootDelayTimer = shootDelay;
+
+                    float alpha = 1.0f - (shootDelayTimer / shootDelay);
+                    alpha = Mathf.Clamp01(alpha);
+                    SetAlpha(alpha);
                 }
             }
             else
@@ -97,7 +111,6 @@ public class EnemyBehavior : MonoBehaviour
 
                 Debug.Log("Hit nothing");
                 DrawRay(transform.position, transform.position + directionToPlayer.normalized * detectionRange, Color.red);
-                IncreaseAlpha();
             }
         }
         // If not in range, set playerInRange to false.
@@ -135,27 +148,31 @@ public class EnemyBehavior : MonoBehaviour
 
     void IncreaseAlpha()
     {
-        if (rayAlpha < maxRayAlpha)
-        {
-            rayAlpha += rayAlphaChangeRate * Time.deltaTime;
-            SetAlpha(rayAlpha);
-        }
-        else
-        {
-            rayAlpha = maxRayAlpha;
-        }
+        /*float alpha = 1.0f - (shootDelay / 1.8f);
+        alpha = Mathf.Clamp01(alpha);
+        SetAlpha(alpha);*/
     }
 
     void SetAlpha(float alpha)
     {
-        rayAlpha = alpha;
         Color color = lineRenderer.material.color;
         color.a = alpha;
-        Debug.Log(alpha);
+        Debug.Log("Alpha: "+ alpha);
         lineRenderer.material.color = color;
     }
 
-    // Function for firing of enemy weapon.
+    void FireWeapon()
+    {
+        if (canAddTime && playerInRange)
+        {
+            Debug.Log("Fire");
+            gM.ChangeTimer(timeAddition);
+        }
+
+        canAddTime = false;
+    }
+    
+    /* // Function for firing of enemy weapon.
     IEnumerator FireWeapon()
     {
         Debug.Log("Start wait: " + shootDelay);
@@ -172,7 +189,7 @@ public class EnemyBehavior : MonoBehaviour
 
         // Code for spawning a projectile that heads towards the player.
 
-        /*// Create a sphere called bullet, change its size, and put its position at the position of this enemy.
+        *//*// Create a sphere called bullet, change its size, and put its position at the position of this enemy.
         GameObject bullet = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         bullet.transform.localScale = new Vector3(0.23f, 0.23f, 0.23f);
         bullet.transform.position = this.transform.position;
@@ -188,15 +205,8 @@ public class EnemyBehavior : MonoBehaviour
         bulletRigidbody.velocity = directionToPlayer * bulletSpeed;
 
         // Destroy the bullet after 2 and a half seconds.
-        Destroy(bullet, 2.5f);*/
-    }
-    
-    // Coroutine for allowing the enemy to shoot again. 
-    IEnumerator ResetShootDelay()
-    {
-        yield return new WaitForSeconds(Random.Range(1.2f, 2.6f));
-        canFire = true;
-    }
+        Destroy(bullet, 2.5f);*//*
+    }*/
 
     // Function called in WeaponHandler script that occurs when the enemy is hit by a player's attack.
     public void LoseHealth()
