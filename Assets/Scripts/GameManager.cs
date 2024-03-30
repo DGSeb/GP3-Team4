@@ -447,12 +447,20 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetFloat("PBSmallTutorial", currentTime);
             UpdatePBText();
         }
+        // If currently in level 1 and the current time is lower than the player's PB, the player has a new PB.
+        // Set the player's PB to the currentTime and update the PB text.
+        else if (currentScene == "Level1" && (currentTime < PlayerPrefs.GetFloat("PBLevel1", timerLimit)))
+        {
+            PlayerPrefs.SetFloat("PBLevel1", currentTime);
+            UpdatePBText();
+        }
+
     }
 
     // Update text displaying the player's PB.
     void UpdatePBText()
     {
-        // If in the first scene, set the PB text to the PB for the 1st level.
+        // If in the first scene, set the PB text to the PB for the 1st random level.
         if (currentScene == "LiamsWackyWonderland")
         {
             // If there is a format, use the format. Otherwise, don't use a format for PB text.
@@ -475,6 +483,12 @@ public class GameManager : MonoBehaviour
         {
             // If there is a format, use the format. Otherwise, don't use a format for PB text.
             pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PBSmallTutorial", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PBSmallTutorial", timerLimit)}";
+        }
+        // If in level 1, set the PB text to the PB for level 1.
+        else if (currentScene == "Level1")
+        {
+            // If there is a format, use the format. Otherwise, don't use a format for PB text.
+            pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PBLevel1", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PBLevel1", timerLimit)}";
         }
     }    
 
