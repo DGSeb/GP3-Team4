@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 2159.1555, g: 2263.639, b: 3287.313, a: 1}
+  m_IndirectSpecularColor: {r: 2182.885, g: 2317.6467, b: 3447.2153, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -550,6 +550,12 @@ Transform:
   m_Father: {fileID: 2099856157}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &297620851 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1058080504421466485, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2754951108071343316}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &412552968
 GameObject:
   m_ObjectHideFlags: 0
@@ -1684,7 +1690,10 @@ MonoBehaviour:
   hasLimit: 1
   timerLimit: 35
   hasFormat: 1
-  format: 3
+  format: 4
+  entryContainer: {fileID: 2754951108071343320}
+  entryTemplate: {fileID: 2754951108071343321}
+  leaderboard: {fileID: 297620851}
 --- !u!1 &1390705899
 GameObject:
   m_ObjectHideFlags: 0
@@ -2490,26 +2499,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7518216299242489009, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
-        type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2754951108071343319}
-    - target: {fileID: 7518216299242489009, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
-        type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: AdjustXSensitivity
-      objectReference: {fileID: 0}
-    - target: {fileID: 7524964705408709459, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
-        type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2754951108071343318}
-    - target: {fileID: 7524964705408709459, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
-        type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: AdjustYSensitivity
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2521,27 +2510,15 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2754951108071343316}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2754951108071343318 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8818886691335669698, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+--- !u!224 &2754951108071343320 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4779986321191773086, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
     type: 3}
   m_PrefabInstance: {fileID: 2754951108071343316}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80166830f6a77444e86ef99589ac466b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2754951108071343319 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8803125245356012113, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+--- !u!224 &2754951108071343321 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8121383405947485942, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
     type: 3}
   m_PrefabInstance: {fileID: 2754951108071343316}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80166830f6a77444e86ef99589ac466b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
