@@ -42,6 +42,7 @@ public class LiamTempPlayer : MonoBehaviour
 
             // If tutorial ending is hit, update pb and change scene.
             case "Glitch":
+                // If the player has eliminated enough enemies, add a leaderboard entry, check the player's PB, and change scene.
                 if (gM.enoughEnemiesEliminated)
                 {
                     gM.AddLeaderboardEntry();

@@ -6,10 +6,13 @@ using UnityEngine.UI;
 
 public class Sliders : MonoBehaviour
 {
+    // Reference to the crosshair object that is a part of the player UI.
+    public RectTransform crosshair;
+
     void Start()
     {
         // Set the slider value to what the current sensitivity is.
-        SetSliderValue();        
+        SetSliderValue();
     }
 
     // Function to update the X sensitivity based on the slider position and apply it to player preferences key.
@@ -26,6 +29,13 @@ public class Sliders : MonoBehaviour
         PlayerPrefs.SetFloat("YSensitivity", PlayerCam.sensY);
     }
 
+    // Function that updates the size of the crosshair based on the slider position and applies it to the player prefs key.
+    public void AdjustCrosshairSize(float newCrosshairSize)
+    {
+        crosshair.transform.localScale = new Vector3(newCrosshairSize, newCrosshairSize, crosshair.transform.localScale.z);
+        PlayerPrefs.SetFloat("CrosshairSize", newCrosshairSize);
+    }
+
     // Function to apply the value of the sensitivity to the slider so that the slider shows the correct position between scenes.
     void SetSliderValue()
     {
@@ -39,6 +49,12 @@ public class Sliders : MonoBehaviour
         else if (this.gameObject.name == "YSensitivitySlider")
         {
             this.GameObject().GetComponent<Slider>().value = PlayerPrefs.GetFloat("YSensitivity", 400f);
+        }
+
+        // If crosshair size slider, set its value to the saved data in the player prefs key. If no value, set default of 0.15.
+        else if (this.gameObject.name == "CrosshairSizeSlider")
+        {
+            this.GameObject().GetComponent<Slider>().value = PlayerPrefs.GetFloat("CrosshairSize", 0.15f);
         }
     }
 }

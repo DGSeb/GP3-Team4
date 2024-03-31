@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 2182.885, g: 2317.6467, b: 3447.2153, a: 1}
+  m_IndirectSpecularColor: {r: 2158.346, g: 2263.3967, b: 3289.192, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1694,6 +1694,11 @@ MonoBehaviour:
   entryContainer: {fileID: 2754951108071343320}
   entryTemplate: {fileID: 2754951108071343321}
   leaderboard: {fileID: 297620851}
+  enemiesRemainingUI: {fileID: 2754951108071343319}
+  enemiesEliminatedUI: {fileID: 2754951108071343318}
+  enoughEnemiesEliminated: 0
+  howToPlayScreen: {fileID: 0}
+  crosshair: {fileID: 0}
 --- !u!1 &1390705899
 GameObject:
   m_ObjectHideFlags: 0
@@ -2510,6 +2515,30 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2754951108071343316}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2754951108071343318 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6984416948342023213, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2754951108071343316}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2754951108071343319 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5186384196814549230, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2754951108071343316}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &2754951108071343320 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4779986321191773086, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,

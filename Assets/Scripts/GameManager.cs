@@ -73,22 +73,49 @@ public class GameManager : MonoBehaviour
     private int levelOneEnemyCount = 32;
     private int levelTwoEnemyCount = 35;
     private int levelThreeEnemyCount = 35;
+    private int oldTutorialEnemyCount = 18;
+    private int tutorialEnemyCount = 18;
 
     private int enemiesRemaining;
     private int enemiesEliminated = 0;
 
     // Number of enemies needed to be eliminated to interact with the end object and win.
-    private int enemiesToWinLevel = 20;
+    private int enemiesToWinLevel;
+    private int enemiesToWinLevel1 = 20;
+    private int enemiesToWinLevel2 = 25;
+    private int enemiesToWinLevel3 = 25;
+    private int enemiesToWinOldTutorial = 10;
+    private int enemiesToWinTutorial = 10;
+
 
     // Bool that says whether or not enough enemies have been eliminated for the player to be able to exit the level.
     [HideInInspector] public bool enoughEnemiesEliminated = false;
 
     // Amount of time taken off the clock per elimination when the number of enemies needed to win the level has been achieved.
-    private float timeSaved = 1.0f;
+    private float timeSaved = 1.5f;
 
+    // Bool that determines whether the how to play screen displays before levels.
+    public static bool displayHowToPlayScreen = true;
+    public GameObject howToPlayScreen;
+
+    // Reference to the crosshair object that is a part of the player UI.
+    private RectTransform crosshair;
 
     void Awake()
     {
+        if (displayHowToPlayScreen)
+        {
+            //howToPlayScreen.SetActive(true);
+        }
+
+        crosshair = GameObject.Find("Crosshair").GetComponent<RectTransform>(); // Set reference to crosshair.
+
+        // Create a variable that will store the size of the crosshair that is obtained from the player prefs key.
+        float crosshairSize = PlayerPrefs.GetFloat("CrosshairSize", 0.15f);
+
+        // Set the x and y scale of the crosshair to the player prefs saved data.
+        crosshair.transform.localScale = new Vector3(crosshairSize, crosshairSize, crosshair.transform.localScale.z);
+
         // Add entries to the dictionary for the timer format.
         timeFormats.Add(TimerFormats.None, "0.000000");
         timeFormats.Add(TimerFormats.Whole, "0");
@@ -577,19 +604,34 @@ public class GameManager : MonoBehaviour
     void EnemyCountVariablesStartValues()
     {
         // As levels may differ in the number of enemies, set the beginning number of remaining enemies to the number of enemies based on the level the player is in.
+        // Also set the number of enemies needed to win the level as this might change for each level.
         switch(currentScene)
         {
             case "Level1":
                 enemiesRemaining = levelOneEnemyCount;
+                enemiesToWinLevel = enemiesToWinLevel1;
                 break;
 
             case "Level2":
                 enemiesRemaining = levelTwoEnemyCount;
+                enemiesToWinLevel = enemiesToWinLevel2;
                 break;
 
             case "Level3":
                 enemiesRemaining = levelThreeEnemyCount;
+                enemiesToWinLevel = enemiesToWinLevel3;
                 break;
+
+            case "Tutorial (Small Version)":
+                enemiesRemaining = oldTutorialEnemyCount;
+                enemiesToWinLevel = enemiesToWinOldTutorial;
+                break;
+
+            case "AveryScene":
+                enemiesRemaining = tutorialEnemyCount;
+                enemiesToWinLevel = enemiesToWinTutorial;
+                break;
+        
         }
 
         // The below items always occur no matter the level.

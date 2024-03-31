@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 2739.6292, g: 2737.8557, b: 3825.3286, a: 1}
+  m_IndirectSpecularColor: {r: 2736.2092, g: 2766.6213, b: 3959.7817, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1668,11 +1668,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1098243601}
-    - target: {fileID: 3729736463087100643, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemiesEliminatedText
-      objectReference: {fileID: 0}
     - target: {fileID: 4741529963497335175, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1787,11 +1782,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6984416948342023213, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
-        type: 3}
-      propertyPath: m_text
-      value: 'Enemies Eliminated: '
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12350,6 +12340,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2865683362732016885, guid: 66f62df211158c2439c0ec0fca6a1364,
     type: 3}
   m_PrefabInstance: {fileID: 466423678}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &466521413 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7098134688303844328, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 58804664}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &468397900 stripped
 Transform:
@@ -26039,6 +26035,8 @@ MonoBehaviour:
   enemiesRemainingUI: {fileID: 978243004}
   enemiesEliminatedUI: {fileID: 978243003}
   enoughEnemiesEliminated: 0
+  howToPlayScreen: {fileID: 0}
+  crosshair: {fileID: 466521413}
 --- !u!4 &1098243602
 Transform:
   m_ObjectHideFlags: 0
