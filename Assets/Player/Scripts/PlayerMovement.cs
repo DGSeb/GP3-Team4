@@ -45,6 +45,11 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode sprintKey = KeyCode.LeftShift;
     public KeyCode crouchKey = KeyCode.LeftControl;
 
+    // Controller binds.
+    private KeyCode jumpController = KeyCode.JoystickButton0;
+    private KeyCode sprintController = KeyCode.JoystickButton8;
+    private KeyCode crouchController = KeyCode.JoystickButton9;
+
     [Header("Slope")]
     public float maxSlopeAngle;
     private RaycastHit slopeHit;
@@ -103,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Mode - Crouching
-        else if (Input.GetKey(crouchKey))
+        else if (Input.GetKey(crouchKey) || Input.GetKey(crouchController))
         {
             state = MovementState.crouching;
             desiredMoveSpeed = crouchSpeed;
@@ -111,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Mode - Sprinting
-        else if (grounded && Input.GetKey(sprintKey))
+        else if (grounded && (Input.GetKey(sprintKey) || Input.GetKey(sprintController)))
         {
             state = MovementState.sprinting;
             desiredMoveSpeed = sprintSpeed;
@@ -190,7 +195,7 @@ public class PlayerMovement : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
         // when to jump
-        if(Input.GetKeyDown(jumpKey) && readyToJump && jumpsRemaining > 0)
+        if((Input.GetKeyDown(jumpKey) || Input.GetKeyDown(jumpController)) && readyToJump && jumpsRemaining > 0)
         {
             readyToJump = false;
             Jump();
@@ -198,8 +203,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // when to crouch
-        if (Input.GetKeyDown(crouchKey) && GameManager.isPlayerActive)
+        if ((Input.GetKeyDown(crouchKey) || Input.GetKeyDown(crouchController)) && GameManager.isPlayerActive)
         {
+            Debug.Log("Crouch");
             transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
             if (grounded)
             {
@@ -207,8 +213,10 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyUp(crouchKey) && GameManager.isPlayerActive)
+        if ((Input.GetKeyDown(crouchKey) || Input.GetKeyDown(crouchController)) && GameManager.isPlayerActive)
         {
+            Debug.Log("Crouch2");
+
             transform.localScale = new Vector3(transform.localScale.x, startYscale, transform.localScale.z);
         }
     }

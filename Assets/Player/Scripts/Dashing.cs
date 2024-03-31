@@ -33,6 +33,7 @@ public class Dashing : MonoBehaviour
 
     [Header("Input")]
     public KeyCode dashKey = KeyCode.E;
+    private KeyCode dashController = KeyCode.JoystickButton4;
 
     private void Start()
     {
@@ -42,7 +43,7 @@ public class Dashing : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyUp(dashKey))
+        if (Input.GetKeyUp(dashKey) || Input.GetKeyUp(dashController))
         {
             Dash();
         }

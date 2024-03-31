@@ -336,7 +336,7 @@ public class GameManager : MonoBehaviour
     void CheckInput()
     {
         // If escape key is pressed, check if the game is paused.
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7))
         {
             // If paused, resume the game.
             if (gameIsPaused)
@@ -388,6 +388,8 @@ public class GameManager : MonoBehaviour
             AddHighscoreEntry(currentTime, "Liam");
             Debug.Log("Entry added");
         }
+
+        CheckControllerInput();
     }
 
     // Function to set the text of the timer.
@@ -644,5 +646,99 @@ public class GameManager : MonoBehaviour
 
         // Set the UI so it displays the number of enemies in the level and 0 for the number of enemies eliminated.
         SetEnemyUI();
+    }
+
+    void CheckControllerInput()
+    {
+        /*if (Input.GetKeyDown(KeyCode.JoystickButton0))
+        {
+            // A button
+            Debug.Log("0 is A button");
+        }
+        else if (Input.GetKeyDown(KeyCode.JoystickButton1))
+        {
+            // B button
+            Debug.Log("1 is B button");
+        }
+        else if (Input.GetKeyDown(KeyCode.JoystickButton2))
+        {
+            // X button
+            Debug.Log("2 is X button");
+        }
+        else if (Input.GetKeyDown(KeyCode.JoystickButton3))
+        {
+            // Y button
+            Debug.Log("3 is Y button");
+        }
+        else if (Input.GetKeyDown(KeyCode.JoystickButton4))
+        {
+            // Left bumper (LB)
+            Debug.Log("4 is left bumper (LB)");
+        }
+        else if (Input.GetKeyDown(KeyCode.JoystickButton5))
+        {
+            // Right bumper (RB)
+            Debug.Log("5 is right bumper (RB)");
+        }
+        else if (Input.GetKeyDown(KeyCode.JoystickButton6))
+        {
+            // Select button (two squares)
+            Debug.Log("6 is the select button (two squares)");
+        }
+        else if (Input.GetKeyDown(KeyCode.JoystickButton7))
+        {
+            // Pause button with the three horizontal parallel lines (hamburger button or start button).
+            Debug.Log("7 is start button/pause button/hamburger button");
+        }
+        else if (Input.GetKeyDown(KeyCode.JoystickButton8))
+        {
+            // Clicking left stick.
+            Debug.Log("8 is click left stick");
+        }
+        else if (Input.GetKeyDown(KeyCode.JoystickButton9))
+        {
+            // Clicking right stick.
+            Debug.Log("9 is click right stick");
+        }
+        else if (Input.GetKeyDown(KeyCode.JoystickButton10))
+        {
+            Debug.Log("10");
+        }
+        else if (Input.GetKeyDown(KeyCode.JoystickButton11))
+        {
+            Debug.Log("11");
+        }
+        else if (Input.GetKeyDown(KeyCode.JoystickButton12))
+        {
+            Debug.Log("12");
+        }
+        else if (Input.GetKeyDown(KeyCode.JoystickButton13))
+        {
+            Debug.Log("13");
+        }
+        else if (Input.GetKeyDown(KeyCode.JoystickButton14))
+        {
+            Debug.Log("14");
+        }
+        else if (Input.GetKeyDown(KeyCode.JoystickButton15))
+        {
+            Debug.Log("15");
+        }
+        else if (Input.GetKeyDown(KeyCode.JoystickButton16))
+        {
+            Debug.Log("16");
+        }
+        else if (Input.GetKeyDown(KeyCode.JoystickButton17))
+        {
+            Debug.Log("17");
+        }
+        else if (Input.GetKeyDown(KeyCode.JoystickButton18))
+        {
+            Debug.Log("18");
+        }
+        else if (Input.GetKeyDown(KeyCode.JoystickButton19))
+        {
+            Debug.Log("19");
+        }*/
     }
 }

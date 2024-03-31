@@ -7,6 +7,7 @@ public class WeaponHandler : MonoBehaviour
 {
     [Header("Keybinds")]
     public KeyCode shootKey = KeyCode.Mouse0;
+    public KeyCode shootController = KeyCode.JoystickButton5;
 
     [Header("References")]
     public GameObject Effect;
@@ -28,8 +29,8 @@ public class WeaponHandler : MonoBehaviour
     private bool canFire = true;
 
     private void Update()
-    {
-        if (Input.GetKey(shootKey) && canFire && GameManager.isPlayerActive)
+    {        
+        if ((Input.GetKey(shootKey) || Input.GetKey(shootController)) && canFire && GameManager.isPlayerActive)
         {
             canFire = false;
             StartCoroutine(Shoot(cooldown));

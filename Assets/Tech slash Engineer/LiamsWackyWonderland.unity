@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 2158.346, g: 2263.3967, b: 3289.192, a: 1}
+  m_IndirectSpecularColor: {r: 2158.5608, g: 2263.8967, b: 3290.2622, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1698,7 +1698,6 @@ MonoBehaviour:
   enemiesEliminatedUI: {fileID: 2754951108071343318}
   enoughEnemiesEliminated: 0
   howToPlayScreen: {fileID: 0}
-  crosshair: {fileID: 0}
 --- !u!1 &1390705899
 GameObject:
   m_ObjectHideFlags: 0
@@ -2082,11 +2081,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerPrefab
       objectReference: {fileID: 0}
-    - target: {fileID: 7738953370247331686, guid: 0df14ca73a9074947a0f137360c4cc8e,
-        type: 3}
-      propertyPath: enemyGroups.Array.size
-      value: 4
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2399,6 +2393,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1332842027}
+    - target: {fileID: 6300239129109436133, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6558359569830117989, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
         type: 3}
       propertyPath: m_Pivot.x

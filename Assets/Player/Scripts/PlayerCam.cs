@@ -46,8 +46,12 @@ public class PlayerCam : MonoBehaviour
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
 
-        yRotation += mouseX;
-        xRotation -= mouseY;
+        // Combine mouse and controller input into one variable, so either can be used.
+        float inputX = mouseX + Input.GetAxisRaw("Controller X");
+        float inputY = mouseY + Input.GetAxisRaw("Controller Y");
+
+        yRotation += inputX;
+        xRotation -= inputY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         // Rotate cam and orientation
