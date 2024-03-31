@@ -15,18 +15,32 @@ public class Sliders : MonoBehaviour
         SetSliderValue();
     }
 
-    // Function to update the X sensitivity based on the slider position and apply it to player preferences key.
-    public void AdjustXSensitivity(float newSensX)
+    // Function to update the mouse X sensitivity based on the slider position and apply it to player preferences key.
+    public void MouseXSensitivityAdjustment(float newSensX)
     {
-        PlayerCam.sensX = newSensX;
-        PlayerPrefs.SetFloat("XSensitivity", PlayerCam.sensX);
+        PlayerCam.sensMouseX = newSensX;
+        PlayerPrefs.SetFloat("MouseXSensitivity", PlayerCam.sensMouseX);
     }
 
-    // Function to update the Y sensitivity based on the slider position and apply it to player preferences key.
-    public void AdjustYSensitivity(float newSensY)
+    // Function to update the mouse Y sensitivity based on the slider position and apply it to player preferences key.
+    public void MouseYSensitivityAdjustment(float newSensY)
     {
-        PlayerCam.sensY = newSensY;
-        PlayerPrefs.SetFloat("YSensitivity", PlayerCam.sensY);
+        PlayerCam.sensMouseY = newSensY;
+        PlayerPrefs.SetFloat("MouseYSensitivity", PlayerCam.sensMouseY);
+    }
+
+    // Function to update the controller X sensitivity based on the slider position and apply it to player preferences key.
+    public void ControllerXSensitivityAdjustment(float newSensX)
+    {
+        PlayerCam.sensControllerX = newSensX;
+        PlayerPrefs.SetFloat("ControllerXSensitivity", PlayerCam.sensControllerX);
+    }
+
+    // Function to update the controller Y sensitivity based on the slider position and apply it to player preferences key.
+    public void ControllerYSensitivityAdjustment(float newSensY)
+    {
+        PlayerCam.sensControllerY = newSensY;
+        PlayerPrefs.SetFloat("ControllerYSensitivity", PlayerCam.sensControllerY);
     }
 
     // Function that updates the size of the crosshair based on the slider position and applies it to the player prefs key.
@@ -39,16 +53,28 @@ public class Sliders : MonoBehaviour
     // Function to apply the value of the sensitivity to the slider so that the slider shows the correct position between scenes.
     void SetSliderValue()
     {
-        // If X Sensitivity slider, set its value to the player prefs key that stores X sensitivity. If no value, set it to 400.
-        if (this.gameObject.name == "XSensitivitySlider")
+        // If mouse X Sensitivity slider, set its value to the player prefs key that stores mouse X sensitivity. If no value, set it to 400.
+        if (this.gameObject.name == "MouseXSensitivitySlider")
         {
-            this.GameObject().GetComponent<Slider>().value = PlayerPrefs.GetFloat("XSensitivity", 400f);
+            this.GameObject().GetComponent<Slider>().value = PlayerPrefs.GetFloat("MouseXSensitivity", 400f);
         }
 
-        // If Y Sensitivity slider, set its value to the player prefs key that stores Y sensitivity. If no value, set it to 400.
-        else if (this.gameObject.name == "YSensitivitySlider")
+        // If mouse Y Sensitivity slider, set its value to the player prefs key that stores mouse Y sensitivity. If no value, set it to 400.
+        else if (this.gameObject.name == "MouseYSensitivitySlider")
         {
-            this.GameObject().GetComponent<Slider>().value = PlayerPrefs.GetFloat("YSensitivity", 400f);
+            this.GameObject().GetComponent<Slider>().value = PlayerPrefs.GetFloat("MouseYSensitivity", 400f);
+        }
+
+        // If controller X Sensitivity slider, set its value to the player prefs key that stores controller X sensitivity. If no value, set it to 225.
+        if (this.gameObject.name == "ControllerXSensitivitySlider")
+        {
+            this.GameObject().GetComponent<Slider>().value = PlayerPrefs.GetFloat("ControllerXSensitivity", 225f);
+        }
+
+        // If controller Y Sensitivity slider, set its value to the player prefs key that stores controller Y sensitivity. If no value, set it to 100.
+        else if (this.gameObject.name == "ControllerYSensitivitySlider")
+        {
+            this.GameObject().GetComponent<Slider>().value = PlayerPrefs.GetFloat("ControllerYSensitivity", 100f);
         }
 
         // If crosshair size slider, set its value to the saved data in the player prefs key. If no value, set default of 0.15.

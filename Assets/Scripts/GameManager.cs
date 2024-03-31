@@ -389,7 +389,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Entry added");
         }
 
-        CheckControllerInput();
+        //CheckControllerInput();
     }
 
     // Function to set the text of the timer.
@@ -427,10 +427,12 @@ public class GameManager : MonoBehaviour
         timeLimitReachedText.SetActive(true);
         Time.timeScale = 0f;
         yield return new WaitForSecondsRealtime(1.2f);
-        ReloadScene();
+        ResultScreen.lastScene = currentScene;
         Time.timeScale = 1.0f;
+        ChangeScene("ResultsScreen");
+        /*
         isPlayerActive = true;
-        UpdatePBText();
+        UpdatePBText();*/
     }
 
     // Function to check the fastest time the player beat the level (PB (Personal Best)).
@@ -648,9 +650,10 @@ public class GameManager : MonoBehaviour
         SetEnemyUI();
     }
 
-    void CheckControllerInput()
+    // Function that checks which button on the controller is pressed.
+    /*void CheckControllerInput()
     {
-        /*if (Input.GetKeyDown(KeyCode.JoystickButton0))
+        if (Input.GetKeyDown(KeyCode.JoystickButton0))
         {
             // A button
             Debug.Log("0 is A button");
@@ -739,6 +742,6 @@ public class GameManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.JoystickButton19))
         {
             Debug.Log("19");
-        }*/
-    }
+        }
+    }*/
 }
