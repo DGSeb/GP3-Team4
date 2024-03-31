@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,6 +17,12 @@ public class ResultScreen : MonoBehaviour
     public GameObject lostUI;
     public GameObject wonUI;
 
+    // Text element that will display the player's time on their last run and their PB for that level.
+    public TextMeshProUGUI runTimeSecondsText;
+    public TextMeshProUGUI pBTimeText;
+
+    public static string runTime;
+    public static string pBTime;
     void Start()
     {
         // If the player lost, ensure won UI is off and turn on the lost UI.
@@ -29,6 +36,10 @@ public class ResultScreen : MonoBehaviour
         {
             lostUI.SetActive(false);
             wonUI.SetActive(true);
+
+            // Set the run time and pb time texts to the variable values that correspond with them.
+            runTimeSecondsText.text = runTime;
+            pBTimeText.text = pBTime;
         }
 
         // Ensure that the player can use their mouse cursor.

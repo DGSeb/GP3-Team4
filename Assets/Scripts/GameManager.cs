@@ -291,6 +291,9 @@ public class GameManager : MonoBehaviour
         // Make sure this occurs before running UpdatePBText so it knows which scene it is in.
         currentScene = SceneManager.GetActiveScene().name;
 
+        // Set the scene that the result screen play again button will load.
+        ResultScreen.lastScene = currentScene;
+
         // Run the UpdatePBText that updates the text displaying the player's PB.
         UpdatePBText();
 
@@ -421,18 +424,16 @@ public class GameManager : MonoBehaviour
     // When time limit is reached, run coroutine that resets game.
     IEnumerator TimeLimitReached()
     {
-        // Set bool saying player isn't active to false, turn on text telling player the time limit is reached, stop time, wait about a second,
-        // change scene to the one the player is currently in, resume time, set player active bool back to true, and update text displaying player's PB.
+        // Set bool saying player isn't active to false, turn on text telling player the time limit is reached, stop time, and wait about a second.
+        // The player has lost, so set that bool to true and make sure won is false. Resume time and changing scenes to the results screen.
         isPlayerActive = false;
         timeLimitReachedText.SetActive(true);
         Time.timeScale = 0f;
         yield return new WaitForSecondsRealtime(1.2f);
-        ResultScreen.lastScene = currentScene;
+        ResultScreen.lost = true;
+        ResultScreen.won = false;
         Time.timeScale = 1.0f;
         ChangeScene("ResultsScreen");
-        /*
-        isPlayerActive = true;
-        UpdatePBText();*/
     }
 
     // Function to check the fastest time the player beat the level (PB (Personal Best)).
@@ -508,20 +509,35 @@ public class GameManager : MonoBehaviour
         {
             // If there is a format, use the format. Otherwise, don't use a format for PB text.
             pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PBTutorial", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PBTutorial", timerLimit)}";
+
+            // Set the text for what the player's PB will be displayed as on the results screen.
+            ResultScreen.pBTime = hasFormat ? PlayerPrefs.GetFloat("PBTutorial", timerLimit).ToString(timeFormats[format]) : PlayerPrefs.GetFloat("PBTutorial", timerLimit).ToString();
         }
         // If in the small/old tutorial scene, set the PB text to the PB for the small/old tutorial level.
         else if (currentScene == "Tutorial (Small Version)")
         {
             // If there is a format, use the format. Otherwise, don't use a format for PB text.
             pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PBSmallTutorial", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PBSmallTutorial", timerLimit)}";
+
+            // Set the text for what the player's PB will be displayed as on the results screen.
+            ResultScreen.pBTime = hasFormat ? PlayerPrefs.GetFloat("PBSmallTutorial", timerLimit).ToString(timeFormats[format]) : PlayerPrefs.GetFloat("PBSmallTutorial", timerLimit).ToString();
         }
         // If in level 1, set the PB text to the PB for level 1.
         else if (currentScene == "Level1")
         {
             // If there is a format, use the format. Otherwise, don't use a format for PB text.
             pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PBLevel1", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PBLevel1", timerLimit)}";
+
+            // Set the text for what the player's PB will be displayed as on the results screen.
+            ResultScreen.pBTime = hasFormat ? PlayerPrefs.GetFloat("PBLevel1", timerLimit).ToString(timeFormats[format]) : PlayerPrefs.GetFloat("PBLevel", timerLimit).ToString();
         }
-    }    
+    }  
+    
+    // Function that sets the run time on the results screen
+    public void SetRunTime()
+    {
+        ResultScreen.runTime = hasFormat ? currentTime.ToString(timeFormats[format]) : currentTime.ToString();
+    }
 
     // Function to resume the game.
     public void Resume()
@@ -591,7 +607,7 @@ public class GameManager : MonoBehaviour
         SetEnemyUI();
 
         // If the number of required eliminations has been reached, subtract time from the timer, so the player receives a benefit for eliminating more enemies.
-        if (enemiesEliminated >= enemiesToWinLevel)
+        if (enemiesEliminated > enemiesToWinLevel)
         {
             currentTime -= timeSaved;
         }

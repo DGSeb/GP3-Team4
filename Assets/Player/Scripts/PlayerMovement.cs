@@ -205,7 +205,6 @@ public class PlayerMovement : MonoBehaviour
         // when to crouch
         if ((Input.GetKeyDown(crouchKey) || Input.GetKeyDown(crouchController)) && GameManager.isPlayerActive)
         {
-            Debug.Log("Crouch");
             transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
             if (grounded)
             {
@@ -215,8 +214,6 @@ public class PlayerMovement : MonoBehaviour
 
         if ((Input.GetKeyUp(crouchKey) || Input.GetKeyUp(crouchController)) && GameManager.isPlayerActive)
         {
-            Debug.Log("Crouch2");
-
             transform.localScale = new Vector3(transform.localScale.x, startYscale, transform.localScale.z);
         }
     }
