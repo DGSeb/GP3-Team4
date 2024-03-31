@@ -213,7 +213,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if ((Input.GetKeyDown(crouchKey) || Input.GetKeyDown(crouchController)) && GameManager.isPlayerActive)
+        if ((Input.GetKeyUp(crouchKey) || Input.GetKeyUp(crouchController)) && GameManager.isPlayerActive)
         {
             Debug.Log("Crouch2");
 
