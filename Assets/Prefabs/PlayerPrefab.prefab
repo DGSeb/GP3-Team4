@@ -108,7 +108,7 @@ Transform:
   - {fileID: 7381983025445258527}
   - {fileID: 7138508912072643059}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4644995246992761061
 GameObject:
@@ -2977,7 +2977,7 @@ MonoBehaviour:
   weaponTransform: {fileID: 6588409297430346810}
   player: {fileID: 4644995246992761061}
   rb: {fileID: 3613266812328952105}
-  swayAmount: 0.01
+  swayAmount: 0.001
   maxSwayAmount: 0.1
   swaySmooth: 5
   swayCurve:
