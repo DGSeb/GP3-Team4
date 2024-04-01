@@ -78,6 +78,9 @@ public class PlayerMovement : MonoBehaviour
 
     public bool dashing;
 
+    [Header("Sound Effects")]
+    [SerializeField] private AudioSource dashSound;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -102,6 +105,12 @@ public class PlayerMovement : MonoBehaviour
         // Mode - Dashing
         if (dashing)
         {
+            // If dash sound isn't already playing, play it.
+            if (!dashSound.isPlaying)
+            {
+                dashSound.Play();
+            }
+
             state = MovementState.dashing;
             desiredMoveSpeed = dashSpeed;
             speedChangeFactor = dashSpeedChangeFactor;

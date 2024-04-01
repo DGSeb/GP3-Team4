@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using System;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
@@ -100,6 +101,20 @@ public class GameManager : MonoBehaviour
 
     // Reference to the crosshair object that is a part of the player UI.
     private RectTransform crosshair;
+
+    // Variables related to allowing the menus to be navigated with keyboard and controller.
+    [Header("Pause Menu Navigation")]
+    public GameObject pauseFirstButton;
+    public GameObject settingsFirstButton;
+    public GameObject settingsClosedButton;
+
+    // Scrollbar movement on controller
+    [SerializeField] private Scrollbar scrollbar;
+    private float scrollSpeed = 0.0035f;
+
+    [Header("Audio Sources")]
+    [SerializeField] private AudioSource enemyDeathSound;
+    [SerializeField] private AudioSource playerLoseSound;
 
     void Awake()
     {
@@ -353,9 +368,15 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        // If B button is pressed and player is in the pause menu, resume the game.
+        if (Input.GetKeyDown(KeyCode.JoystickButton1) && gameIsPaused)
+        {
+            Resume();
+        }    
+
         // If the R key is pressed, restart the player in the scene they are currently in.
         // This is very helpful if you want to restart a run or if you fall off into the abyss.
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.JoystickButton6))
         {
             ReloadScene();
         }
@@ -393,6 +414,28 @@ public class GameManager : MonoBehaviour
         }
 
         //CheckControllerInput();
+
+        // If the settings menu is active, check for controller input to scroll the scroll bar.
+        if (settingsMenuUI.activeSelf)
+        {
+            // Use this for right joystick
+            float controllerInputRight = Input.GetAxis("Controller Y");
+
+            // use this for left joystick.
+            float controllerInputLeft = Input.GetAxis("Vertical");
+
+            // Combine both left and right joystick input so the player can use either on the settings menu.
+            float controllerInput = controllerInputLeft + controllerInputRight;
+
+            // Adjust the speed at which the scorllbar scrolls with input. Use this value for vertical axis.
+            scrollSpeed = 0.0068f;
+
+            // Multiply the controllerInput with the scroll speed and set the scrollbar's value to that.
+            scrollbar.value += controllerInput * scrollSpeed;
+
+            // Clamp the scrollbar's value so it can't go above 1 or below 0.
+            scrollbar.value = Mathf.Clamp01(scrollbar.value);
+        }
     }
 
     // Function to set the text of the timer.
@@ -426,6 +469,13 @@ public class GameManager : MonoBehaviour
     {
         // Set bool saying player isn't active to false, turn on text telling player the time limit is reached, stop time, and wait about a second.
         // The player has lost, so set that bool to true and make sure won is false. Resume time and changing scenes to the results screen.
+
+        // if it isn't already playing, play it
+        if (!playerLoseSound.isPlaying)
+        {
+            playerLoseSound.Play();
+        }
+
         isPlayerActive = false;
         timeLimitReachedText.SetActive(true);
         Time.timeScale = 0f;
@@ -486,7 +536,6 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetFloat("PBLevel1", currentTime);
             UpdatePBText();
         }
-
     }
 
     // Update text displaying the player's PB.
@@ -565,6 +614,10 @@ public class GameManager : MonoBehaviour
         pauseMenuUI.SetActive(true);
         pauseScreenOneUI.SetActive(true);
         gameIsPaused = true;
+
+        // Clear any selected object in the event system and set a new selected object.
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(pauseFirstButton);
     }
 
     // Function to load the menu scene.
@@ -589,7 +642,22 @@ public class GameManager : MonoBehaviour
     {
         pauseScreenOneUI.SetActive(false);
         settingsMenuUI.SetActive(true);
+
+        // Clear any selected object in the event system and set a new selected object.
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(settingsFirstButton);
     }  
+
+    // Function to exit settings menu and return to pause menu.
+    public void ExitSettings()
+    {
+        settingsMenuUI.SetActive(false);
+        pauseScreenOneUI.SetActive(true);
+
+        // Clear any selected object in the event system and set a new selected object.
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(settingsClosedButton);
+    }
     
     // Set the UI for how many enemies are left and have been eliminated.
     void SetEnemyUI()
@@ -664,6 +732,16 @@ public class GameManager : MonoBehaviour
 
         // Set the UI so it displays the number of enemies in the level and 0 for the number of enemies eliminated.
         SetEnemyUI();
+    }
+
+    // Function to play the enemy's death sound as if it's played in the enemy scipt, the enemy object no longer exists, so the sound only plays for a split second.
+    public void PlayEnemyDeathSound()
+    {
+        // If sound isn't playing, play it.
+        if (!enemyDeathSound.isPlaying)
+        {
+            enemyDeathSound.Play();
+        }
     }
 
     // Function that checks which button on the controller is pressed.
