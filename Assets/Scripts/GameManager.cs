@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using System;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
@@ -100,6 +101,16 @@ public class GameManager : MonoBehaviour
 
     // Reference to the crosshair object that is a part of the player UI.
     private RectTransform crosshair;
+
+    // Variables related to allowing the menus to be navigated with keyboard and controller.
+    [Header("Pause Menu Navigation")]
+    public GameObject pauseFirstButton;
+    public GameObject settingsFirstButton;
+    public GameObject settingsClosedButton;
+
+    // Scrollbar movement on controller
+    [SerializeField] private Scrollbar scrollbar;
+    private float scrollSpeed = 0.0035f;
 
     void Awake()
     {
@@ -393,6 +404,25 @@ public class GameManager : MonoBehaviour
         }
 
         //CheckControllerInput();
+
+        // If the settings menu is active, check for controller input to scroll the scroll bar.
+        if (settingsMenuUI.activeSelf)
+        {
+            // Use this for right joystick
+            //float controllerInput = Input.GetAxis("Controller Y");
+
+            // use this for left joystick.
+            float controllerInput = Input.GetAxis("Vertical");
+
+            // Adjust the speed at which the scorllbar scrolls with input. Use this value for vertical axis.
+            scrollSpeed = 0.0068f;
+
+            // Multiply the controllerInput with the scroll speed and set the scrollbar's value to that.
+            scrollbar.value += controllerInput * scrollSpeed;
+
+            // Clamp the scrollbar's value so it can't go above 1 or below 0.
+            scrollbar.value = Mathf.Clamp01(scrollbar.value);
+        }
     }
 
     // Function to set the text of the timer.
@@ -486,7 +516,6 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetFloat("PBLevel1", currentTime);
             UpdatePBText();
         }
-
     }
 
     // Update text displaying the player's PB.
@@ -565,6 +594,10 @@ public class GameManager : MonoBehaviour
         pauseMenuUI.SetActive(true);
         pauseScreenOneUI.SetActive(true);
         gameIsPaused = true;
+
+        // Clear any selected object in the event system and set a new selected object.
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(pauseFirstButton);
     }
 
     // Function to load the menu scene.
@@ -589,7 +622,22 @@ public class GameManager : MonoBehaviour
     {
         pauseScreenOneUI.SetActive(false);
         settingsMenuUI.SetActive(true);
+
+        // Clear any selected object in the event system and set a new selected object.
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(settingsFirstButton);
     }  
+
+    // Function to exit settings menu and return to pause menu.
+    public void ExitSettings()
+    {
+        settingsMenuUI.SetActive(false);
+        pauseScreenOneUI.SetActive(true);
+
+        // Clear any selected object in the event system and set a new selected object.
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(settingsClosedButton);
+    }
     
     // Set the UI for how many enemies are left and have been eliminated.
     void SetEnemyUI()
