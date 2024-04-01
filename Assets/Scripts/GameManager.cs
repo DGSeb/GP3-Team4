@@ -364,9 +364,15 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        // If B button is pressed and player is in the pause menu, resume the game.
+        if (Input.GetKeyDown(KeyCode.JoystickButton1) && gameIsPaused)
+        {
+            Resume();
+        }    
+
         // If the R key is pressed, restart the player in the scene they are currently in.
         // This is very helpful if you want to restart a run or if you fall off into the abyss.
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.JoystickButton6))
         {
             ReloadScene();
         }
@@ -409,10 +415,13 @@ public class GameManager : MonoBehaviour
         if (settingsMenuUI.activeSelf)
         {
             // Use this for right joystick
-            //float controllerInput = Input.GetAxis("Controller Y");
+            float controllerInputRight = Input.GetAxis("Controller Y");
 
             // use this for left joystick.
-            float controllerInput = Input.GetAxis("Vertical");
+            float controllerInputLeft = Input.GetAxis("Vertical");
+
+            // Combine both left and right joystick input so the player can use either on the settings menu.
+            float controllerInput = controllerInputLeft + controllerInputRight;
 
             // Adjust the speed at which the scorllbar scrolls with input. Use this value for vertical axis.
             scrollSpeed = 0.0068f;

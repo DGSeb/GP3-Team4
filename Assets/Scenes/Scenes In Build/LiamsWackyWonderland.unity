@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 2182.55, g: 2316.633, b: 3443.8872, a: 1}
+  m_IndirectSpecularColor: {r: 2181.1067, g: 2311.1897, b: 3425.317, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -550,6 +550,36 @@ Transform:
   m_Father: {fileID: 2099856157}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &286536507 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3029265286844826892, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2754951108071343316}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &286536508 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1543033063330440972, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2754951108071343316}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a4db7a114972834c8e4117be1d82ba3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &286536509 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 722276848932588773, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2754951108071343316}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &286536510 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4614770047630170549, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2754951108071343316}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &297620851 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1058080504421466485, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
@@ -1698,6 +1728,10 @@ MonoBehaviour:
   enemiesEliminatedUI: {fileID: 2754951108071343318}
   enoughEnemiesEliminated: 0
   howToPlayScreen: {fileID: 0}
+  pauseFirstButton: {fileID: 286536510}
+  settingsFirstButton: {fileID: 286536507}
+  settingsClosedButton: {fileID: 286536509}
+  scrollbar: {fileID: 286536508}
 --- !u!1 &1390705899
 GameObject:
   m_ObjectHideFlags: 0
@@ -2082,7 +2116,8 @@ PrefabInstance:
       value: PlayerPrefab
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 6463964941182623943, guid: 0df14ca73a9074947a0f137360c4cc8e, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0df14ca73a9074947a0f137360c4cc8e, type: 3}
@@ -2497,6 +2532,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7830087775605702676, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1332842027}
+    - target: {fileID: 7830087775605702676, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ExitSettings
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

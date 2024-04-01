@@ -39,6 +39,10 @@ public class EnemyBehavior : MonoBehaviour
 
     private bool canAddTime; // Bool that says whether or not time can be added to the timer.
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource attackChargeSound;
+    [SerializeField] private AudioSource attackSound;
+
     void Start()
     {
         // References
@@ -80,6 +84,12 @@ public class EnemyBehavior : MonoBehaviour
                     // Begin the counting down of the timer.
                     shootDelayTimer -= Time.deltaTime;
 
+                    // Play audio of enemy attack charging up
+                    /*if (!attackChargeSound.isPlaying)
+                    {
+                        attackChargeSound.Play();
+                    }*/
+
                     // If the timer has reached or gone below zero, the enemy is now able to fire at the player.
                     if (shootDelayTimer <= 0)
                     {
@@ -115,6 +125,9 @@ public class EnemyBehavior : MonoBehaviour
                 // Also, prevent the addition of time to the timer by setting canAddTime bool to false.
                 else
                 {
+                    /*// Make sure audio isn't playing.
+                    attackChargeSound.Stop();
+*/
                     canAddTime = false;
 
                     // Draw a ray in the direction of the player, but it will hit an obstacle instead of the player.
@@ -133,17 +146,23 @@ public class EnemyBehavior : MonoBehaviour
             // with the farthest point being the range at which the player can begin to be detected.
             else
             {
+                /*// Make sure audio isn't playing.
+                attackChargeSound.Stop();
+*/
                 // Set this bool to false to ensure that time is not added to the timer when it shouldn't be.
                 canAddTime = false;
 
                 DrawRay(transform.position, transform.position + directionToPlayer.normalized * detectionRange, Color.red);
             }
         }
-        // If the player is not in range, set playerInRange to false and turn off the ray that was drawn.
+        // If the player is not in range, set playerInRange to false and turn off the ray that was drawn. Also stop audio if it's playing.
         else
         {
             playerInRange = false;
             lineRenderer.enabled = false;
+
+            /*// Make sure audio isn't playing.
+            attackChargeSound.Stop();*/
         }
 
         // If the player is in range, rotate the enemy towards the player.
@@ -200,7 +219,14 @@ public class EnemyBehavior : MonoBehaviour
         // add time to the timer through a function in the game manager script using a set value that can be changed.
         if (canAddTime && playerInRange)
         {
-            Debug.Log("Fire");
+            //Debug.Log("Fire");
+
+           /* // If the sound isn't already playing, play the attack sound.
+            if (!attackSound.isPlaying)
+            {
+                attackSound.Play();
+            }*/
+
             gM.ChangeTimer(timeAddition);
         }
 

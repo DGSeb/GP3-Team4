@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class ResultScreen : MonoBehaviour
 {
+    // Objects that determine what button will start as selected.
+    [SerializeField] private GameObject lostFirstButton;
+    [SerializeField] private GameObject wonFirstButton;
+
     // String that stores the scene the player was in before they went to the results screen.
     public static string lastScene;
 
@@ -30,6 +35,10 @@ public class ResultScreen : MonoBehaviour
         {
             wonUI.SetActive(false);
             lostUI.SetActive(true);
+
+            // Clear any selected object in the event system and set a new selected object.
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(lostFirstButton);
         }
         // If the player won, ensure the lost UI is off and turn on the won UI.
         else if (won)
@@ -40,6 +49,10 @@ public class ResultScreen : MonoBehaviour
             // Set the run time and pb time texts to the variable values that correspond with them.
             runTimeSecondsText.text = runTime;
             pBTimeText.text = pBTime;
+
+            // Clear any selected object in the event system and set a new selected object.
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(wonFirstButton);
         }
 
         // Ensure that the player can use their mouse cursor.
