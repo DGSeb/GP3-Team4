@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
     private float timeSaved = 1.5f;
 
     // Bool that determines whether the how to play screen displays before levels.
-    public static bool displayHowToPlayScreen = true;
+    //public static bool displayHowToPlayScreen = true;
     public GameObject howToPlayScreen;
 
     // Reference to the crosshair object that is a part of the player UI.
@@ -123,12 +123,6 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-
-        if (displayHowToPlayScreen)
-        {
-            //howToPlayScreen.SetActive(true);
-        }
-
         crosshair = GameObject.Find("Crosshair").GetComponent<RectTransform>(); // Set reference to crosshair.
 
         // Create a variable that will store the size of the crosshair that is obtained from the player prefs key.
@@ -316,6 +310,9 @@ public class GameManager : MonoBehaviour
         {
             exitMaterial = exitMaterialRed;
             SwapExitMaterial();
+
+            howToPlayScreen.SetActive(true);
+            Time.timeScale = 0f;
         }
 
         // Set the scene that the result screen play again button will load.
@@ -360,6 +357,11 @@ public class GameManager : MonoBehaviour
         // Run the check input function to see what is being pressed.
         CheckInput();
         
+        if (howToPlayScreen.activeSelf && Input.anyKeyDown)
+        {
+            howToPlayScreen.SetActive(false);
+            Time.timeScale = 1.0f;
+        }
     }
 
     // Function that checks for different inputs.
