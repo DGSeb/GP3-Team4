@@ -116,8 +116,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioSource enemyDeathSound;
     [SerializeField] private AudioSource playerLoseSound;
 
+    public Material exitMaterialGreen;
+    public Material exitMaterialRed;
+    private Material exitMaterial;
+    public GameObject exit;
+
     void Awake()
     {
+        exitMaterial = exitMaterialRed;
+        SwapExitMaterial();
+
         if (displayHowToPlayScreen)
         {
             //howToPlayScreen.SetActive(true);
@@ -684,6 +692,9 @@ public class GameManager : MonoBehaviour
         // This is a separate if statement as this only needs to occur once, rather than every time a kill is obtained when the number of required eliminations has already been reached.
         if (enemiesEliminated == enemiesToWinLevel)
         {
+            exitMaterial = exitMaterialGreen;
+            SwapExitMaterial();
+
             enoughEnemiesEliminated = true;
         }
     }
@@ -741,6 +752,31 @@ public class GameManager : MonoBehaviour
         if (!enemyDeathSound.isPlaying)
         {
             enemyDeathSound.Play();
+        }
+    }
+
+    void SwapExitMaterial()
+    {
+        // Check if the object to swap and the new material are not null
+        if (exit != null && exitMaterial != null)
+        {
+            // Get the renderer component of the object
+            Renderer renderer = exit.GetComponent<Renderer>();
+
+            // Check if the renderer component is not null
+            if (renderer != null)
+            {
+                // Assign the new material to the object
+                renderer.material = exitMaterial;
+            }
+            else
+            {
+                Debug.LogWarning("Renderer component not found on the object to swap.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Object to swap or new material is null.");
         }
     }
 
