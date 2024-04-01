@@ -123,8 +123,6 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        exitMaterial = exitMaterialRed;
-        SwapExitMaterial();
 
         if (displayHowToPlayScreen)
         {
@@ -313,6 +311,12 @@ public class GameManager : MonoBehaviour
         // Find the name of the active scene and assign it to the currentScene variable.
         // Make sure this occurs before running UpdatePBText so it knows which scene it is in.
         currentScene = SceneManager.GetActiveScene().name;
+
+        if (currentScene == "Level1")
+        {
+            exitMaterial = exitMaterialRed;
+            SwapExitMaterial();
+        }
 
         // Set the scene that the result screen play again button will load.
         ResultScreen.lastScene = currentScene;
@@ -692,8 +696,11 @@ public class GameManager : MonoBehaviour
         // This is a separate if statement as this only needs to occur once, rather than every time a kill is obtained when the number of required eliminations has already been reached.
         if (enemiesEliminated == enemiesToWinLevel)
         {
-            exitMaterial = exitMaterialGreen;
-            SwapExitMaterial();
+            if (currentScene == "Level1")
+            {
+                exitMaterial = exitMaterialGreen;
+                SwapExitMaterial();
+            }
 
             enoughEnemiesEliminated = true;
         }
