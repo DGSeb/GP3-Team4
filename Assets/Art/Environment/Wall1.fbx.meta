@@ -9,6 +9,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: Default_Material
     second: {fileID: 2100000, guid: e4c3e2b728271364891feb50bb52aa5b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WallTrim
+    second: {fileID: 2100000, guid: e4c3e2b728271364891feb50bb52aa5b, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
