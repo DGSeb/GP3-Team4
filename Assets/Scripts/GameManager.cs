@@ -82,18 +82,21 @@ public class GameManager : MonoBehaviour
 
     // Number of enemies needed to be eliminated to interact with the end object and win.
     private int enemiesToWinLevel;
-    private int enemiesToWinLevel1 = 20;
-    private int enemiesToWinLevel2 = 25;
-    private int enemiesToWinLevel3 = 25;
-    private int enemiesToWinOldTutorial = 10;
-    private int enemiesToWinTutorial = 10;
+    private int enemiesToWinLevel1 = 15;
+    private int enemiesToWinLevel2 = 18;
+    private int enemiesToWinLevel3 = 18;
+    private int enemiesToWinOldTutorial = 8;
+    private int enemiesToWinTutorial = 8;
 
 
     // Bool that says whether or not enough enemies have been eliminated for the player to be able to exit the level.
     [HideInInspector] public bool enoughEnemiesEliminated = false;
 
     // Amount of time taken off the clock per elimination when the number of enemies needed to win the level has been achieved.
-    private float timeSaved = 1.5f;
+    private float timeSaved = 1.8f;
+
+    private float colorFlashTime = 0.2f;
+
 
     // Bool that determines whether the how to play screen displays before levels.
     //public static bool displayHowToPlayScreen = true;
@@ -116,10 +119,21 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioSource enemyDeathSound;
     [SerializeField] private AudioSource playerLoseSound;
 
+    [Header("Exit")]
+    // Variables related to the changing of exit material color based on whether or not the player has enough elims.
     public Material exitMaterialGreen;
     public Material exitMaterialRed;
     private Material exitMaterial;
     public GameObject exit;
+
+    [Header("FPS")]
+    // FPS variables
+    [SerializeField] private TextMeshProUGUI fpsDisplay;
+    [SerializeField] private Toggle fpsToggle;
+    private float fps;
+    private float fpsUpdateFrequency = 0.125f;
+    private float fpsUpdateTimer;
+    public static bool displayFPS;
 
     void Awake()
     {
@@ -330,6 +344,17 @@ public class GameManager : MonoBehaviour
         // Set the start value of the enemy count values. Enemies remaining is the enemy count of the level.
         // Enemies eliminated is 0 as no eliminations have occurred yet.
         EnemyCountVariablesStartValues();
+
+        // Set the fps timer to the frequency that it will update at.
+        fpsUpdateTimer = fpsUpdateFrequency;
+
+        // Check if display fps is true to determine if it should be displayed
+        if (displayFPS)
+        {
+            fpsToggle.isOn = displayFPS;
+            displayFPS = true;
+            fpsDisplay.enabled = true;
+        }
     }
 
     void Update()
@@ -357,10 +382,17 @@ public class GameManager : MonoBehaviour
         // Run the check input function to see what is being pressed.
         CheckInput();
         
+        // If the how to play screen is active and the player presses a key, turn off the how to play screen and set time to normal speed.
         if (howToPlayScreen.activeSelf && Input.anyKeyDown)
         {
             howToPlayScreen.SetActive(false);
             Time.timeScale = 1.0f;
+        }
+
+        // Run function that updates the FPS on screen if the bool is true.
+        if (displayFPS)
+        {
+            UpdateFPSDisplay();
         }
     }
 
@@ -464,6 +496,8 @@ public class GameManager : MonoBehaviour
     public void ChangeTimer(float timeChange)
     {
         currentTime += timeChange;
+        StopCoroutine(SavedTime());
+        StartCoroutine(TakeTimerDamage());
     }
 
     // Function to change the scene based on the name inputted when function is called.
@@ -677,7 +711,7 @@ public class GameManager : MonoBehaviour
     void SetEnemyUI()
     {
         enemiesRemainingUI.text = "Enemies Remaining: " + enemiesRemaining;
-        enemiesEliminatedUI.text = "Enemies Eliminated: " + enemiesEliminated;
+        enemiesEliminatedUI.text = "Enemies Eliminated: " + enemiesEliminated + " / " + enemiesToWinLevel;
     }
 
     // Function called in the EnemyBehavior script when the enemy runs out of health.
@@ -692,6 +726,8 @@ public class GameManager : MonoBehaviour
         if (enemiesEliminated > enemiesToWinLevel)
         {
             currentTime -= timeSaved;
+            StopCoroutine(TakeTimerDamage());
+            StartCoroutine(SavedTime());
         }
 
         // If the number of required eliminations has been reached, set the bool that indicates that to true. 
@@ -764,6 +800,30 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Coroutine that flashes the timer red when the player gets shot by an enemy.
+    IEnumerator TakeTimerDamage()
+    {
+        timerText.color = Color.red;
+        yield return new WaitForSeconds(colorFlashTime);
+        timerText.color = Color.white;
+        yield return new WaitForSeconds(colorFlashTime);
+        timerText.color = Color.red;
+        yield return new WaitForSeconds(colorFlashTime);
+        timerText.color = Color.white;
+    }
+
+    // Coroutine that flashes the timer green when the player takes time off the clock (positive action).
+    IEnumerator SavedTime()
+    {
+        timerText.color = Color.green;
+        yield return new WaitForSeconds(colorFlashTime);
+        timerText.color = Color.white;
+        yield return new WaitForSeconds(colorFlashTime);
+        timerText.color = Color.green;
+        yield return new WaitForSeconds(colorFlashTime);
+        timerText.color = Color.white;
+    }
+
     void SwapExitMaterial()
     {
         // Check if the object to swap and the new material are not null
@@ -786,6 +846,33 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.LogWarning("Object to swap or new material is null.");
+        }
+    }
+
+    // Function that changes the display fps bool based on input in settings menu.
+    public void ShowFPSDisplay()
+    {
+        displayFPS = !displayFPS;
+        fpsDisplay.enabled = displayFPS;
+    }
+
+    // Function that updates the FPS counter on screen.
+    void UpdateFPSDisplay()
+    {
+        // fpsUpdateTimer will equal 0 at the end of the current frame in seconds.
+        fpsUpdateTimer -= Time.unscaledDeltaTime;
+
+        // If fpsUpdateTimer is less than or equal to 0 seconds, display the number of frames. 
+        if (fpsUpdateTimer <= 0f)
+        {
+            // fps 
+            fps = 1f / Time.unscaledDeltaTime;
+
+            // Display the rounded to a whole number fps value on screen.
+            fpsDisplay.text = "FPS: " + Mathf.Round(fps);
+
+            // Set the fpsUpdateTimer back to its original value to begin the cycle again.
+            fpsUpdateTimer = fpsUpdateFrequency;
         }
     }
 
