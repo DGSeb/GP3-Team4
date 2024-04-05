@@ -24197,6 +24197,16 @@ PrefabInstance:
       propertyPath: rb
       value: 
       objectReference: {fileID: 680613444}
+    - target: {fileID: 1259090076443677903, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+        type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1098243601}
+    - target: {fileID: 1259090076443677903, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+        type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowFPSDisplay
+      objectReference: {fileID: 0}
     - target: {fileID: 3405281162565006903, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
