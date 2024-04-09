@@ -9,6 +9,7 @@ using Unity.VisualScripting;
 using System;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -134,6 +135,20 @@ public class GameManager : MonoBehaviour
     private float fpsUpdateFrequency = 0.125f;
     private float fpsUpdateTimer;
     public static bool displayFPS;
+
+    [Header("Tutorial")]
+    // Variables used for things in the tutorial.
+    [SerializeField] private GameObject[] shootingRangeEnemies;
+    [SerializeField] private GameObject[] tutorialDoors;
+    private int shootingRangeEnemyCount = 10;
+
+    // First door
+    private bool movedForward;
+    private bool movedBackward;
+    private bool movedLeft;
+    private bool movedRight;
+    private bool firstDoorOpen;
+    private bool secondDoorOpen;
 
     void Awake()
     {
@@ -393,6 +408,12 @@ public class GameManager : MonoBehaviour
         if (displayFPS)
         {
             UpdateFPSDisplay();
+        }
+
+        // If the player is currently in the tutorial, do the tutorial checks.
+        if (currentScene == "TutorialRemastered")
+        {
+            TutorialChecks();
         }
     }
 
@@ -873,6 +894,76 @@ public class GameManager : MonoBehaviour
 
             // Set the fpsUpdateTimer back to its original value to begin the cycle again.
             fpsUpdateTimer = fpsUpdateFrequency;
+        }
+    }
+
+    // Function for checks that occur while in the tutorial level.
+    void TutorialChecks()
+    {
+        // Input axis variables.
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+        
+        // Amount of input needed to set move variables to true.
+        float inputAmountRequired = 0.2f;
+
+        // If the first door isn't open, check for movement.
+        if (!firstDoorOpen)
+        {
+            // If vertical movement is higher than the positive input amount, player is going forward, so set that variable to true.
+            if (verticalInput >= inputAmountRequired)
+            {
+                movedForward = true;
+            }
+            // If vertical input is less than the negative input amount, player is going backwards, so set that variable to true.
+            else if (verticalInput <= -inputAmountRequired)
+            {
+                movedBackward = true;
+            }
+            // If horizontal input is greater than the positive input amount, player is moving right, so set that variable to true.
+            else if (horizontalInput >= inputAmountRequired)
+            {
+                movedRight = true;
+            }
+            // If horizontal input is less than the negative input amount, player is moving left, so set that variable to true.
+            else if (horizontalInput <= -inputAmountRequired)
+            {
+                movedLeft = true;
+            }
+
+            // If the player has moved in all directions, open the door and set door open variable to true so this function does not run again
+            // unless level is restarted/scene is reloaded.
+            if (movedForward && movedBackward && movedRight && movedLeft)
+            {
+                Destroy(tutorialDoors[0]);
+                firstDoorOpen = true;
+            }
+        }
+
+        // If the second door isn't open, check if enough enemies have been eliminated. If enough have, open the door.
+        if (!secondDoorOpen)
+        {
+            if (enoughEnemiesEliminated)
+            {
+                Destroy(tutorialDoors[1]);
+                secondDoorOpen = true;
+            }
+        }
+    }
+
+    // Handling of the spawning and other items of the firing range in the tutorial.
+    public void TutorialFiringRangeSpawn()
+    {
+        // Turn off enemies in firing range to prep for next wave.
+        for (int i = 0; i < shootingRangeEnemies.Length; i++)
+        {
+            shootingRangeEnemies[i].SetActive(false);
+        }
+
+        // Spawn enemies in firing range.
+        for (int i = 0; i < shootingRangeEnemyCount; i++)
+        {
+            shootingRangeEnemies[Random.Range(0, shootingRangeEnemies.Length)].SetActive(true);
         }
     }
 
