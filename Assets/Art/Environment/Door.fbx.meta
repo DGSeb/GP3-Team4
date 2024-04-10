@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c72990e8aa858db49b4e5103ad82ce0c
+guid: 047cd57e1a8e7424ca12a9ad2b885df3
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,13 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: standardSurface1
-    second: {fileID: 2100000, guid: 0cfa6b5d7a5cc6441a4e57c3dc7016a2, type: 2}
+      name: Default_Material
+    second: {fileID: 2100000, guid: e4c3e2b728271364891feb50bb52aa5b, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: trim_sheet_1
-    second: {fileID: 2100000, guid: 0cfa6b5d7a5cc6441a4e57c3dc7016a2, type: 2}
+      name: WallTrim
+    second: {fileID: 2100000, guid: e4c3e2b728271364891feb50bb52aa5b, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
