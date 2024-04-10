@@ -5,14 +5,17 @@ using UnityEngine;
 public class LiamTempPlayer : MonoBehaviour
 {
     private GameManager gM; // game manager script reference.
+    private TutorialManager tM; // Tutorial manager script reference.
 
     // Array for enemies that will spawn
     [SerializeField] private GameObject[] enemyGroups;
 
     void Start()
     {
-        // Set reference to game manager script.
+        // Set reference to scripts.
         gM = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+        tM = GameObject.FindWithTag("GameManager").GetComponent<TutorialManager>();
+
     }
 
     void Update()
@@ -21,7 +24,7 @@ public class LiamTempPlayer : MonoBehaviour
         BoundaryCheck();
     }
 
-    // Add this to player script so when they reach the end, their PB is updated.
+    // Check what trigger the player walked into.
     private void OnTriggerEnter(Collider other)
     {
         switch(other.name)
@@ -53,6 +56,13 @@ public class LiamTempPlayer : MonoBehaviour
                     ResultScreen.lost = false;
                     gM.ChangeScene("ResultsScreen");
                 }
+                break;
+
+            // If the tutorial pressure plate is walked on, run function from tutorial manager script that turns off all current enemies
+            // and then spawns all new enemies. Also, destroy the pressure plate.
+            case "TutorialPressurePlate":
+                tM.FiringRangeSpawn();
+                Destroy(other.gameObject);
                 break;
 
             // If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.

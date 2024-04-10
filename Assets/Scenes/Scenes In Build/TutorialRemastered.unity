@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 3.5395074, g: 5.7763906, b: 8.205705, a: 1}
+  m_IndirectSpecularColor: {r: 3.5392022, g: 5.7764897, b: 8.205827, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -10542,6 +10542,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2545586469566344298, guid: 0df14ca73a9074947a0f137360c4cc8e,
+        type: 3}
+      propertyPath: jumpsRemaining
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2627673580082098294, guid: 0df14ca73a9074947a0f137360c4cc8e,
         type: 3}
@@ -21387,6 +21392,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1098243602}
+  - component: {fileID: 1098243605}
   - component: {fileID: 1098243601}
   - component: {fileID: 1098243603}
   - component: {fileID: 1098243604}
@@ -21439,10 +21445,6 @@ MonoBehaviour:
   exit: {fileID: 319364449}
   fpsDisplay: {fileID: 871981561}
   fpsToggle: {fileID: 871981562}
-  shootingRangeEnemies: []
-  tutorialDoors:
-  - {fileID: 24144881}
-  - {fileID: 114959388}
 --- !u!4 &1098243602
 Transform:
   m_ObjectHideFlags: 0
@@ -21650,6 +21652,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1098243605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098243600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af127ea22127cee428172992b8ac3ff1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootingRangeEnemies: []
+  tutorialDoors:
+  - {fileID: 24144881}
+  - {fileID: 114959388}
+  secondDoorOpen: 0
 --- !u!1001 &1108607273
 PrefabInstance:
   m_ObjectHideFlags: 0

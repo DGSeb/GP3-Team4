@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     public bool readyToJump;
 
     // Int that determines how many times player can jump before touching the ground again.
-    public int jumpsRemaining = 1; 
+    private int jumpsRemaining = 0;
 
     [Header("Crouching")]
     public float crouchSpeed;
@@ -183,7 +183,7 @@ public class PlayerMovement : MonoBehaviour
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);        
 
-        if (grounded)
+        if (grounded && TutorialManager.canDoubleJump)
             // Give player an extra jump once they touch the ground.
             jumpsRemaining = 1;
 
@@ -204,11 +204,20 @@ public class PlayerMovement : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
         // when to jump
-        if((Input.GetKeyDown(jumpKey) || Input.GetKeyDown(jumpController)) && readyToJump && jumpsRemaining > 0)
+        if((Input.GetKeyDown(jumpKey) || Input.GetKeyDown(jumpController)) && readyToJump)
         {
-            readyToJump = false;
-            Jump();
-            Invoke(nameof(ResetJump), jumpCooldown);
+            if (jumpsRemaining > 0)
+            {
+                readyToJump = false;
+                Jump();
+                Invoke(nameof(ResetJump), jumpCooldown);
+            }
+            else if (grounded)
+            {
+                readyToJump = false;
+                Jump();
+                Invoke(nameof(ResetJump), jumpCooldown);
+            }
         }
 
         // when to crouch
