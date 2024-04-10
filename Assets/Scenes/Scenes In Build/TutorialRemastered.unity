@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 3.539496, g: 5.778229, b: 8.208314, a: 1}
+  m_IndirectSpecularColor: {r: 3.5322785, g: 5.844155, b: 8.548249, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9444,11 +9444,6 @@ PrefabInstance:
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1098243601}
-    - target: {fileID: 1259090076443677903, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
-        type: 3}
-      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ShowFPSDisplay
-      objectReference: {fileID: 0}
     - target: {fileID: 3405281162565006903, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -21680,6 +21675,8 @@ MonoBehaviour:
   leaderboard: {fileID: 438312849}
   enemiesRemainingUI: {fileID: 438312851}
   enemiesEliminatedUI: {fileID: 438312850}
+  enemiesRemaining: 0
+  enemiesEliminated: 0
   enoughEnemiesEliminated: 0
   howToPlayScreen: {fileID: 72495274}
   pauseFirstButton: {fileID: 438312858}
