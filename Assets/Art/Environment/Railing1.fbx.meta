@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9eb780e75bcdede46b790aa5499bf51f
+guid: ee9c99bf9c7b227408b94dd6cca66123
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -14,16 +14,6 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: Default_Material
     second: {fileID: 2100000, guid: f4b61c92808d4c04a85b86f9251551df, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: WallTrim
-    second: {fileID: 2100000, guid: f4b61c92808d4c04a85b86f9251551df, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: lambert4
-    second: {fileID: 2100000, guid: e4c3e2b728271364891feb50bb52aa5b, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
