@@ -10,6 +10,9 @@ public class LiamTempPlayer : MonoBehaviour
     // Array for enemies that will spawn
     [SerializeField] private GameObject[] enemyGroups;
 
+    // Array for pressure plates in tutorial
+    [SerializeField] private GameObject[] tutorialPressurePlates; 
+
     void Start()
     {
         // Set reference to scripts.
@@ -59,10 +62,47 @@ public class LiamTempPlayer : MonoBehaviour
                 break;
 
             // If the tutorial pressure plate is walked on, run function from tutorial manager script that turns off all current enemies
-            // and then spawns all new enemies. Also, destroy the pressure plate.
-            case "TutorialPressurePlate":
+            // and then spawns all new enemies. Also, turn off the trigger on the current pressure plate and turn on the other pressure plate triggers.
+            case "TutorialPressurePlate1":
                 tM.FiringRangeSpawn();
+                other.gameObject.GetComponent<BoxCollider>().enabled = false;
+                tutorialPressurePlates[1].GetComponent<BoxCollider>().enabled = true;
+                tutorialPressurePlates[2].GetComponent<BoxCollider>().enabled = true;
+                break;
+
+            // If the tutorial pressure plate is walked on, run function from tutorial manager script that turns off all current enemies
+            // and then spawns all new enemies. Also, turn off the trigger on the current pressure plate and turn on the other pressure plate triggers.
+            case "TutorialPressurePlate2":
+                tM.FiringRangeSpawn();
+                other.gameObject.GetComponent<BoxCollider>().enabled = false;
+                tutorialPressurePlates[0].GetComponent<BoxCollider>().enabled = true;
+                tutorialPressurePlates[2].GetComponent<BoxCollider>().enabled = true;
+                break;
+
+            // If the tutorial pressure plate is walked on, run function from tutorial manager script that turns off all current enemies
+            // and then spawns all new enemies. Also, turn off the trigger on the current pressure plate and turn on the other pressure plate triggers.
+            case "TutorialPressurePlate3":
+                tM.FiringRangeSpawn();
+                other.gameObject.GetComponent<BoxCollider>().enabled = false;
+                tutorialPressurePlates[0].GetComponent<BoxCollider>().enabled = true;
+                tutorialPressurePlates[1].GetComponent<BoxCollider>().enabled = true;
+                break;
+
+            // If the player runs into the dash trigger, let them dash and destroy the trigger.
+            case "DashTrigger":
+                TutorialManager.canDash = true;
                 Destroy(other.gameObject);
+                break;
+
+            // If player walks into the power outage trigger, shut off power and start glitching the game. Also, destroy the trigger.
+            case "PowerOutageTrigger":
+                tM.PowerOutage();
+                Destroy(other.gameObject);
+                break;
+
+            // If player walks into the door, play the door's open animation.
+            case "Door4":
+                other.GetComponent<Animator>().Play("doorOpen");
                 break;
 
             // If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.

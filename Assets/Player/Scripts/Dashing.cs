@@ -43,7 +43,8 @@ public class Dashing : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyUp(dashKey) || Input.GetKeyUp(dashController))
+        // If the dash input is pressed and the player can dash, dash.
+        if ((Input.GetKeyDown(dashKey) || Input.GetKeyDown(dashController)) && TutorialManager.canDash)
         {
             Dash();
         }

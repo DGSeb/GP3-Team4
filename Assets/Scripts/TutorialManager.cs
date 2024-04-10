@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class TutorialManager : MonoBehaviour
 {
+    // reference to game manager script.
+    private GameManager gM;
+
     // Variables used for things in the tutorial.
     [Header("Tutorial")]
 
@@ -12,7 +16,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private GameObject[] tutorialDoors;
 
     // Integer that determines how many enemies will be spawned in the shooting range.
-    private int shootingRangeEnemySpawnCount = 10;
+    //private int shootingRangeEnemySpawnCount = 10;
 
     // First door bools.
     private bool movedForward;
@@ -21,13 +25,31 @@ public class TutorialManager : MonoBehaviour
     private bool movedRight;
     private bool firstDoorOpen;
 
-    // Second door bools.
+    // Second door variables.
     private int enemiesInFiringRange = 5;
     private bool firingRangeDone;
-    public bool secondDoorOpen;
+    private bool secondDoorOpen;
+
+    // Third door variables
+    [SerializeField] private AudioSource powerGoesOut;
+    private bool powerOutAudioStarted;
 
     // Bools that determine if the player can perform certain movements.
     [HideInInspector] public static bool canDoubleJump;
+    [HideInInspector] public static bool canDash;
+
+    private void Start()
+    {
+        // Set reference to game manager script.
+        gM = this.gameObject.GetComponent<GameManager>();
+        
+        // Set enemy remaining variable.
+        gM.enemiesRemaining = shootingRangeEnemies.Length;
+
+        // Ensure double jump and dash is false when beginning the tutorial.
+        canDoubleJump = false;
+        canDash = false;
+    }
 
     void Update()
     {
@@ -38,6 +60,9 @@ public class TutorialManager : MonoBehaviour
     // Function for checks that occur while in the tutorial level.
     void TutorialChecks()
     {
+        // Function used for testing things.
+        TestingKeys();
+
         // Run door checks function that checks to see if doors should be opened.
         DoorChecks();
 
@@ -47,10 +72,18 @@ public class TutorialManager : MonoBehaviour
             canDoubleJump = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.I))
+        // Once the audio has started, check to see if it has stopped. If it has, open the door.
+        if (powerOutAudioStarted && !powerGoesOut.isPlaying)
+        {
+            Destroy(tutorialDoors[2]);
+            powerOutAudioStarted = false;
+        }
+
+        // If the number of enemies eliminated is equal to half of the array length, that means enough enemies have been eliminated to complete the firing range.
+        if (gM.enemiesEliminated >= (shootingRangeEnemies.Length / 2))
         {
             firingRangeDone = true;
-        }    
+        }
     }
 
     // Function that performs checks to see if doors should be opened.
@@ -107,7 +140,7 @@ public class TutorialManager : MonoBehaviour
         {
             Destroy(tutorialDoors[1]);
             secondDoorOpen = true;
-        }
+        }        
     }
 
     // Handling of the spawning and other items of the firing range in the tutorial.
@@ -116,13 +149,41 @@ public class TutorialManager : MonoBehaviour
         // Turn off enemies in firing range to prep for next wave.
         for (int i = 0; i < shootingRangeEnemies.Length; i++)
         {
-            shootingRangeEnemies[i].SetActive(false);
+            if (shootingRangeEnemies[i] != null)
+            {
+                shootingRangeEnemies[i].SetActive(false);
+            }
         }
 
         // Spawn enemies in firing range.
-        for (int i = 0; i < shootingRangeEnemySpawnCount; i++)
+        for (int i = 0; i < shootingRangeEnemies.Length / 2; i++)
         {
-            shootingRangeEnemies[Random.Range(0, shootingRangeEnemies.Length)].SetActive(true);
+            int randomNum = Random.Range(0, shootingRangeEnemies.Length);
+
+            if (shootingRangeEnemies[randomNum] != null)
+            {
+                shootingRangeEnemies[randomNum].SetActive(true);
+            }
+        }
+    }
+
+    // Function that runs the power outage items.
+    public void PowerOutage()
+    {
+        powerGoesOut.Play();
+        powerOutAudioStarted = true;
+    }
+
+    // Function used for testing to ensure things are working.
+    void TestingKeys()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            firingRangeDone = true;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            Destroy(tutorialDoors[2]);
         }
     }
 }

@@ -9,7 +9,6 @@ using Unity.VisualScripting;
 using System;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -78,8 +77,8 @@ public class GameManager : MonoBehaviour
     private int oldTutorialEnemyCount = 18;
     private int tutorialEnemyCount = 18;
 
-    private int enemiesRemaining;
-    private int enemiesEliminated = 0;
+    [HideInInspector] public int enemiesRemaining;
+    [HideInInspector] public int enemiesEliminated = 0;
 
     // Number of enemies needed to be eliminated to interact with the end object and win.
     private int enemiesToWinLevel;
@@ -330,9 +329,11 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0f;
         }
 
+        // If the player is not in the tutorial, make sure they can double jump and dash.
         if (currentScene != "TutorialRemastered")
         {
             TutorialManager.canDoubleJump = true;
+            TutorialManager.canDash = true;
         }
 
         // Set the scene that the result screen play again button will load.
