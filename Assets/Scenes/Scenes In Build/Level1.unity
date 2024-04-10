@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 3.5407834, g: 5.7780766, b: 8.206971, a: 1}
+  m_IndirectSpecularColor: {r: 3.5407147, g: 5.7779546, b: 8.206971, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -53979,6 +53979,8 @@ MonoBehaviour:
   exit: {fileID: 319364449}
   fpsDisplay: {fileID: 1763375333}
   fpsToggle: {fileID: 1783654620}
+  shootingRangeEnemies: []
+  tutorialDoors: []
 --- !u!4 &1098243602
 Transform:
   m_ObjectHideFlags: 0
@@ -61912,18 +61914,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 23394acadd7a5f44181f54b1c05f15a3,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.9656879
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 23394acadd7a5f44181f54b1c05f15a3,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.9656879
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 23394acadd7a5f44181f54b1c05f15a3,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.9656879
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 23394acadd7a5f44181f54b1c05f15a3,
+        type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.627
+      value: -4.529
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 23394acadd7a5f44181f54b1c05f15a3,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.083
+      value: -0.046
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 23394acadd7a5f44181f54b1c05f15a3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -28.616
+      value: -29.779
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 23394acadd7a5f44181f54b1c05f15a3,
         type: 3}
