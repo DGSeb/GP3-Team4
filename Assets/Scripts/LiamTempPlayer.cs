@@ -61,7 +61,7 @@ public class LiamTempPlayer : MonoBehaviour
                 }
                 break;
 
-            // If the tutorial pressure plate is walked on, run function from tutorial manager script that turns off all current enemies
+            /*// If the tutorial pressure plate is walked on, run function from tutorial manager script that turns off all current enemies
             // and then spawns all new enemies. Also, turn off the trigger on the current pressure plate and turn on the other pressure plate triggers.
             case "TutorialPressurePlate1":
                 tM.FiringRangeSpawn();
@@ -86,17 +86,19 @@ public class LiamTempPlayer : MonoBehaviour
                 other.gameObject.GetComponent<BoxCollider>().enabled = false;
                 tutorialPressurePlates[0].GetComponent<BoxCollider>().enabled = true;
                 tutorialPressurePlates[1].GetComponent<BoxCollider>().enabled = true;
-                break;
+                break;*/
 
             // If the player runs into the dash trigger, let them dash and destroy the trigger.
             case "DashTrigger":
                 TutorialManager.canDash = true;
+                TutorialManager.canDoubleJump = false;
                 Destroy(other.gameObject);
                 break;
 
             // If player walks into the power outage trigger, shut off power and start glitching the game. Also, destroy the trigger.
             case "PowerOutageTrigger":
                 tM.PowerOutage();
+                TutorialManager.canDoubleJump = true;
                 Destroy(other.gameObject);
                 break;
 

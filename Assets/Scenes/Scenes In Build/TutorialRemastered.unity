@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 3.5387826, g: 5.7770696, b: 8.207459, a: 1}
+  m_IndirectSpecularColor: {r: 3.5371346, g: 5.7746587, b: 8.204667, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -19260,7 +19260,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 400.00018, y: 400, z: 107.425835}
   m_Center: {x: -200, y: 199.99995, z: -46.28724}
@@ -22314,8 +22314,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1, z: 1.7072777}
+  m_Center: {x: 0, y: 0, z: -0.3536383}
 --- !u!23 &1081958625
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -22373,14 +22373,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1081958623}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -6.07, y: 0.931, z: -31.96}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.03, y: 6.74, z: -25.91}
   m_LocalScale: {x: 3.8732963, y: 1.725076, z: 7.261627}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1092165482
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38922,7 +38922,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 400.00018, y: 400, z: 107.425835}
   m_Center: {x: -200, y: 199.99995, z: -46.28724}
@@ -41495,7 +41495,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 400.00018, y: 400, z: 107.425835}
   m_Center: {x: -200, y: 199.99995, z: -46.28724}

@@ -24,9 +24,12 @@ public class TutorialManager : MonoBehaviour
     private bool movedLeft;
     private bool movedRight;
     private bool firstDoorOpen;
+    private bool startSpawningEnemies;
 
     // Second door variables.
-    private int enemiesInFiringRange = 5;
+    private float enemySpawnTime = 5.0f; // How often enemies spawn.
+    private int enemiesInFiringRange = 6;
+    private int enemiesToSpawn = 3; // number of enemies to spawn in the firing range.
     private bool firingRangeDone;
     private bool secondDoorOpen;
 
@@ -126,7 +129,15 @@ public class TutorialManager : MonoBehaviour
             {
                 Destroy(tutorialDoors[0]);
                 firstDoorOpen = true;
+                startSpawningEnemies = true;
             }
+        }
+
+        // If the first door is open, spawn the enemies
+        if (startSpawningEnemies)
+        {
+            InvokeRepeating("FiringRangeSpawn", 2.0f, enemySpawnTime);
+            startSpawningEnemies = false;
         }
 
         // If there are no more enemies in the firing range, the firing range is done.
@@ -143,12 +154,14 @@ public class TutorialManager : MonoBehaviour
         }        
     }
 
-    // Handling of the spawning and other items of the firing range in the tutorial.
-    public void FiringRangeSpawn()
+    // Handling of the spawning in the firing range in the tutorial.
+    void FiringRangeSpawn()
     {
         // Turn off enemies in firing range to prep for next wave.
         for (int i = 0; i < shootingRangeEnemies.Length; i++)
         {
+            Debug.Log(shootingRangeEnemies.Length);
+            // If the enemy exists, set it's active to false.
             if (shootingRangeEnemies[i] != null)
             {
                 shootingRangeEnemies[i].SetActive(false);
@@ -156,14 +169,25 @@ public class TutorialManager : MonoBehaviour
         }
 
         // Spawn enemies in firing range.
-        for (int i = 0; i < shootingRangeEnemies.Length / 2; i++)
+        for (int i = 1; i <= enemiesToSpawn; i++)
         {
+            // Create a random number.
             int randomNum = Random.Range(0, shootingRangeEnemies.Length);
 
-            if (shootingRangeEnemies[randomNum] != null)
+            // If there are more than 2 enemies in the array, keep finding new numbers
+            if (shootingRangeEnemies.Length > enemiesToSpawn - 1)
             {
-                shootingRangeEnemies[randomNum].SetActive(true);
+                // If that random number does not have a corresponding enemy in the array, keep finding a new number until it does.
+                while (shootingRangeEnemies[randomNum] == null || shootingRangeEnemies[randomNum].activeSelf)
+                {
+                    randomNum = Random.Range(0, shootingRangeEnemies.Length);
+                }
             }
+
+            // Once a random number that correlates with an enemy in the array has been found, set that enemy active.
+            shootingRangeEnemies[randomNum].SetActive(true);
+
+            Debug.Log(shootingRangeEnemies[randomNum]);
         }
     }
 
