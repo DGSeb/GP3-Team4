@@ -69,12 +69,6 @@ public class TutorialManager : MonoBehaviour
         // Run door checks function that checks to see if doors should be opened.
         DoorChecks();
 
-        // If the second door is open, the player can now double jump.
-        if (secondDoorOpen)
-        {
-            canDoubleJump = true;
-        }
-
         // Once the audio has started, check to see if it has stopped. If it has, open the door.
         if (powerOutAudioStarted && !powerGoesOut.isPlaying)
         {
@@ -151,6 +145,7 @@ public class TutorialManager : MonoBehaviour
         {
             Destroy(tutorialDoors[1]);
             secondDoorOpen = true;
+            canDoubleJump = true;
         }        
     }
 

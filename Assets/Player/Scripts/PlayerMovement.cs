@@ -81,12 +81,26 @@ public class PlayerMovement : MonoBehaviour
     [Header("Sound Effects")]
     [SerializeField] private AudioSource dashSound;
 
+    private GameManager gM; // game manager script reference.
+    private TutorialManager tM; // Tutorial manager script reference.
+
+    /*[Header("Enemy Array")]
+    // Array for enemies that will spawn
+    [SerializeField] private GameObject[] enemyGroups;
+
+    // Array for pressure plates in tutorial
+    [SerializeField] private GameObject[] tutorialPressurePlates;*/
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
         startYscale = transform.localScale.y;
+
+        // Set reference to scripts.
+        gM = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+        tM = GameObject.FindWithTag("GameManager").GetComponent<TutorialManager>();
     }
 
     private void FixedUpdate()
@@ -187,7 +201,11 @@ public class PlayerMovement : MonoBehaviour
             // Give player an extra jump once they touch the ground.
             jumpsRemaining = 1;
 
-        MyInput();
+        // If the player is active, check for their input.
+        if (GameManager.isPlayerActive)
+        {
+            MyInput();
+        }
         SpeedControl();
         StateHandler();
 
@@ -196,6 +214,9 @@ public class PlayerMovement : MonoBehaviour
             rb.drag = groundDrag;
         else
             rb.drag = 0;
+
+        // Run function that checks whether or not the player is within the map boundaries.
+        BoundaryCheck();
     }
 
     private void MyInput()
@@ -221,7 +242,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // when to crouch
-        if ((Input.GetKeyDown(crouchKey) || Input.GetKeyDown(crouchController)) && GameManager.isPlayerActive)
+        if ((Input.GetKeyDown(crouchKey) || Input.GetKeyDown(crouchController)))
         {
             transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
             if (grounded)
@@ -230,7 +251,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if ((Input.GetKeyUp(crouchKey) || Input.GetKeyUp(crouchController)) && GameManager.isPlayerActive)
+        if ((Input.GetKeyUp(crouchKey) || Input.GetKeyUp(crouchController)))
         {
             transform.localScale = new Vector3(transform.localScale.x, startYscale, transform.localScale.z);
         }
@@ -367,5 +388,142 @@ public class PlayerMovement : MonoBehaviour
         moveSpeed = desiredMoveSpeed;
         speedChangeFactor = 1f;
         keepMomentum= false;    
+    }
+
+    // Function to check if the player is out of bounds.
+    void BoundaryCheck()
+    {
+        // If player is below -50 on the y axis, respawn them.
+        if (this.gameObject.transform.position.y < -50)
+        {
+            gM.ReloadScene();
+        }
+    }
+
+    // Check what trigger the player walked into.
+    private void OnTriggerEnter(Collider other)
+    {
+        switch (other.name)
+        {
+            // If player hits the end object, update PB and go to next scene.
+            case "End":
+                gM.AddLeaderboardEntry();
+                gM.CheckPB();
+                gM.ChangeScene("LiamsHighlyPsychoticJoint");
+                break;
+
+            // If second ending is hit, update pb and change scene.
+            case "End2":
+                gM.AddLeaderboardEntry();
+                gM.CheckPB();
+                gM.ChangeScene("LiamsWackyWonderland");
+                break;
+
+            // If tutorial ending is hit, update pb and change scene.
+            case "Glitch":
+                // If the player has eliminated enough enemies, add a leaderboard entry, set the run time for the results screen,
+                // check the player's PB, the player won so set that bool to true and make sure lost is false, and change scene.
+                if (gM.enoughEnemiesEliminated)
+                {
+                    gM.AddLeaderboardEntry();
+                    gM.SetRunTime();
+                    gM.CheckPB();
+                    ResultScreen.won = true;
+                    ResultScreen.lost = false;
+                    gM.ChangeScene("ResultsScreen");
+                }
+                break;
+
+            // If the player runs into the dash trigger, let them dash and destroy the trigger.
+            // Also, turn off double jump so player can only dash at the next part.
+            case "DashTrigger":
+                TutorialManager.canDash = true;
+                TutorialManager.canDoubleJump = false;
+                jumpsRemaining = 0;
+                Destroy(other.gameObject);
+                break;
+
+            // If player walks into the power outage trigger, shut off power and start glitching the game.
+            // Also, allow the player to double jump and destroy the trigger.
+            case "PowerOutageTrigger":
+                tM.PowerOutage();
+                TutorialManager.canDoubleJump = true;
+                Destroy(other.gameObject);
+                break;
+
+            // If player walks into the door, play the door's open animation.
+            case "Door4":
+                other.GetComponent<Animator>().Play("doorOpen");
+                break;
+
+            /*// If the tutorial pressure plate is walked on, run function from tutorial manager script that turns off all current enemies
+            // and then spawns all new enemies. Also, turn off the trigger on the current pressure plate and turn on the other pressure plate triggers.
+            case "TutorialPressurePlate1":
+                tM.FiringRangeSpawn();
+                other.gameObject.GetComponent<BoxCollider>().enabled = false;
+                tutorialPressurePlates[1].GetComponent<BoxCollider>().enabled = true;
+                tutorialPressurePlates[2].GetComponent<BoxCollider>().enabled = true;
+                break;
+
+            // If the tutorial pressure plate is walked on, run function from tutorial manager script that turns off all current enemies
+            // and then spawns all new enemies. Also, turn off the trigger on the current pressure plate and turn on the other pressure plate triggers.
+            case "TutorialPressurePlate2":
+                tM.FiringRangeSpawn();
+                other.gameObject.GetComponent<BoxCollider>().enabled = false;
+                tutorialPressurePlates[0].GetComponent<BoxCollider>().enabled = true;
+                tutorialPressurePlates[2].GetComponent<BoxCollider>().enabled = true;
+                break;
+
+            // If the tutorial pressure plate is walked on, run function from tutorial manager script that turns off all current enemies
+            // and then spawns all new enemies. Also, turn off the trigger on the current pressure plate and turn on the other pressure plate triggers.
+            case "TutorialPressurePlate3":
+                tM.FiringRangeSpawn();
+                other.gameObject.GetComponent<BoxCollider>().enabled = false;
+                tutorialPressurePlates[0].GetComponent<BoxCollider>().enabled = true;
+                tutorialPressurePlates[1].GetComponent<BoxCollider>().enabled = true;
+                break;*/
+
+            /*// If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
+            case "PressurePlate0":
+                enemyGroups[0].SetActive(true);
+                Destroy(other.gameObject);
+                break;
+
+            // If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
+            case "PressurePlate1":
+                enemyGroups[1].SetActive(true);
+                Destroy(other.gameObject);
+                break;
+
+            // If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
+            case "PressurePlate2":
+                enemyGroups[2].SetActive(true);
+                Destroy(other.gameObject);
+                break;
+
+            // If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
+            case "PressurePlate3":
+                enemyGroups[3].SetActive(true);
+                Destroy(other.gameObject);
+                break;
+
+            // If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
+            case "PressurePlate4":
+                enemyGroups[4].SetActive(true);
+                Destroy(other.gameObject);
+                break;
+
+            // If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
+            case "PressurePlate5":
+                enemyGroups[5].SetActive(true);
+                Destroy(other.gameObject);
+                break;
+
+            // If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
+            case "PressurePlate6":
+                enemyGroups[6].SetActive(true);
+                Destroy(other.gameObject);
+                break;*/
+        }
     }
 }

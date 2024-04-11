@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
     public static bool gameIsPaused;
 
     // String to say which scene the player is currently in.
-    private string currentScene;
+    [HideInInspector] public string currentScene;
 
     // Bool that says whether the player is actively playing or not.
     // Used to stop certain actions from ocurring when the player isn't active.

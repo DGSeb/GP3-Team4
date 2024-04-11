@@ -108,7 +108,7 @@ Transform:
   - {fileID: 7381983025445258527}
   - {fileID: 7138508912072643059}
   m_Father: {fileID: 0}
-  m_RootOrder: 42
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4644995246992761061
 GameObject:
@@ -120,7 +120,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7381983025445258527}
   - component: {fileID: 3613266812328952105}
-  - component: {fileID: 7738953370247331686}
   - component: {fileID: 2545586469566344298}
   - component: {fileID: 4027159516958417653}
   - component: {fileID: 2920454816270228540}
@@ -177,27 +176,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &7738953370247331686
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4644995246992761061}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e8d3263ade440743a4f618e4c6a0254, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyGroups:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  tutorialPressurePlates: []
 --- !u!114 &2545586469566344298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,7 +264,7 @@ MonoBehaviour:
   Emitter: {fileID: 1229273873084220999}
   playerCam: {fileID: 5919125329909046362}
   recoilScript: {fileID: 4005345185967632737}
-  cooldown: 1
+  cooldown: 0.7
   travelSpeedFactor: 0.001
   recoilX: -20
   recoilY: 5
