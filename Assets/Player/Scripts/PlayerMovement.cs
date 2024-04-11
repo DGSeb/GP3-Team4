@@ -27,6 +27,14 @@ public class PlayerMovement : MonoBehaviour
     // Int that determines how many times player can jump before touching the ground again.
     private int jumpsRemaining = 0;
 
+    // Variables for coyote time and better jumping.
+    private float coyoteTime = 0.25f;
+    private float coyoteTimeCounter;
+
+    // Jump buffering (allows for jumping slightly before touching the ground.
+    private float jumpBufferTime = 0.15f;
+    private float jumpBufferCounter;
+
     [Header("Crouching")]
     public float crouchSpeed;
     public float crouchYScale;
@@ -200,7 +208,7 @@ public class PlayerMovement : MonoBehaviour
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);        
 
-        if (grounded && TutorialManager.canDoubleJump)
+        if (coyoteTimeCounter > 0f && TutorialManager.canDoubleJump)
             // Give player an extra jump once they touch the ground.
             jumpsRemaining = 1;
 
@@ -227,8 +235,34 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
+        // If grounded, set the coyote time counter equal to the coyote time (extra time before jump is not registered)
+        if (grounded)
+        {
+            coyoteTimeCounter = coyoteTime;
+        }
+        // If not grounded, let the coyote time counter count down.
+        // If the player clicks the jump button before the coyote time counter reaches zero, the player will jump, even if they are slightly in the air.
+        // This allows for the player to press the jump key slightly late (slightly after they have already left the ground) and still jump.
+        else
+        {
+            coyoteTimeCounter -= Time.deltaTime;
+        }
+
+        // If the jump key is pressed, set the jump buffer counter to the jumper buffer time
+        if (Input.GetKeyDown(jumpKey) || Input.GetKeyDown(jumpController))
+        {
+            jumpBufferCounter = jumpBufferTime;
+        }
+        // If the jump key isn't pressed, let the jump buffer counter count down.
+        // If the player is close enough to the ground to reset the coyote time counter before the jump buffer counter runs out of time, the player will jump.
+        // This allows for the player to press the jump button slightly before they actually touch the ground.
+        else
+        {
+            jumpBufferCounter -= Time.deltaTime;
+        }
+
         // when to jump
-        if((Input.GetKeyDown(jumpKey) || Input.GetKeyDown(jumpController)) && readyToJump)
+        if (jumpBufferCounter > 0f && readyToJump)
         {
             if (jumpsRemaining > 0)
             {
@@ -236,7 +270,7 @@ public class PlayerMovement : MonoBehaviour
                 Jump();
                 Invoke(nameof(ResetJump), jumpCooldown);
             }
-            else if (grounded)
+            else if (coyoteTimeCounter > 0f)
             {
                 readyToJump = false;
                 Jump();
@@ -335,6 +369,9 @@ public class PlayerMovement : MonoBehaviour
 
         // Subtract 1 from the remaining jumps count.
         jumpsRemaining--;
+
+        // Set the jump buffer counter to 0.
+        jumpBufferCounter = 0f;
     }
 
     private void ResetJump()
