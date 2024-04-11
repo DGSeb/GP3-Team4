@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using UnityEngine;
 
@@ -40,6 +41,9 @@ public class TutorialManager : MonoBehaviour
     // Bools that determine if the player can perform certain movements.
     [HideInInspector] public static bool canDoubleJump;
     [HideInInspector] public static bool canDash;
+
+    // bool to say whether or not debugging should show up in the console.
+    private bool debug = false;
 
     private void Start()
     {
@@ -155,7 +159,6 @@ public class TutorialManager : MonoBehaviour
         // Turn off enemies in firing range to prep for next wave.
         for (int i = 0; i < shootingRangeEnemies.Length; i++)
         {
-            Debug.Log(shootingRangeEnemies.Length);
             // If the enemy exists, set it's active to false.
             if (shootingRangeEnemies[i] != null)
             {
@@ -182,7 +185,7 @@ public class TutorialManager : MonoBehaviour
             // Once a random number that correlates with an enemy in the array has been found, set that enemy active.
             shootingRangeEnemies[randomNum].SetActive(true);
 
-            Debug.Log(shootingRangeEnemies[randomNum]);
+            Debugging(shootingRangeEnemies[randomNum]);
         }
     }
 
@@ -196,13 +199,31 @@ public class TutorialManager : MonoBehaviour
     // Function used for testing to ensure things are working.
     void TestingKeys()
     {
+        // If the number 2 is pressed, open door 2.
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             firingRangeDone = true;
         }
+
+        // If the number 3 is pressed, open door 3.
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             Destroy(tutorialDoors[2]);
+        }
+
+        // If the backslash key is pressed, set debug to opposite of what it currently is.
+        if (Input.GetKeyDown(KeyCode.Backslash))
+        {
+            debug = !debug;
+        }
+    }
+
+    // Generic function that prints info inputted when function is called into the console if debugging is active.
+    void Debugging<T>(T info)
+    {
+        if (debug)
+        {
+            Debug.Log(info);
         }
     }
 }

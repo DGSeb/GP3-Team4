@@ -460,7 +460,7 @@ public class GameManager : MonoBehaviour
         }
 
         // Add an entry to the highscores list to test if the leaderboard is working correctly.
-        if (Input.GetKeyDown(KeyCode.Backslash))
+        if (Input.GetKey(KeyCode.Backslash) && Input.GetKeyDown(KeyCode.Slash))
         {
             AddHighscoreEntry(currentTime, "Liam");
             Debug.Log("Entry added");
