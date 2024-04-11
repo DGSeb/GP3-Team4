@@ -248,12 +248,6 @@ public class PlayerMovement : MonoBehaviour
             coyoteTimeCounter -= Time.deltaTime;
         }
 
-        if (coyoteTimeCounter <= 0f)
-        {
-            Debug.Log("Done");
-            Debug.Log("Grounded: " + grounded);
-        }
-
         // If the jump key is pressed, set the jump buffer counter to the jumper buffer time
         if (Input.GetKeyDown(jumpKey) || Input.GetKeyDown(jumpController))
         {
