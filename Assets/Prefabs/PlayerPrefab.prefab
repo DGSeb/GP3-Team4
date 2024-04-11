@@ -195,7 +195,7 @@ MonoBehaviour:
   groundDrag: 2.5
   maxYSpeed: 10
   jumpForce: 12
-  jumpCooldown: 0.25
+  jumpCooldown: 0.3
   airMultiplier: 0.4
   orientation: {fileID: 8144135747042390168}
   readyToJump: 1
@@ -217,6 +217,7 @@ MonoBehaviour:
   state: 0
   dashing: 0
   dashSound: {fileID: 3922764328107279623}
+  dashCheckpoint: {fileID: 0}
 --- !u!114 &4027159516958417653
 MonoBehaviour:
   m_ObjectHideFlags: 0

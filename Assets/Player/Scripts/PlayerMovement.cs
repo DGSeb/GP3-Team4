@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jumping")]
     public float jumpForce;
-    public float jumpCooldown;
+    public float jumpCooldown = 0.3f;
     public float airMultiplier;
     public Transform orientation;
     public bool readyToJump;
@@ -264,14 +264,28 @@ public class PlayerMovement : MonoBehaviour
         // when to jump
         if (jumpBufferCounter > 0f && readyToJump)
         {
+            // If the player can double jump, set the jump cooldown very low. This prevents double jumping when the player shouldn't be able to.
+            // If the player spammed jump quick enough, the readyToJump bool did not turn false quick enough, so they could jump again.
+            // This does not matter if the player can double jump, so the cooldown is higher when the player cannot double jump.
+            if (TutorialManager.canDoubleJump)
+            {
+                jumpCooldown = 0.05f;
+            }
+            else if (!TutorialManager.canDoubleJump)
+            {
+                jumpCooldown = 0.3f;
+            }
+
             if (jumpsRemaining > 0)
             {
+                //Debug.Log("Double: " + jumpCooldown);
                 readyToJump = false;
                 Jump();
                 Invoke(nameof(ResetJump), jumpCooldown);
             }
             else if (coyoteTimeCounter > 0f)
             {
+                //Debug.Log("Single: " + jumpCooldown);
                 readyToJump = false;
                 Jump();
                 Invoke(nameof(ResetJump), jumpCooldown);
@@ -360,6 +374,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
+        // Set coyote and jump buffer counters to 0 so player cannot spam jump to jump again.
+        coyoteTimeCounter = 0f;
+        jumpBufferCounter = 0f;
+
         exitingSlope = true;
 
         // reset y velocity
@@ -369,9 +387,6 @@ public class PlayerMovement : MonoBehaviour
 
         // Subtract 1 from the remaining jumps count.
         jumpsRemaining--;
-
-        // Set the jump buffer counter to 0.
-        jumpBufferCounter = 0f;
     }
 
     private void ResetJump()

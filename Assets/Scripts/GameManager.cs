@@ -652,9 +652,9 @@ public class GameManager : MonoBehaviour
         Cursor.visible = false;
         settingsMenuUI.SetActive(false);
         pauseMenuUI.SetActive(false);
-        Time.timeScale = 1.0f;
-        isPlayerActive = true;
         gameIsPaused = false;
+        isPlayerActive = true;
+        Time.timeScale = 1.0f;
     }
 
     // Function to pause the game.
