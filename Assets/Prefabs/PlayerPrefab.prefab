@@ -195,7 +195,7 @@ MonoBehaviour:
   groundDrag: 2.5
   maxYSpeed: 10
   jumpForce: 12
-  jumpCooldown: 0.3
+  jumpCooldown: 0.35
   airMultiplier: 0.4
   orientation: {fileID: 8144135747042390168}
   readyToJump: 1

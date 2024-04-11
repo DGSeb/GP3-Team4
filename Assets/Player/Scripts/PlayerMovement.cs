@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jumping")]
     public float jumpForce;
-    public float jumpCooldown = 0.3f;
+    public float jumpCooldown = 0.35f;
     public float airMultiplier;
     public Transform orientation;
     public bool readyToJump;
@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
     private int jumpsRemaining = 0;
 
     // Variables for coyote time and better jumping.
-    private float coyoteTime = 0.25f;
+    private float coyoteTime = 0.3f;
     private float coyoteTimeCounter;
 
     // Jump buffering (allows for jumping slightly before touching the ground.
@@ -248,6 +248,12 @@ public class PlayerMovement : MonoBehaviour
             coyoteTimeCounter -= Time.deltaTime;
         }
 
+        if (coyoteTimeCounter <= 0f)
+        {
+            Debug.Log("Done");
+            Debug.Log("Grounded: " + grounded);
+        }
+
         // If the jump key is pressed, set the jump buffer counter to the jumper buffer time
         if (Input.GetKeyDown(jumpKey) || Input.GetKeyDown(jumpController))
         {
@@ -273,7 +279,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (!TutorialManager.canDoubleJump)
             {
-                jumpCooldown = 0.3f;
+                jumpCooldown = 0.35f;
             }
 
             if (jumpsRemaining > 0)
@@ -374,10 +380,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        // Set coyote and jump buffer counters to 0 so player cannot spam jump to jump again.
-        coyoteTimeCounter = 0f;
-        jumpBufferCounter = 0f;
-
         exitingSlope = true;
 
         // reset y velocity
@@ -387,6 +389,9 @@ public class PlayerMovement : MonoBehaviour
 
         // Subtract 1 from the remaining jumps count.
         jumpsRemaining--;
+
+        // Set jump buffer counter to 0 so player cannot spam jump to jump again.
+        jumpBufferCounter = 0f;
     }
 
     private void ResetJump()
