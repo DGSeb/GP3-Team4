@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Design" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 176.71 119.34">
+  <defs>
+    <linearGradient id="linear-gradient" x1="88.21" y1="53.86" x2="88.21" y2="35.62" gradientUnits="userSpaceOnUse">
+      <stop offset=".12" stop-color="#e02b2b"/>
+      <stop offset=".76" stop-color="#efaa30"/>
+      <stop offset="1" stop-color="#fff427"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="88.54" y1="46.24" x2="88.54" y2="28" gradientTransform="translate(0 46.24) scale(1 -1)" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-3" x1="88.17" y1="119.34" x2="88.17" y2="101.1" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-4" x1="88.5" y1="-19.23" x2="88.5" y2="-37.48" gradientTransform="translate(0 46.24) scale(1 -1)" xlink:href="#linear-gradient"/>
+  </defs>
+  <path d="M161.2,35.62H15.2v4h146v-4ZM3.15,53.86l13.86-16.71-1.83-1.54L.04,53.86h3.11ZM176.38,53.62l-15.13-18-1.83,1.52,13.85,16.48h3.11Z" style="fill: url(#linear-gradient); opacity: .7; stroke-width: 0px;"/>
+  <path d="M161.53,14.24H15.53v4h146v-4ZM.38,0l15.13,18.24,1.83-1.54L3.48,0H.38ZM173.61.24l-13.85,16.48,1.83,1.52L176.71.24h-3.11Z" style="fill: url(#linear-gradient-2); opacity: .7; stroke-width: 0px;"/>
+  <text transform="translate(14.25 33.19)" style="fill: #fff; font-family: MS-UIGothic, &apos;MS UI Gothic&apos;; font-size: 18px;"><tspan x="0" y="0">Enemies Remaining:</tspan></text>
+  <path d="M161.15,101.1H15.15v4h146v-4ZM3.11,119.34l13.86-16.71-1.83-1.54L0,119.34h3.11ZM176.33,119.1l-15.13-18-1.83,1.52,13.85,16.48h3.11Z" style="fill: url(#linear-gradient-3); opacity: .7; stroke-width: 0px;"/>
+  <path d="M161.49,79.72H15.49v4h146v-4ZM.34,65.48l15.13,18.24,1.83-1.54-13.86-16.71H.34ZM173.56,65.72l-13.85,16.48,1.83,1.52,15.13-18h-3.11Z" style="fill: url(#linear-gradient-4); opacity: .7; stroke-width: 0px;"/>
+  <text transform="translate(14.85 98.67)" style="fill: #fff; font-family: MS-UIGothic, &apos;MS UI Gothic&apos;; font-size: 18px;"><tspan x="0" y="0">Enemies Eliminated:</tspan></text>
+</svg>
