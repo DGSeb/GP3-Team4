@@ -18,7 +18,7 @@ public class EnemyBehavior : MonoBehaviour
 
     // Speed variables
     //private float bulletSpeed = 1.3f;
-    private float enemyRotationSpeed = 2.5f;
+    private float enemyRotationSpeed = 20.5f;
 
     private bool playerInRange; // Bool that tracks if player is in range.
     private bool canFire = false; // Bool that determine whether or not the enemy can fire.
@@ -241,42 +241,6 @@ public class EnemyBehavior : MonoBehaviour
         // With the weapon fired and time added to the timer, set canAddTime back to false so the cooldown before the next shot begins.
         canAddTime = false;
     }
-    
-    /* // Function for firing of enemy weapon that shot a projectile.
-    IEnumerator FireWeapon()
-    {
-        Debug.Log("Start wait: " + shootDelay);
-        yield return new WaitForSeconds(shootDelay);
-
-        if (canAddTime && playerInRange)
-        {
-            Debug.Log("Fire");
-            gM.ChangeTimer(timeAddition);
-        }
-
-        canAddTime = false;
-
-
-        // Code for spawning a projectile that heads towards the player.
-
-        *//*// Create a sphere called bullet, change its size, and put its position at the position of this enemy.
-        GameObject bullet = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        bullet.transform.localScale = new Vector3(0.23f, 0.23f, 0.23f);
-        bullet.transform.position = this.transform.position;
-
-        // Add a rigidbody to the bullet, change its mass, turn off the effect of gravity on the bullet,
-        // and ensure collision detection is occurring quickly to prevent bullets going through walls.
-        Rigidbody bulletRigidbody = bullet.AddComponent<Rigidbody>();
-        bulletRigidbody.mass = 0.7f;
-        bulletRigidbody.useGravity = false;
-        bulletRigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-
-        // Set the velocity of the bullet to the direction of the player times the bullet speed, which can me modified.
-        bulletRigidbody.velocity = directionToPlayer * bulletSpeed;
-
-        // Destroy the bullet after 2 and a half seconds.
-        Destroy(bullet, 2.5f);*//*
-    }*/
 
     // Function called in WeaponHandler script that occurs when the enemy is hit by a player's attack.
     public void LoseHealth()
