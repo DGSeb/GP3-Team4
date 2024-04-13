@@ -10,7 +10,7 @@ public class DoorAnimation : MonoBehaviour
     void Start()
     {
         // Set reference.
-        doorAnimator = GetComponent<Animator>();    
+        doorAnimator = GetComponentInParent<Animator>();    
     }
 
     private void OnTriggerEnter(Collider other)
@@ -19,7 +19,15 @@ public class DoorAnimation : MonoBehaviour
         {
             // If player tag object enters the trigger, set open door to true to play the open door animation.
             case "Player":
-                doorAnimator.SetBool("OpenDoor", true);
+                Debug.Log("HEre");
+                if (doorAnimator != null)
+                {
+                    doorAnimator.SetBool("OpenDoor", true);
+                }
+                else
+                {
+                    Debug.LogWarning("doorAnimator not found.");
+                }
                 break;
         }
     }
@@ -30,7 +38,14 @@ public class DoorAnimation : MonoBehaviour
         {
             // If player tag object exits the trigger, set open door to false to play the close door animation.
             case "Player":
-                doorAnimator.SetBool("OpenDoor", false);
+                if (doorAnimator != null)
+                {
+                    doorAnimator.SetBool("OpenDoor", false);
+                }
+                else
+                {
+                    Debug.LogWarning("doorAnimator not found.");
+                }
                 break;
         }
     }

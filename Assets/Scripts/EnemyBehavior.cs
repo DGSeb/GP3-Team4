@@ -181,7 +181,7 @@ public class EnemyBehavior : MonoBehaviour
             // Change the enemy count variables by decreasing one from the enemy remaining count and increasing the enemies eliminated count by 1.
             gM.ChangeEnemyCountVariables();
             gM.PlayEnemyDeathSound();
-            if (gM.currentScene == "TutorialRemastered")
+            if (gM.currentScene == "Tutorial")
             {
                 enemyHealth = 1;
                 this.gameObject.SetActive(false);

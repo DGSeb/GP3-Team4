@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI enemiesEliminatedUI; // Reference to enemies eliminated text element.
 
     // Level enemy count variables
-    private int levelOneEnemyCount = 32;
+    private int levelOneEnemyCount = 15;
     private int levelTwoEnemyCount = 35;
     private int levelThreeEnemyCount = 35;
     private int oldTutorialEnemyCount = 18;
@@ -82,8 +82,8 @@ public class GameManager : MonoBehaviour
 
     // Number of enemies needed to be eliminated to interact with the end object and win.
     private int enemiesToWinLevel;
-    private int enemiesToWinLevel1 = 15;
-    private int enemiesToWinLevel2 = 18;
+    private int enemiesToWinLevel1 = 14;
+    private int enemiesToWinLevel2 = 15;
     private int enemiesToWinLevel3 = 18;
     private int enemiesToWinOldTutorial = 8;
     private int enemiesToWinTutorial = 8;
@@ -320,7 +320,7 @@ public class GameManager : MonoBehaviour
         // Make sure this occurs before running UpdatePBText so it knows which scene it is in.
         currentScene = SceneManager.GetActiveScene().name;
 
-        if (currentScene == "Level1")
+        if (currentScene == "Level1" || currentScene == "Level2" || currentScene == "Level3")
         {
             exitMaterial = exitMaterialRed;
             SwapExitMaterial();
@@ -330,7 +330,7 @@ public class GameManager : MonoBehaviour
         }
 
         // If the player is not in the tutorial, make sure they can double jump and dash.
-        if (currentScene != "TutorialRemastered")
+        if (currentScene != "Tutorial")
         {
             TutorialManager.canDoubleJump = true;
             TutorialManager.canDash = true;
@@ -572,7 +572,7 @@ public class GameManager : MonoBehaviour
         }
         // If currently in the tutorial scene and the current time is lower than the player's PB, the player has a new PB.
         // Set the player's PB to the currentTime and update the PB text.
-        else if (currentScene == "AveryScene" && (currentTime < PlayerPrefs.GetFloat("PBTutorial", timerLimit)))
+        else if (currentScene == "Tutorial" && (currentTime < PlayerPrefs.GetFloat("PBTutorial", timerLimit)))
         {
             PlayerPrefs.SetFloat("PBTutorial", currentTime);
             UpdatePBText();
@@ -589,6 +589,27 @@ public class GameManager : MonoBehaviour
         else if (currentScene == "Level1" && (currentTime < PlayerPrefs.GetFloat("PBLevel1", timerLimit)))
         {
             PlayerPrefs.SetFloat("PBLevel1", currentTime);
+            UpdatePBText();
+        }
+        // If currently in level 1 and the current time is lower than the player's PB, the player has a new PB.
+        // Set the player's PB to the currentTime and update the PB text.
+        else if (currentScene == "Level2" && (currentTime < PlayerPrefs.GetFloat("PBLevel2", timerLimit)))
+        {
+            PlayerPrefs.SetFloat("PBLevel2", currentTime);
+            UpdatePBText();
+        }
+        // If currently in level 2 and the current time is lower than the player's PB, the player has a new PB.
+        // Set the player's PB to the currentTime and update the PB text.
+        else if (currentScene == "Level2" && (currentTime < PlayerPrefs.GetFloat("PBLevel2", timerLimit)))
+        {
+            PlayerPrefs.SetFloat("PBLevel2", currentTime);
+            UpdatePBText();
+        }
+        // If currently in level 3 and the current time is lower than the player's PB, the player has a new PB.
+        // Set the player's PB to the currentTime and update the PB text.
+        else if (currentScene == "Level3" && (currentTime < PlayerPrefs.GetFloat("PBLevel3", timerLimit)))
+        {
+            PlayerPrefs.SetFloat("PBLevel3", currentTime);
             UpdatePBText();
         }
     }
@@ -609,7 +630,7 @@ public class GameManager : MonoBehaviour
             pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PB2", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PB2", timerLimit)}";
         }
         // If in the tutorial scene, set the PB text to the PB for the tutorial level.
-        else if (currentScene == "AveryScene")
+        else if (currentScene == "Tutorial")
         {
             // If there is a format, use the format. Otherwise, don't use a format for PB text.
             pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PBTutorial", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PBTutorial", timerLimit)}";
@@ -633,7 +654,25 @@ public class GameManager : MonoBehaviour
             pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PBLevel1", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PBLevel1", timerLimit)}";
 
             // Set the text for what the player's PB will be displayed as on the results screen.
-            ResultScreen.pBTime = hasFormat ? PlayerPrefs.GetFloat("PBLevel1", timerLimit).ToString(timeFormats[format]) : PlayerPrefs.GetFloat("PBLevel", timerLimit).ToString();
+            ResultScreen.pBTime = hasFormat ? PlayerPrefs.GetFloat("PBLevel1", timerLimit).ToString(timeFormats[format]) : PlayerPrefs.GetFloat("PBLevel1", timerLimit).ToString();
+        }
+        // If in level 1, set the PB text to the PB for level 1.
+        else if (currentScene == "Level2")
+        {
+            // If there is a format, use the format. Otherwise, don't use a format for PB text.
+            pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PBLevel2", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PBLevel2", timerLimit)}";
+
+            // Set the text for what the player's PB will be displayed as on the results screen.
+            ResultScreen.pBTime = hasFormat ? PlayerPrefs.GetFloat("PBLevel2", timerLimit).ToString(timeFormats[format]) : PlayerPrefs.GetFloat("PBLevel2", timerLimit).ToString();
+        }
+        // If in level 1, set the PB text to the PB for level 1.
+        else if (currentScene == "Level3")
+        {
+            // If there is a format, use the format. Otherwise, don't use a format for PB text.
+            pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PBLevel3", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PBLevel3", timerLimit)}";
+
+            // Set the text for what the player's PB will be displayed as on the results screen.
+            ResultScreen.pBTime = hasFormat ? PlayerPrefs.GetFloat("PBLevel3", timerLimit).ToString(timeFormats[format]) : PlayerPrefs.GetFloat("PBLevel3", timerLimit).ToString();
         }
     }  
     
@@ -741,7 +780,7 @@ public class GameManager : MonoBehaviour
         // This is a separate if statement as this only needs to occur once, rather than every time a kill is obtained when the number of required eliminations has already been reached.
         if (enemiesEliminated == enemiesToWinLevel)
         {
-            if (currentScene == "Level1")
+            if (currentScene == "Level1" || currentScene == "Level2" || currentScene == "Level3")
             {
                 exitMaterial = exitMaterialGreen;
                 SwapExitMaterial();
@@ -778,7 +817,7 @@ public class GameManager : MonoBehaviour
                 enemiesToWinLevel = enemiesToWinOldTutorial;
                 break;
 
-            case "AveryScene":
+            case "Tutorial":
                 enemiesRemaining = tutorialEnemyCount;
                 enemiesToWinLevel = enemiesToWinTutorial;
                 break;
