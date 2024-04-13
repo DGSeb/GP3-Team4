@@ -457,6 +457,7 @@ public class PlayerMovement : MonoBehaviour
     // Check what trigger the player walked into.
     private void OnTriggerEnter(Collider other)
     {
+        // Check for collided with object's name.
         switch (other.name)
         {
             // If player hits the end object, update PB and go to next scene.
@@ -503,11 +504,6 @@ public class PlayerMovement : MonoBehaviour
                 tM.PowerOutage();
                 TutorialManager.canDoubleJump = true;
                 Destroy(other.gameObject);
-                break;
-
-            // If player walks into the door, play the door's open animation.
-            case "Door4":
-                other.GetComponent<Animator>().Play("doorOpen");
                 break;
 
             // If player lands in the DashFallZone trigger, transform them back to the point before the dash.
