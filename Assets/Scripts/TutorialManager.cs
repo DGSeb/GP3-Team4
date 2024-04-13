@@ -45,6 +45,9 @@ public class TutorialManager : MonoBehaviour
     // bool to say whether or not debugging should show up in the console.
     private bool debug = false;
 
+    [Header("Passageway")]
+    [SerializeField] private GameObject[] passageEntrance;
+
     private void Start()
     {
         // Set reference to game manager script.
@@ -56,6 +59,14 @@ public class TutorialManager : MonoBehaviour
         // Ensure double jump and dash is false when beginning the tutorial.
         canDoubleJump = false;
         canDash = false;
+
+        // 0 means false or no, and 1 means true or yes.
+        bool tutorialComplete = PlayerPrefs.GetInt("TutorialComplete") == 1 ? true : false;
+
+        if (tutorialComplete)
+        {
+            OpenPassageToPortals();
+        }
     }
 
     void Update()
@@ -224,6 +235,16 @@ public class TutorialManager : MonoBehaviour
         if (debug)
         {
             Debug.Log(info);
+        }
+    }
+
+    // Function that opens a passage the player can use to access the level portals if they have already completed the tutorial.
+    void OpenPassageToPortals()
+    {
+        // For each object in the array, set it to not active.
+        foreach (GameObject passageObject in passageEntrance)
+        {
+            passageObject.SetActive(false);
         }
     }
 }

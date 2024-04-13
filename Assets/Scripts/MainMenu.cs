@@ -109,7 +109,7 @@ public class MainMenu : MonoBehaviour
     public void PlayTutorial()
     {
         GameManager.isPlayerActive = true;
-        LoadScene("TutorialRemastered");
+        LoadScene("Tutorial");
     }
 
     // Function to play the old and smaller tutorial.

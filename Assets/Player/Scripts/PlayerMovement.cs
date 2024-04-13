@@ -448,7 +448,7 @@ public class PlayerMovement : MonoBehaviour
     void BoundaryCheck()
     {
         // If player is below -50 on the y axis, respawn them.
-        if (this.gameObject.transform.position.y < -50)
+        if (this.gameObject.transform.position.y < -40)
         {
             gM.ReloadScene();
         }
@@ -457,6 +457,28 @@ public class PlayerMovement : MonoBehaviour
     // Check what trigger the player walked into.
     private void OnTriggerEnter(Collider other)
     {
+        // Check for collided with object's tag.
+        switch (other.tag)
+        {
+            // If the player hit the level 1 portal, send them to level 1.
+            case "Level1Portal":
+                gM.ChangeScene("Level1");
+                PlayerPrefs.SetInt("TutorialComplete", 1);
+                break;
+
+            // If the player hit the level 2 portal, send them to level 2.
+            case "Level2Portal":
+                gM.ChangeScene("Level2");
+                PlayerPrefs.SetInt("TutorialComplete", 1);
+                break;
+
+            // If the player hit the level 3 portal, send them to level 3.
+            case "Level3Portal":
+                gM.ChangeScene("Level3");
+                PlayerPrefs.SetInt("TutorialComplete", 1);
+                break;
+        }
+
         // Check for collided with object's name.
         switch (other.name)
         {
@@ -474,7 +496,7 @@ public class PlayerMovement : MonoBehaviour
                 gM.ChangeScene("LiamsWackyWonderland");
                 break;
 
-            // If tutorial ending is hit, update pb and change scene.
+            // If level ending is hit, update pb and change scene.
             case "Glitch":
                 // If the player has eliminated enough enemies, add a leaderboard entry, set the run time for the results screen,
                 // check the player's PB, the player won so set that bool to true and make sure lost is false, and change scene.

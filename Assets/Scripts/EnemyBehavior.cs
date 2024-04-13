@@ -69,7 +69,7 @@ public class EnemyBehavior : MonoBehaviour
             RaycastHit hit;
 
             // Do a raycast in the direction of the player and check to see what it hit.
-            if (Physics.Raycast(transform.position, directionToPlayer, out hit, detectionRange))
+            if (Physics.Raycast(transform.position, directionToPlayer, out hit, detectionRange, ~LayerMask.GetMask("AttackIgnore")))
             {
                 // If the hit rigidbody exists and if it is part of the player, draw a ray and begin attack sequence.
                 if (hit.rigidbody != null && hit.rigidbody.CompareTag("Player"))

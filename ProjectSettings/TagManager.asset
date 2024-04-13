@@ -6,6 +6,9 @@ TagManager:
   tags:
   - GameManager
   - Enemy
+  - Level1Portal
+  - Level2Portal
+  - Level3Portal
   layers:
   - Default
   - TransparentFX
