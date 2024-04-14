@@ -567,9 +567,17 @@ public class PlayerMovement : MonoBehaviour
         // Set player prefs int. Can't store a bool, so 0 is false and 1 is true. Since player interacted with portal, tutorial complete is true.
         PlayerPrefs.SetInt("TutorialComplete", 1);
 
-        // Add an entry to the leaderboard because why not have one for speedrunning the tutorial. Also, set tutorial PB, then change scene.
-        gM.AddLeaderboardEntry();
-        gM.CheckPB();
+        // If the player can double jump and dash, they have cleared most of the tutorial, so
+        // add an entry to the leaderboard because why not have one for speedrunning the tutorial. Also, set tutorial PB, then change scene.
+        // The if check is added here to ensure that only if the player completes most of the tutorial can they log an entry in the leaderboard or get a better PB.
+        // This is necessary because the player can just use the portals to change scenes if they have completed the tutorial before.
+        // If they haven't completed the tutorial again, then they shouldn't be able to change their PB or add a leaderboard entry.
+        if (TutorialManager.canDoubleJump && TutorialManager.canDash)
+        {
+            gM.AddLeaderboardEntry();
+            gM.CheckPB();
+        }
+        
         gM.ChangeScene(sceneName);
     }
 
