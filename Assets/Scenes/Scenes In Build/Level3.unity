@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 3.5376954, g: 5.771462, b: 8.189515, a: 1}
+  m_IndirectSpecularColor: {r: 3.5376954, g: 5.7714314, b: 8.189485, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -19216,6 +19216,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1666951113}
     m_Modifications:
+    - target: {fileID: 5914947750872415407, guid: b3eb1706615473446af777c9310e9f4e,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 2.9642792
+      objectReference: {fileID: 0}
+    - target: {fileID: 5914947750872415407, guid: b3eb1706615473446af777c9310e9f4e,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0.023766518
+      objectReference: {fileID: 0}
+    - target: {fileID: 5914947750872415407, guid: b3eb1706615473446af777c9310e9f4e,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 4.2538672e-16
+      objectReference: {fileID: 0}
     - target: {fileID: 5925009536222307012, guid: b3eb1706615473446af777c9310e9f4e,
         type: 3}
       propertyPath: m_Name
@@ -24574,6 +24589,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1666951113}
     m_Modifications:
+    - target: {fileID: 5914947750872415407, guid: b3eb1706615473446af777c9310e9f4e,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 2.9642792
+      objectReference: {fileID: 0}
+    - target: {fileID: 5914947750872415407, guid: b3eb1706615473446af777c9310e9f4e,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0.023766518
+      objectReference: {fileID: 0}
+    - target: {fileID: 5914947750872415407, guid: b3eb1706615473446af777c9310e9f4e,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 4.2538672e-16
+      objectReference: {fileID: 0}
     - target: {fileID: 5925009536222307012, guid: b3eb1706615473446af777c9310e9f4e,
         type: 3}
       propertyPath: m_Name
@@ -26428,6 +26458,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy (34)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1854574700627123396, guid: 66f62df211158c2439c0ec0fca6a1364,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2461839148276781197, guid: 66f62df211158c2439c0ec0fca6a1364,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2865683362732016885, guid: 66f62df211158c2439c0ec0fca6a1364,
         type: 3}
