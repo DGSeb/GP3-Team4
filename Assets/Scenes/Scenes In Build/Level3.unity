@@ -10645,18 +10645,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a, type: 3}
---- !u!224 &438312847 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4779986321191773086, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
-    type: 3}
-  m_PrefabInstance: {fileID: 438312846}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &438312848 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8121383405947485942, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
-    type: 3}
-  m_PrefabInstance: {fileID: 438312846}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &438312849 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1058080504421466485, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
@@ -24214,9 +24202,6 @@ MonoBehaviour:
   hasFormat: 1
   format: 4
   currentScene: 
-  entryContainer: {fileID: 438312847}
-  entryTemplate: {fileID: 438312848}
-  leaderboard: {fileID: 438312849}
   enemiesRemainingUI: {fileID: 438312851}
   enemiesEliminatedUI: {fileID: 438312850}
   enemiesRemaining: 0
@@ -24234,6 +24219,7 @@ MonoBehaviour:
   exit: {fileID: 2098345022}
   fpsDisplay: {fileID: 1763375333}
   fpsToggle: {fileID: 1783654620}
+  leaderboard: {fileID: 438312849}
 --- !u!4 &1098243602
 Transform:
   m_ObjectHideFlags: 0
