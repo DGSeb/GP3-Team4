@@ -485,9 +485,14 @@ public class PlayerMovement : MonoBehaviour
                 // check the player's PB, the player won so set that bool to true and make sure lost is false, and change scene.
                 if (gM.enoughEnemiesEliminated)
                 {
+                    // Disable the collider to ensure the function does not run twice.
+                    this.gameObject.GetComponent<Collider>().enabled = false;
+
+                    // Add leaderboard entry and update PB if it's better than it was.
                     gM.AddLeaderboardEntry();
                     gM.CheckPB();
 
+                    // Check the current scene to determine which scene to go to.
                     if (gM.currentScene == "Level1")
                     {
                         gM.ChangeScene("Level2");
@@ -512,6 +517,8 @@ public class PlayerMovement : MonoBehaviour
         {
             // If player hits the end object, update PB and go to next scene.
             case "End":
+                // Disable the collider to ensure the function does not run twice.
+                this.gameObject.GetComponent<Collider>().enabled = false;
                 gM.AddLeaderboardEntry();
                 gM.CheckPB();
                 gM.ChangeScene("LiamsHighlyPsychoticJoint");
@@ -519,6 +526,8 @@ public class PlayerMovement : MonoBehaviour
 
             // If second ending is hit, update pb and change scene.
             case "End2":
+                // Disable the collider to ensure the function does not run twice.
+                this.gameObject.GetComponent<Collider>().enabled = false;
                 gM.AddLeaderboardEntry();
                 gM.CheckPB();
                 gM.ChangeScene("LiamsWackyWonderland");
@@ -553,7 +562,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // Disable the collider to ensure that the function does not trigger multiple times.
         // There was an issue with this function running twice, so this resolves that issue.
-        this.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+        this.gameObject.GetComponent<Collider>().enabled = false;
 
         // Set player prefs int. Can't store a bool, so 0 is false and 1 is true. Since player interacted with portal, tutorial complete is true.
         PlayerPrefs.SetInt("TutorialComplete", 1);
