@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
     public Transform entryContainer; // Container that stores entries.
     public Transform entryTemplate; // Template that is used to determine how entries display.
     public GameObject leaderboard;
+    private string playerPrefsString; // String where leaderboard entries are based on the current scene.
 
     private float templateHeight = 37f; // Y distance between entries.
     private List<Transform> highscoreEntryTransformList; // List of entry locations.
@@ -72,10 +73,8 @@ public class GameManager : MonoBehaviour
 
     // Level enemy count variables
     private int levelOneEnemyCount = 15;
-    private int levelTwoEnemyCount = 35;
-    private int levelThreeEnemyCount = 35;
-    private int oldTutorialEnemyCount = 18;
-    private int tutorialEnemyCount = 18;
+    private int levelTwoEnemyCount = 28;
+    private int levelThreeEnemyCount = 37;
 
     [HideInInspector] public int enemiesRemaining;
     [HideInInspector] public int enemiesEliminated = 0;
@@ -84,9 +83,7 @@ public class GameManager : MonoBehaviour
     private int enemiesToWinLevel;
     private int enemiesToWinLevel1 = 14;
     private int enemiesToWinLevel2 = 15;
-    private int enemiesToWinLevel3 = 18;
-    private int enemiesToWinOldTutorial = 8;
-    private int enemiesToWinTutorial = 8;
+    private int enemiesToWinLevel3 = 22;
 
 
     // Bool that says whether or not enough enemies have been eliminated for the player to be able to exit the level.
@@ -266,8 +263,24 @@ public class GameManager : MonoBehaviour
     // Function that adds a new highscore entry to the list.
     private void AddHighscoreEntry(float time, string name)
     {
+        // Switch statment that sets the playerprefs string to store a leaderboard entry in based on which scene the player is in.
+        switch (currentScene)
+        {
+            case "Level1":
+                playerPrefsString = "PBLeaderboardLevel1";
+                break;
+
+            case "Level2":
+                playerPrefsString = "PBLeaderboardLevel2";
+                break;
+
+            case "Level3":
+                playerPrefsString = "PBLeaderboardLevel3";
+                break;
+        }
+
         // Load saved highscores by first getting the data from the player prefs string, then setting a variable to the JSON data we want to access.
-        string jsonString = PlayerPrefs.GetString("PBTimes");
+        string jsonString = PlayerPrefs.GetString(playerPrefsString);
         Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
 
         // If highscores is null, create a new instance of it to prevent null reference exception error.
@@ -290,7 +303,7 @@ public class GameManager : MonoBehaviour
 
         // Save the new entry by putting it into a JSON string and then storing that in the player prefs key.
         string json = JsonUtility.ToJson(highscores);
-        PlayerPrefs.SetString("PBTimes", json);
+        PlayerPrefs.SetString(playerPrefsString, json);
         PlayerPrefs.Save();
     }
 
@@ -810,18 +823,7 @@ public class GameManager : MonoBehaviour
             case "Level3":
                 enemiesRemaining = levelThreeEnemyCount;
                 enemiesToWinLevel = enemiesToWinLevel3;
-                break;
-
-            case "Tutorial (Small Version)":
-                enemiesRemaining = oldTutorialEnemyCount;
-                enemiesToWinLevel = enemiesToWinOldTutorial;
-                break;
-
-            case "Tutorial":
-                enemiesRemaining = tutorialEnemyCount;
-                enemiesToWinLevel = enemiesToWinTutorial;
-                break;
-        
+                break;        
         }
 
         // The below items always occur no matter the level.

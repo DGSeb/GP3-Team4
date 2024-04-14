@@ -477,6 +477,33 @@ public class PlayerMovement : MonoBehaviour
                 gM.ChangeScene("Level3");
                 PlayerPrefs.SetInt("TutorialComplete", 1);
                 break;
+
+            // If level ending is hit, update pb and change scene.
+            case "Exit":
+                // If the player has eliminated enough enemies, add a leaderboard entry, set the run time for the results screen,
+                // check the player's PB, the player won so set that bool to true and make sure lost is false, and change scene.
+                if (gM.enoughEnemiesEliminated)
+                {
+                    gM.AddLeaderboardEntry();
+                    gM.SetRunTime();
+                    gM.CheckPB();
+                    ResultScreen.won = true;
+                    ResultScreen.lost = false;
+
+                    if (gM.currentScene == "Level1")
+                    {
+                        gM.ChangeScene("Level2");
+                    }
+                    else if (gM.currentScene == "Level2")
+                    {
+                        gM.ChangeScene("Level3");
+                    }
+                    else if (gM.currentScene == "Level3")
+                    {
+                        gM.ChangeScene("ResultsScreen");
+                    }
+                }
+                break;
         }
 
         // Check for collided with object's name.
@@ -494,21 +521,6 @@ public class PlayerMovement : MonoBehaviour
                 gM.AddLeaderboardEntry();
                 gM.CheckPB();
                 gM.ChangeScene("LiamsWackyWonderland");
-                break;
-
-            // If level ending is hit, update pb and change scene.
-            case "Glitch":
-                // If the player has eliminated enough enemies, add a leaderboard entry, set the run time for the results screen,
-                // check the player's PB, the player won so set that bool to true and make sure lost is false, and change scene.
-                if (gM.enoughEnemiesEliminated)
-                {
-                    gM.AddLeaderboardEntry();
-                    gM.SetRunTime();
-                    gM.CheckPB();
-                    ResultScreen.won = true;
-                    ResultScreen.lost = false;
-                    gM.ChangeScene("ResultsScreen");
-                }
                 break;
 
             // If the player runs into the dash trigger, let them dash and destroy the trigger.

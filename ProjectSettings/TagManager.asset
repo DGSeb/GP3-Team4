@@ -9,6 +9,7 @@ TagManager:
   - Level1Portal
   - Level2Portal
   - Level3Portal
+  - Exit
   layers:
   - Default
   - TransparentFX
