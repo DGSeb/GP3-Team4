@@ -616,6 +616,10 @@ public class PlayerMovement : MonoBehaviour
     // Same code is used for tutorial portals, so running a function instead of writing the same lines of code.
     void TutorialComplete(string sceneName)
     {
+        // Disable the collider to ensure that the function does not trigger multiple times.
+        // There was an issue with this function running twice, so this resolves that issue.
+        this.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+
         // Set player prefs int. Can't store a bool, so 0 is false and 1 is true. Since player interacted with portal, tutorial complete is true.
         PlayerPrefs.SetInt("TutorialComplete", 1);
 

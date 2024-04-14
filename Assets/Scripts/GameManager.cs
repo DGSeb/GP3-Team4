@@ -462,6 +462,7 @@ public class GameManager : MonoBehaviour
             && Input.GetKey(KeyCode.B) && Input.GetKeyDown(KeyCode.P))
         {
             PlayerPrefs.DeleteAll();
+            Debug.Log("Deleted all player prefs keys!");
         }
 
         // While equals is held down, each press of the T key adds 10 seconds to the timer.

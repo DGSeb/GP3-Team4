@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 3.5376954, g: 5.7714314, b: 8.189485, a: 1}
+  m_IndirectSpecularColor: {r: 3.537579, g: 5.7713933, b: 8.1893015, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -23782,7 +23782,7 @@ MonoBehaviour:
   playerLoseSound: {fileID: 1098243604}
   exitMaterialGreen: {fileID: 2100000, guid: 93177b5f39c98244e93a0cb9833cbc19, type: 2}
   exitMaterialRed: {fileID: 2100000, guid: 81ed5b6123e4ba342ace33cb5bc95d84, type: 2}
-  exit: {fileID: 0}
+  exit: {fileID: 2098345022}
   fpsDisplay: {fileID: 1763375333}
   fpsToggle: {fileID: 1783654620}
 --- !u!4 &1098243602
@@ -46002,6 +46002,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d08a526928acd045bad0582c921da0c, type: 3}
+--- !u!1 &2098345022 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1247777130758424960, guid: 0d08a526928acd045bad0582c921da0c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2098345021}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2102619519
 PrefabInstance:
   m_ObjectHideFlags: 0

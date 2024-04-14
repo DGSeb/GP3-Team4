@@ -39,7 +39,7 @@ public class WeaponHandler : MonoBehaviour
 
     private IEnumerator Shoot(float waitTime)
     {
-        print("Pew!");
+        //print("Pew!");
         recoilScript.RecoilFire(recoilX, recoilY, recoilZ);
 
         GameObject effectInstance = Instantiate(Effect, Emitter);

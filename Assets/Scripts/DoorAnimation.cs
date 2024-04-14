@@ -19,7 +19,6 @@ public class DoorAnimation : MonoBehaviour
         {
             // If player tag object enters the trigger, set open door to true to play the open door animation.
             case "Player":
-                Debug.Log("HEre");
                 if (doorAnimator != null)
                 {
                     doorAnimator.SetBool("OpenDoor", true);
