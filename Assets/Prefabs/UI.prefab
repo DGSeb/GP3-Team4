@@ -740,6 +740,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entryContainer: {fileID: 4779986321191773086}
   entryTemplate: {fileID: 8121383405947485942}
+  hasLimit: 1
+  hasFormat: 1
+  format: 4
 --- !u!1 &1114135103838810925
 GameObject:
   m_ObjectHideFlags: 0

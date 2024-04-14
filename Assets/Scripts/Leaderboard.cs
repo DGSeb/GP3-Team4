@@ -13,17 +13,50 @@ public class Leaderboard : MonoBehaviour
     private float templateHeight = 37f; // Y distance between entries.
     private List<Transform> highscoreEntryTransformList; // List of entry locations.
 
-    private GameManager gM;
+    // Settings to control if there is a time limit.
+    [Header("Limit Settings")]
+    public bool hasLimit;
+
+    // Settings to control the format of the timer.
+    [Header("Format Settings")]
+    public bool hasFormat;
+    public TimerFormats format;
+    [HideInInspector] public Dictionary<TimerFormats, string> timeFormats = new Dictionary<TimerFormats, string>();
+
+    // Enum for the different formats of the timer, such as 1 second or 1.1 seconds or 1.11 seconds or 1.111 seconds.
+    public enum TimerFormats
+    {
+        None,
+        Whole,
+        TenthDecimal,
+        HundrethsDecimal,
+        ThousandthsDecimal
+    }
 
     private void Awake()
     {
-        gM = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-        LoadLeaderboard();
+
     }
 
     // Function that load and populates the leaderboard with the entries stored in the player prefs string/json file.
-    void LoadLeaderboard()
+    public void LoadLeaderboard(string playerPrefsStringy)
     {
+        // Clear the dictionary so the addition of new keys does not cause any issues.
+        timeFormats.Clear();
+
+        // Add entries to the dictionary for the timer format.
+        timeFormats.Add(TimerFormats.None, "0.000000");
+        timeFormats.Add(TimerFormats.Whole, "0");
+        timeFormats.Add(TimerFormats.TenthDecimal, "0.0");
+        timeFormats.Add(TimerFormats.HundrethsDecimal, "0.00");
+        timeFormats.Add(TimerFormats.ThousandthsDecimal, "0.000");
+
+        // Set the static player prefs string variable to the string taken in when this function is called.
+        playerPrefsString = playerPrefsStringy;
+
+        // Clear the leaderboard for new entries
+        ClearLeaderboard();
+
         // Turn off the template of what entries will look like as it's not meant to be seen as an actual entry.
         entryTemplate.gameObject.SetActive(false);
 
@@ -108,7 +141,7 @@ public class Leaderboard : MonoBehaviour
 
         // Find the time text in the entry template and set it to the current time on the timer utilizing the timer format chosen.
         // (highscoreEntry.time is equal to time parameter when adding a new highscore entry, which is set to the currentTime on the timer when a new highscore entry is created.)
-        entryTransform.Find("TimeTextEntry").GetComponent<TextMeshProUGUI>().text = gM.hasFormat ? $"{highscoreEntry.time.ToString(gM.timeFormats[gM.format])}" : $"{highscoreEntry.time}";
+        entryTransform.Find("TimeTextEntry").GetComponent<TextMeshProUGUI>().text = hasFormat ? $"{highscoreEntry.time.ToString(timeFormats[format])}" : $"{highscoreEntry.time}";
 
         string name = highscoreEntry.name; // String for player name
 
@@ -178,5 +211,18 @@ public class Leaderboard : MonoBehaviour
     {
         public float time;
         public string name;
+    }
+
+    // Function that clears out all current entries on the leaderboard, so new entries have a fresh template to draw on.
+    void ClearLeaderboard()
+    {
+        // For each transform in the entry container, remove it.
+        foreach (Transform entry in entryContainer)
+        {
+            if (entry.name != "HighscoreEntryTemplate")
+            {
+                Destroy(entry.gameObject);
+            }
+        }
     }
 }

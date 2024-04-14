@@ -22,14 +22,22 @@ public class MainMenu : MonoBehaviour
     private float fpsUpdateTimer;
 
     // Variables related to allowing the menus to be navigated with keyboard and controller.
-    [Header("Pause Menu Navigation")]
+    [Header("Menu Navigation")]
     public GameObject pauseFirstButton;
     public GameObject settingsFirstButton;
     public GameObject settingsClosedButton;
+    public GameObject leaderboardClosedButton;
 
     // Scrollbar movement on controller
     [SerializeField] private Scrollbar scrollbar;
     private float scrollSpeed = 0.0035f;
+
+    // Leaderboard variables.
+    [Header("Leaderboard")]
+    [SerializeField] private GameObject leaderboard; // Leaderboard object.
+    [SerializeField] private GameObject leaderboardSelection; // Screen that has selection for which leaderboard to display.
+    private Leaderboard leaderboardScript; // reference to the leaderboard script.
+    [SerializeField] private GameObject leaderboardSelectionFirstButton; // first button selected when leaderboard selection screen is active.
 
     void Start()
     {
@@ -47,6 +55,9 @@ public class MainMenu : MonoBehaviour
             GameManager.displayFPS = true;
             fpsDisplay.enabled = true;
         }
+
+        // Set reference to leaderboard script.
+        leaderboardScript = leaderboard.GetComponent<Leaderboard>();
     }
 
     void Update()
@@ -77,10 +88,18 @@ public class MainMenu : MonoBehaviour
 
             // Clamp the scrollbar's value so it can't go above 1 or below 0.
             scrollbar.value = Mathf.Clamp01(scrollbar.value);
+        }
 
-            if (Input.GetKeyDown(KeyCode.Escape))
+        // If escape is pressed, see what UI is currently active and set it to false.
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1) || Input.GetKeyDown(KeyCode.JoystickButton7))
+        {
+            if (settingsMenu.activeSelf)
             {
                 ExitSettings();
+            }
+            else if (leaderboardSelection.activeSelf)
+            {
+                ExitLeaderboard();
             }
         }
     }
@@ -168,9 +187,55 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    // Display leaderboard UI
-    public void LeaderboardDisplay()
+    // Display leaderboard selection screen
+    public void LeaderboardSelectionScreen()
     {
+        leaderboardSelection.SetActive(true);
+        // Clear any selected object in the event system and set a new selected object.
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(leaderboardSelectionFirstButton);
+    }
 
+    // Display tutorial leaderboard
+    public void LeaderboardTutorial()
+    {
+        leaderboardScript.LoadLeaderboard("PBLeaderboardTutorial");
+        leaderboard.SetActive(true);
+    }
+
+    // Display level 1 leaderboard
+    public void LeaderboardLevel1()
+    {
+        leaderboardScript.LoadLeaderboard("PBLeaderboardLevel1");
+        leaderboard.SetActive(true);
+    }
+
+    // Display level 2 leaderboard
+    public void LeaderboardLevel2()
+    {
+        leaderboardScript.LoadLeaderboard("PBLeaderboardLevel2");
+        leaderboard.SetActive(true);
+    }
+
+    // Display level 3 leaderboard
+    public void LeaderboardLevel3()
+    {
+        leaderboardScript.LoadLeaderboard("PBLeaderboardLevel3");
+        leaderboard.SetActive(true);
+    }
+
+    // Go back to menu
+    public void ExitLeaderboard()
+    {
+        leaderboardSelection.SetActive(false);
+        
+        if (leaderboard.activeSelf)
+        {
+            leaderboard.SetActive(false);
+        }
+
+        // Set the main menu first button
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(leaderboardClosedButton);
     }
 }

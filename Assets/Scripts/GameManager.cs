@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     [Header("Format Settings")]
     public bool hasFormat;
     public TimerFormats format;
-    [HideInInspector] public Dictionary<TimerFormats, string> timeFormats = new Dictionary<TimerFormats, string>();
+    private Dictionary<TimerFormats, string> timeFormats = new Dictionary<TimerFormats, string>();
 
     // Enum for the different formats of the timer, such as 1 second or 1.1 seconds or 1.11 seconds or 1.111 seconds.
     public enum TimerFormats
@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
 
     // Number of enemies needed to be eliminated to interact with the end object and win.
     private int enemiesToWinLevel;
-    private int enemiesToWinTutorial = 6;
+    private int enemiesToWinTutorial = 12;
     private int enemiesToWinLevel1 = 14;
     private int enemiesToWinLevel2 = 15;
     private int enemiesToWinLevel3 = 22;
@@ -317,6 +317,7 @@ public class GameManager : MonoBehaviour
         //** Leaderboard will become accessible through the menu later on.**
         if (Input.GetKeyDown(KeyCode.L))
         {
+            leaderboardScript.LoadLeaderboard(Leaderboard.playerPrefsString);
             leaderboard.SetActive(!leaderboard.activeSelf);
         }
 

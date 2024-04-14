@@ -88,7 +88,7 @@ public class TutorialManager : MonoBehaviour
         }
 
         // If the number of enemies eliminated is equal to half of the array length, that means enough enemies have been eliminated to complete the firing range.
-        if (gM.enemiesEliminated >= (shootingRangeEnemies.Length / 2))
+        if (gM.enemiesEliminated >= (shootingRangeEnemies.Length))
         {
             firingRangeDone = true;
         }
