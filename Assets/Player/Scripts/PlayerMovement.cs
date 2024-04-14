@@ -102,6 +102,11 @@ public class PlayerMovement : MonoBehaviour
     [Header("Tutorial Items")]
     public Transform dashCheckpoint;
 
+    // Reference to the parent object of the player that is used when changing parents with moving platforms.
+    private Transform originalParent;
+    private bool onMovingPlatform;
+    private Vector3 platformVelocity;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -228,6 +233,12 @@ public class PlayerMovement : MonoBehaviour
 
         // Run function that checks whether or not the player is within the map boundaries.
         BoundaryCheck();
+
+        // If player is on the platform, set their velocity to the platform's velocity.
+        if (onMovingPlatform)
+        {
+            rb.velocity += platformVelocity;
+        }
     }
 
     private void MyInput()
@@ -541,75 +552,6 @@ public class PlayerMovement : MonoBehaviour
             case "DashFallZone":
                 this.gameObject.transform.position = new Vector3(dashCheckpoint.position.x, dashCheckpoint.position.y, dashCheckpoint.position.z);
                 break;
-
-            /*// If the tutorial pressure plate is walked on, run function from tutorial manager script that turns off all current enemies
-            // and then spawns all new enemies. Also, turn off the trigger on the current pressure plate and turn on the other pressure plate triggers.
-            case "TutorialPressurePlate1":
-                tM.FiringRangeSpawn();
-                other.gameObject.GetComponent<BoxCollider>().enabled = false;
-                tutorialPressurePlates[1].GetComponent<BoxCollider>().enabled = true;
-                tutorialPressurePlates[2].GetComponent<BoxCollider>().enabled = true;
-                break;
-
-            // If the tutorial pressure plate is walked on, run function from tutorial manager script that turns off all current enemies
-            // and then spawns all new enemies. Also, turn off the trigger on the current pressure plate and turn on the other pressure plate triggers.
-            case "TutorialPressurePlate2":
-                tM.FiringRangeSpawn();
-                other.gameObject.GetComponent<BoxCollider>().enabled = false;
-                tutorialPressurePlates[0].GetComponent<BoxCollider>().enabled = true;
-                tutorialPressurePlates[2].GetComponent<BoxCollider>().enabled = true;
-                break;
-
-            // If the tutorial pressure plate is walked on, run function from tutorial manager script that turns off all current enemies
-            // and then spawns all new enemies. Also, turn off the trigger on the current pressure plate and turn on the other pressure plate triggers.
-            case "TutorialPressurePlate3":
-                tM.FiringRangeSpawn();
-                other.gameObject.GetComponent<BoxCollider>().enabled = false;
-                tutorialPressurePlates[0].GetComponent<BoxCollider>().enabled = true;
-                tutorialPressurePlates[1].GetComponent<BoxCollider>().enabled = true;
-                break;*/
-
-                /*// If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
-                case "PressurePlate0":
-                    enemyGroups[0].SetActive(true);
-                    Destroy(other.gameObject);
-                    break;
-
-                // If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
-                case "PressurePlate1":
-                    enemyGroups[1].SetActive(true);
-                    Destroy(other.gameObject);
-                    break;
-
-                // If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
-                case "PressurePlate2":
-                    enemyGroups[2].SetActive(true);
-                    Destroy(other.gameObject);
-                    break;
-
-                // If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
-                case "PressurePlate3":
-                    enemyGroups[3].SetActive(true);
-                    Destroy(other.gameObject);
-                    break;
-
-                // If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
-                case "PressurePlate4":
-                    enemyGroups[4].SetActive(true);
-                    Destroy(other.gameObject);
-                    break;
-
-                // If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
-                case "PressurePlate5":
-                    enemyGroups[5].SetActive(true);
-                    Destroy(other.gameObject);
-                    break;
-
-                // If pressure plate is hit, spawn corresponding enemy group and destroy the pressure plate.
-                case "PressurePlate6":
-                    enemyGroups[6].SetActive(true);
-                    Destroy(other.gameObject);
-                    break;*/
         }
     }
 
@@ -627,5 +569,31 @@ public class PlayerMovement : MonoBehaviour
         gM.AddLeaderboardEntry();
         gM.CheckPB();
         gM.ChangeScene(sceneName);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        // If the player collides with a moving platform, store the player's parent object, then set the player's new parent to the transform of the moving platform.
+        if (collision.gameObject.CompareTag("MovingPlatform"))
+        {
+            onMovingPlatform = true;
+            platformVelocity = collision.gameObject.GetComponent<Rigidbody>().velocity;
+            Debug.Log("On");
+            originalParent = transform.parent;
+
+            transform.parent = collision.transform;
+            Debug.Log("Attached");
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        // If the player has exited the moving platform's collider, set the player's parent back to what it was originally.
+        if (collision.gameObject.CompareTag("MovingPlatform"))
+        {
+            onMovingPlatform = false;
+            transform.parent = originalParent;
+            Debug.Log("He GONE!");
+        }
     }
 }
