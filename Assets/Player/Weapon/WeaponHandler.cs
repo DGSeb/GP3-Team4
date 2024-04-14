@@ -48,7 +48,7 @@ public class WeaponHandler : MonoBehaviour
         Vector3 aimPosition = playerCam.transform.position + playerCam.transform.forward * 100;
 
         RaycastHit hit;
-        if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, 9999f, ~LayerMask.GetMask("AttackIgnore")))
+        if (Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hit, 9999f, ~LayerMask.GetMask("AttackIgnore", "Player")))
         {
             Debug.Log(hit.transform.name);
 
