@@ -102,9 +102,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("Tutorial Items")]
     public Transform dashCheckpoint;
 
-    // Reference to the parent object of the player that is used when changing parents with moving platforms.
-    private Transform originalParent;
-    private bool onMovingPlatform;
+    // Variables used for moving platform interaction.
+    private Transform originalParent; // Player's parent object.
     private Vector3 platformVelocity;
 
     private void Start()
@@ -233,12 +232,6 @@ public class PlayerMovement : MonoBehaviour
 
         // Run function that checks whether or not the player is within the map boundaries.
         BoundaryCheck();
-
-        // If player is on the platform, set their velocity to the platform's velocity.
-        if (onMovingPlatform)
-        {
-            rb.velocity += platformVelocity;
-        }
     }
 
     private void MyInput()
@@ -576,11 +569,17 @@ public class PlayerMovement : MonoBehaviour
         // If the player collides with a moving platform, store the player's parent object, then set the player's new parent to the transform of the moving platform.
         if (collision.gameObject.CompareTag("MovingPlatform"))
         {
-            onMovingPlatform = true;
-            platformVelocity = collision.gameObject.GetComponent<Rigidbody>().velocity;
-            Debug.Log("On");
+            // Store the player's current parent object.
             originalParent = transform.parent;
 
+            // Store the platforms velocity.
+            platformVelocity = collision.gameObject.GetComponent<Rigidbody>().velocity;
+
+            // Add force to the player using the platforms velocity. Also, increase move speed so player can move on platform.
+            rb.AddForce(platformVelocity);
+            moveSpeed = 25;
+
+            // Set the platform as the player's parent.
             transform.parent = collision.transform;
             Debug.Log("Attached");
         }
@@ -591,8 +590,10 @@ public class PlayerMovement : MonoBehaviour
         // If the player has exited the moving platform's collider, set the player's parent back to what it was originally.
         if (collision.gameObject.CompareTag("MovingPlatform"))
         {
-            onMovingPlatform = false;
+            // Set the player's parent make to what it was before touching the moving platform and set the move speed back to what it should be.
             transform.parent = originalParent;
+            moveSpeed = desiredMoveSpeed;
+            
             Debug.Log("He GONE!");
         }
     }
