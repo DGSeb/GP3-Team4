@@ -583,12 +583,20 @@ public class PlayerMovement : MonoBehaviour
             transform.parent = collision.transform;
             Debug.Log("Attached");
         }
+        // If it is a moving platform, only child the player to the platform rather than change the player's velocity.
+        else if (collision.gameObject.CompareTag("HorizontalMovingPlatform"))
+        {
+            Debug.Log("Horizontal moving platform");
+            originalParent = transform.parent;
+            transform.parent = collision.transform;
+            moveSpeed = 25;
+        }
     }
 
     private void OnCollisionExit(Collision collision)
     {
         // If the player has exited the moving platform's collider, set the player's parent back to what it was originally.
-        if (collision.gameObject.CompareTag("MovingPlatform"))
+        if (collision.gameObject.CompareTag("MovingPlatform") || collision.gameObject.CompareTag("HorizontalMovingPlatform"))
         {
             // Set the player's parent make to what it was before touching the moving platform and set the move speed back to what it should be.
             transform.parent = originalParent;

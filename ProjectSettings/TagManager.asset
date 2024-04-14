@@ -11,6 +11,7 @@ TagManager:
   - Level3Portal
   - Exit
   - MovingPlatform
+  - HorizontalMovingPlatform
   layers:
   - Default
   - TransparentFX
