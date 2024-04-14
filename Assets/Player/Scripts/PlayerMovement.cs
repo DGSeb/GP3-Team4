@@ -578,6 +578,7 @@ public class PlayerMovement : MonoBehaviour
         {
             onMovingPlatform = true;
             platformVelocity = collision.gameObject.GetComponent<Rigidbody>().velocity;
+            Debug.Log("On");
             originalParent = transform.parent;
 
             transform.parent = collision.transform;
