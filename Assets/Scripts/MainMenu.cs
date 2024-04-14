@@ -191,6 +191,7 @@ public class MainMenu : MonoBehaviour
     public void LeaderboardSelectionScreen()
     {
         leaderboardSelection.SetActive(true);
+
         // Clear any selected object in the event system and set a new selected object.
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(leaderboardSelectionFirstButton);
@@ -227,8 +228,10 @@ public class MainMenu : MonoBehaviour
     // Go back to menu
     public void ExitLeaderboard()
     {
+        // Turn off the leaderboard selection menu.
         leaderboardSelection.SetActive(false);
         
+        // If the leaderboard is active, turn it off.
         if (leaderboard.activeSelf)
         {
             leaderboard.SetActive(false);

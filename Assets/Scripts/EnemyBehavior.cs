@@ -65,104 +65,99 @@ public class EnemyBehavior : MonoBehaviour
             // The Vector3 that indicates the direction to face the player is found through the player position minus the position of the enemy.
             directionToPlayer = (player.position - transform.position).normalized;
 
-            // Create a variable for what the raycast hits.
-            RaycastHit hit;
-
-            // Do a raycast in the direction of the player and check to see what it hit.
-            if (Physics.Raycast(transform.position, directionToPlayer, out hit, detectionRange, ~LayerMask.GetMask("AttackIgnore")))
+            // If the enemy is in the tutorial, their actions are limited, so remove that ability to play audio and fire their weapon.
+            if (gM.currentScene != "Tutorial")
             {
-                // If the hit rigidbody exists and if it is part of the player, draw a ray and begin attack sequence.
-                if (hit.rigidbody != null && hit.rigidbody.CompareTag("Player"))
+                // Create a variable for what the raycast hits.
+                RaycastHit hit;
+
+                // Do a raycast in the direction of the player and check to see what it hit.
+                if (Physics.Raycast(transform.position, directionToPlayer, out hit, detectionRange, ~LayerMask.GetMask("AttackIgnore")))
                 {
-                    // Set bool to true here to ensure that time only gets added to the timer when the player has been hit by the ray.
-                    // This prevents time being added if the player was hit, but then hid behind a wall.
-                    canAddTime = true;
-
-                    // Run the draw ray function that creates a line at the enemy position going towards the player in the color red.
-                    DrawRay(transform.position, hit.point, Color.red);
-
-                    // Begin the counting down of the timer.
-                    shootDelayTimer -= Time.deltaTime;
-
-                    // Play audio of enemy attack charging up
-                    if (!attackChargeSound.isPlaying)
+                    // If the hit rigidbody exists and if it is part of the player, draw a ray and begin attack sequence.
+                    if (hit.rigidbody != null && hit.rigidbody.CompareTag("Player"))
                     {
-                        attackChargeSound.Play();
+                        // Set bool to true here to ensure that time only gets added to the timer when the player has been hit by the ray.
+                        // This prevents time being added if the player was hit, but then hid behind a wall.
+                        canAddTime = true;
+
+                        // Run the draw ray function that creates a line at the enemy position going towards the player in the color red.
+                        DrawRay(transform.position, hit.point, Color.red);
+
+                        // Begin the counting down of the timer.
+                        shootDelayTimer -= Time.deltaTime;
+
+                        // Play audio of enemy attack charging up
+                        if (!attackChargeSound.isPlaying)
+                        {
+                            attackChargeSound.Play();
+                        }
+
+                        // If the timer has reached or gone below zero, the enemy is now able to fire at the player.
+                        if (shootDelayTimer <= 0)
+                        {
+                            canFire = true;
+                            shootDelayTimer = 0; // Ensure timer does not go below zero.
+                        }
+
+                        // Create a float that will be the alpha value of the drawn ray.
+                        // Set the float equal to the opposite percentage of the timer.
+                        // How this works is if the timer is at 8 and the delay is set to 10, the math will be 1 - (8/10), which is 1 - 0.8, which equals 0.2.
+                        // The alpha value should be increasing as the timer is decreasing,
+                        // so the alpha does not use the percentage of how close the timer is to 0, but rather how far the timer is from it's highest value.
+                        float alpha = 1.0f - (shootDelayTimer / shootDelay);
+
+                        // Clamp the alpha value to between 0 and 1 to ensure that it does not go below 0 or above 1.
+                        alpha = Mathf.Clamp01(alpha);
+
+                        // Run the set alpha function that sets the drawn ray's alpha value to the alpha calculated above.
+                        SetAlpha(alpha);
+
+                        // If the enemy can fire and the player is currently in range, fire the enemy's weapon.
+                        if (canFire && playerInRange)
+                        {
+                            FireWeapon();
+
+                            // Set can fire to false as the enemy has to wait before firing again,
+                            // and begin the cooldown by resetting the timer to its starting value.
+                            canFire = false;
+                            shootDelayTimer = shootDelay;
+                        }
                     }
-
-                    // If the timer has reached or gone below zero, the enemy is now able to fire at the player.
-                    if (shootDelayTimer <= 0)
+                    // If the ray hits an obstacle such as a wall, reset the alpha value for the next shot.
+                    // Also, prevent the addition of time to the timer by setting canAddTime bool to false.
+                    else
                     {
-                        canFire = true;
-                        shootDelayTimer = 0; // Ensure timer does not go below zero.
-                    }
+                        // Make sure audio isn't playing.
+                        attackChargeSound.Stop();
 
-                    // Create a float that will be the alpha value of the drawn ray.
-                    // Set the float equal to the opposite percentage of the timer.
-                    // How this works is if the timer is at 8 and the delay is set to 10, the math will be 1 - (8/10), which is 1 - 0.8, which equals 0.2.
-                    // The alpha value should be increasing as the timer is decreasing,
-                    // so the alpha does not use the percentage of how close the timer is to 0, but rather how far the timer is from it's highest value.
-                    float alpha = 1.0f - (shootDelayTimer / shootDelay);
+                        canAddTime = false;
 
-                    // Clamp the alpha value to between 0 and 1 to ensure that it does not go below 0 or above 1.
-                    alpha = Mathf.Clamp01(alpha);
+                        // Draw a ray in the direction of the player, but it will hit an obstacle instead of the player.
+                        DrawRay(transform.position, hit.point, Color.red);
 
-                    // Run the set alpha function that sets the drawn ray's alpha value to the alpha calculated above.
-                    SetAlpha(alpha);
-
-                    // If the enemy can fire and the player is currently in range, fire the enemy's weapon.
-                    if (canFire && playerInRange)
-                    {
-                        FireWeapon();
-
-                        // Set can fire to false as the enemy has to wait before firing again,
-                        // and begin the cooldown by resetting the timer to its starting value.
-                        canFire = false;
+                        // As the ray is not hitting the player, the timer to shoot should not be going down, so set it to its starting value.
                         shootDelayTimer = shootDelay;
+
+                        // Perform the same math as above to calculate the alpha value of the drawn ray.
+                        float alpha = 1.0f - (shootDelayTimer / shootDelay);
+                        alpha = Mathf.Clamp01(alpha);
+                        SetAlpha(alpha);
                     }
                 }
-                // If the ray hits an obstacle such as a wall, reset the alpha value for the next shot.
-                // Also, prevent the addition of time to the timer by setting canAddTime bool to false.
+                // If the player is too far and the ray does not hit anything, draw it in the direction of the player
+                // with the farthest point being the range at which the player can begin to be detected.
                 else
                 {
                     // Make sure audio isn't playing.
                     attackChargeSound.Stop();
 
+                    // Set this bool to false to ensure that time is not added to the timer when it shouldn't be.
                     canAddTime = false;
 
-                    // Draw a ray in the direction of the player, but it will hit an obstacle instead of the player.
-                    DrawRay(transform.position, hit.point, Color.red);
-
-                    // As the ray is not hitting the player, the timer to shoot should not be going down, so set it to its starting value.
-                    shootDelayTimer = shootDelay;
-
-                    // Perform the same math as above to calculate the alpha value of the drawn ray.
-                    float alpha = 1.0f - (shootDelayTimer / shootDelay);
-                    alpha = Mathf.Clamp01(alpha);
-                    SetAlpha(alpha);
+                    DrawRay(transform.position, transform.position + directionToPlayer.normalized * detectionRange, Color.red);
                 }
             }
-            // If the player is too far and the ray does not hit anything, draw it in the direction of the player
-            // with the farthest point being the range at which the player can begin to be detected.
-            else
-            {
-                // Make sure audio isn't playing.
-                attackChargeSound.Stop();
-
-                // Set this bool to false to ensure that time is not added to the timer when it shouldn't be.
-                canAddTime = false;
-
-                DrawRay(transform.position, transform.position + directionToPlayer.normalized * detectionRange, Color.red);
-            }
-        }
-        // If the player is not in range, set playerInRange to false and turn off the ray that was drawn. Also stop audio if it's playing.
-        else
-        {
-            playerInRange = false;
-            lineRenderer.enabled = false;
-
-            // Make sure audio isn't playing.
-            attackChargeSound.Stop();
         }
 
         // If the player is in range, rotate the enemy towards the player.

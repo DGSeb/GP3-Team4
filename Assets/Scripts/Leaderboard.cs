@@ -33,11 +33,6 @@ public class Leaderboard : MonoBehaviour
         ThousandthsDecimal
     }
 
-    private void Awake()
-    {
-
-    }
-
     // Function that load and populates the leaderboard with the entries stored in the player prefs string/json file.
     public void LoadLeaderboard(string playerPrefsStringy)
     {
