@@ -149,12 +149,38 @@ public class GameManager : MonoBehaviour
         timeFormats.Add(TimerFormats.HundrethsDecimal, "0.00");
         timeFormats.Add(TimerFormats.ThousandthsDecimal, "0.000");
 
+        // Find the name of the active scene and assign it to the currentScene variable.
+        currentScene = SceneManager.GetActiveScene().name;
+
+        // Switch statment that sets the playerprefs string to store a leaderboard entry in based on which scene the player is in.
+        switch (currentScene)
+        {
+            case "Level1":
+                playerPrefsString = "PBLeaderboardLevel1";
+                break;
+
+            case "Level2":
+                playerPrefsString = "PBLeaderboardLevel2";
+                break;
+
+            case "Level3":
+                playerPrefsString = "PBLeaderboardLevel3";
+                break;
+        }
+
+        // Load/populate the leaderboard with entries.
+        LoadLeaderboard();
+    }
+
+    // Function that load and populates the leaderboard with the entries stored in the player prefs string/json file.
+    void LoadLeaderboard()
+    {
         // Turn off the template of what entries will look like as it's not meant to be seen as an actual entry.
         entryTemplate.gameObject.SetActive(false);
 
         // Create a string that stores the player prefs PBTimes string. If no string, make an empty JSON object.
-        string jsonString = PlayerPrefs.GetString("PBTimes", "{\"highscoreEntryList\":[]}");
-        
+        string jsonString = PlayerPrefs.GetString(playerPrefsString, "{\"highscoreEntryList\":[]}");
+
         // Set highscores variable equal to JSON file found at jsonString indicated above.
         Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
 
@@ -263,22 +289,6 @@ public class GameManager : MonoBehaviour
     // Function that adds a new highscore entry to the list.
     private void AddHighscoreEntry(float time, string name)
     {
-        // Switch statment that sets the playerprefs string to store a leaderboard entry in based on which scene the player is in.
-        switch (currentScene)
-        {
-            case "Level1":
-                playerPrefsString = "PBLeaderboardLevel1";
-                break;
-
-            case "Level2":
-                playerPrefsString = "PBLeaderboardLevel2";
-                break;
-
-            case "Level3":
-                playerPrefsString = "PBLeaderboardLevel3";
-                break;
-        }
-
         // Load saved highscores by first getting the data from the player prefs string, then setting a variable to the JSON data we want to access.
         string jsonString = PlayerPrefs.GetString(playerPrefsString);
         Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
@@ -329,10 +339,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        // Find the name of the active scene and assign it to the currentScene variable.
-        // Make sure this occurs before running UpdatePBText so it knows which scene it is in.
-        currentScene = SceneManager.GetActiveScene().name;
-
         if (currentScene == "Level1" || currentScene == "Level2" || currentScene == "Level3")
         {
             exitMaterial = exitMaterialRed;
