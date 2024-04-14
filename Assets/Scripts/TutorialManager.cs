@@ -29,7 +29,6 @@ public class TutorialManager : MonoBehaviour
 
     // Second door variables.
     private float enemySpawnTime = 5.0f; // How often enemies spawn.
-    private int enemiesInFiringRange = 6;
     private int enemiesToSpawn = 3; // number of enemies to spawn in the firing range.
     private bool firingRangeDone;
     private bool secondDoorOpen;
@@ -52,9 +51,6 @@ public class TutorialManager : MonoBehaviour
     {
         // Set reference to game manager script.
         gM = this.gameObject.GetComponent<GameManager>();
-        
-        // Set enemy remaining variable.
-        gM.enemiesRemaining = shootingRangeEnemies.Length;
 
         // Ensure double jump and dash is false when beginning the tutorial.
         canDoubleJump = false;
@@ -87,7 +83,7 @@ public class TutorialManager : MonoBehaviour
         // Once the audio has started, check to see if it has stopped. If it has, open the door.
         if (powerOutAudioStarted && !powerGoesOut.isPlaying)
         {
-            Destroy(tutorialDoors[2]);
+            tutorialDoors[2].GetComponent<Animator>().SetBool("OpenDoor", true);
             powerOutAudioStarted = false;
         }
 
@@ -136,7 +132,7 @@ public class TutorialManager : MonoBehaviour
             // unless level is restarted/scene is reloaded.
             if (movedForward && movedBackward && movedRight && movedLeft)
             {
-                Destroy(tutorialDoors[0]);
+                tutorialDoors[0].GetComponent<Animator>().SetBool("OpenDoor", true);
                 firstDoorOpen = true;
                 startSpawningEnemies = true;
             }
@@ -149,16 +145,10 @@ public class TutorialManager : MonoBehaviour
             startSpawningEnemies = false;
         }
 
-        // If there are no more enemies in the firing range, the firing range is done.
-        if (enemiesInFiringRange <= 0)
-        {
-            firingRangeDone = true;
-        }
-
         // If the second door isn't open, check if enough enemies have been eliminated. If enough have, open the door.
         if (!secondDoorOpen && firingRangeDone)
         {
-            Destroy(tutorialDoors[1]);
+            tutorialDoors[1].GetComponent<Animator>().SetBool("OpenDoor", true);
             secondDoorOpen = true;
             canDoubleJump = true;
         }        

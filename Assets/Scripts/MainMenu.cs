@@ -167,4 +167,10 @@ public class MainMenu : MonoBehaviour
             fpsUpdateTimer = fpsUpdateFrequency;
         }
     }
+
+    // Display leaderboard UI
+    public void LeaderboardDisplay()
+    {
+
+    }
 }

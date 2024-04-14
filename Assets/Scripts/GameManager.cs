@@ -81,6 +81,7 @@ public class GameManager : MonoBehaviour
 
     // Number of enemies needed to be eliminated to interact with the end object and win.
     private int enemiesToWinLevel;
+    private int enemiesToWinTutorial = 6;
     private int enemiesToWinLevel1 = 14;
     private int enemiesToWinLevel2 = 15;
     private int enemiesToWinLevel3 = 22;
@@ -155,6 +156,9 @@ public class GameManager : MonoBehaviour
         // Switch statment that sets the playerprefs string to store a leaderboard entry in based on which scene the player is in.
         switch (currentScene)
         {
+            case "Tutorial":
+                playerPrefsString = "PBLeaderboardTutorial";
+                break;
             case "Level1":
                 playerPrefsString = "PBLeaderboardLevel1";
                 break;
@@ -653,18 +657,12 @@ public class GameManager : MonoBehaviour
         {
             // If there is a format, use the format. Otherwise, don't use a format for PB text.
             pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PBTutorial", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PBTutorial", timerLimit)}";
-
-            // Set the text for what the player's PB will be displayed as on the results screen.
-            ResultScreen.pBTime = hasFormat ? PlayerPrefs.GetFloat("PBTutorial", timerLimit).ToString(timeFormats[format]) : PlayerPrefs.GetFloat("PBTutorial", timerLimit).ToString();
         }
         // If in the small/old tutorial scene, set the PB text to the PB for the small/old tutorial level.
         else if (currentScene == "Tutorial (Small Version)")
         {
             // If there is a format, use the format. Otherwise, don't use a format for PB text.
             pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PBSmallTutorial", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PBSmallTutorial", timerLimit)}";
-
-            // Set the text for what the player's PB will be displayed as on the results screen.
-            ResultScreen.pBTime = hasFormat ? PlayerPrefs.GetFloat("PBSmallTutorial", timerLimit).ToString(timeFormats[format]) : PlayerPrefs.GetFloat("PBSmallTutorial", timerLimit).ToString();
         }
         // If in level 1, set the PB text to the PB for level 1.
         else if (currentScene == "Level1")
@@ -816,6 +814,10 @@ public class GameManager : MonoBehaviour
         // Also set the number of enemies needed to win the level as this might change for each level.
         switch(currentScene)
         {
+            case "Tutorial":
+                enemiesToWinLevel = enemiesToWinTutorial;
+                break;
+
             case "Level1":
                 enemiesRemaining = levelOneEnemyCount;
                 enemiesToWinLevel = enemiesToWinLevel1;

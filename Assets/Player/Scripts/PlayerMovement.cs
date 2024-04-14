@@ -462,20 +462,17 @@ public class PlayerMovement : MonoBehaviour
         {
             // If the player hit the level 1 portal, send them to level 1.
             case "Level1Portal":
-                gM.ChangeScene("Level1");
-                PlayerPrefs.SetInt("TutorialComplete", 1);
+                TutorialComplete("Level1");
                 break;
 
             // If the player hit the level 2 portal, send them to level 2.
             case "Level2Portal":
-                gM.ChangeScene("Level2");
-                PlayerPrefs.SetInt("TutorialComplete", 1);
+                TutorialComplete("Level2");
                 break;
 
             // If the player hit the level 3 portal, send them to level 3.
             case "Level3Portal":
-                gM.ChangeScene("Level3");
-                PlayerPrefs.SetInt("TutorialComplete", 1);
+                TutorialComplete("Level3");
                 break;
 
             // If level ending is hit, update pb and change scene.
@@ -485,10 +482,7 @@ public class PlayerMovement : MonoBehaviour
                 if (gM.enoughEnemiesEliminated)
                 {
                     gM.AddLeaderboardEntry();
-                    gM.SetRunTime();
                     gM.CheckPB();
-                    ResultScreen.won = true;
-                    ResultScreen.lost = false;
 
                     if (gM.currentScene == "Level1")
                     {
@@ -500,6 +494,9 @@ public class PlayerMovement : MonoBehaviour
                     }
                     else if (gM.currentScene == "Level3")
                     {
+                        gM.SetRunTime();
+                        ResultScreen.won = true;
+                        ResultScreen.lost = false;
                         gM.ChangeScene("ResultsScreen");
                     }
                 }
@@ -614,5 +611,17 @@ public class PlayerMovement : MonoBehaviour
                     Destroy(other.gameObject);
                     break;*/
         }
+    }
+
+    // Same code is used for tutorial portals, so running a function instead of writing the same lines of code.
+    void TutorialComplete(string sceneName)
+    {
+        // Set player prefs int. Can't store a bool, so 0 is false and 1 is true. Since player interacted with portal, tutorial complete is true.
+        PlayerPrefs.SetInt("TutorialComplete", 1);
+
+        // Add an entry to the leaderboard because why not have one for speedrunning the tutorial. Also, set tutorial PB, then change scene.
+        gM.AddLeaderboardEntry();
+        gM.CheckPB();
+        gM.ChangeScene(sceneName);
     }
 }
