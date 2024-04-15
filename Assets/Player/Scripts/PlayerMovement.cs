@@ -49,12 +49,12 @@ public class PlayerMovement : MonoBehaviour
     public bool grounded;
 
     [Header("Keybinds")]
-    public KeyCode jumpKey = KeyCode.Space;
+    public static KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
     public KeyCode crouchKey = KeyCode.LeftControl;
 
     // Controller binds.
-    private KeyCode jumpController = KeyCode.JoystickButton0;
+    public static KeyCode jumpController = KeyCode.JoystickButton0;
     private KeyCode sprintController = KeyCode.JoystickButton8;
     private KeyCode crouchController = KeyCode.JoystickButton9;
 
@@ -533,9 +533,10 @@ public class PlayerMovement : MonoBehaviour
                 gM.ChangeScene("LiamsWackyWonderland");
                 break;
 
-            // If the player runs into the dash trigger, let them dash and destroy the trigger.
+            // If the player runs into the dash trigger, tell them to dash, let them dash, and destroy the trigger.
             // Also, turn off double jump so player can only dash at the next part.
             case "DashTrigger":
+                StartCoroutine(tM.SetTextPromptActive(4));
                 TutorialManager.canDash = true;
                 TutorialManager.canDoubleJump = false;
                 jumpsRemaining = 0;
@@ -553,6 +554,18 @@ public class PlayerMovement : MonoBehaviour
             // If player lands in the DashFallZone trigger, transform them back to the point before the dash.
             case "DashFallZone":
                 this.gameObject.transform.position = new Vector3(dashCheckpoint.position.x, dashCheckpoint.position.y, dashCheckpoint.position.z);
+                break;
+
+            // If player walks into the double jump text trigger, display the text that tells them to use their double jump across the gap and get rid of the trigger.
+            case "DoubleJumpTextTrigger":
+                StartCoroutine(tM.SetTextPromptActive(3));
+                Destroy(other.gameObject);
+                break;
+
+            // If the player walks into the trigger that is where they walk into the firing range, turn on the text for entering the firing range. 
+            case "WalkIntoFiringRangeTrigger":
+                StartCoroutine(tM.SetTextPromptActive(6));
+                Destroy(other.gameObject);
                 break;
         }
     }

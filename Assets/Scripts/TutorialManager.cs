@@ -16,6 +16,10 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private GameObject[] shootingRangeEnemies;
     [SerializeField] private GameObject[] tutorialDoors;
 
+    // Array of text prompts that relay information to the player such as what they should be doing.
+    public GameObject[] tutorialTextPrompts;
+    private float promptOnScreenTime = 6.5f; // Time the prompt remains on screen.
+
     // Integer that determines how many enemies will be spawned in the shooting range.
     //private int shootingRangeEnemySpawnCount = 10;
 
@@ -63,6 +67,9 @@ public class TutorialManager : MonoBehaviour
         {
             OpenPassageToPortals();
         }
+
+        // Set the movement door text active. The text is position 0 in the array, so input 0.
+        StartCoroutine(SetTextPromptActive(0));
     }
 
     void Update()
@@ -83,6 +90,7 @@ public class TutorialManager : MonoBehaviour
         // Once the audio has started, check to see if it has stopped. If it has, open the door.
         if (powerOutAudioStarted && !powerGoesOut.isPlaying)
         {
+            tutorialTextPrompts[5].SetActive(false);
             tutorialDoors[2].GetComponent<Animator>().SetBool("OpenDoor", true);
             powerOutAudioStarted = false;
         }
@@ -92,6 +100,9 @@ public class TutorialManager : MonoBehaviour
         {
             firingRangeDone = true;
         }
+
+        // Check to see if the required conditions have been met for a text prompt to turn off.
+        TurnOffTextPrompt();
     }
 
     // Function that performs checks to see if doors should be opened.
@@ -132,6 +143,7 @@ public class TutorialManager : MonoBehaviour
             // unless level is restarted/scene is reloaded.
             if (movedForward && movedBackward && movedRight && movedLeft)
             {
+                tutorialTextPrompts[0].SetActive(false);
                 tutorialDoors[0].GetComponent<Animator>().SetBool("OpenDoor", true);
                 firstDoorOpen = true;
                 startSpawningEnemies = true;
@@ -143,6 +155,9 @@ public class TutorialManager : MonoBehaviour
         {
             InvokeRepeating("FiringRangeSpawn", 2.0f, enemySpawnTime);
             startSpawningEnemies = false;
+
+            // Now that the firing range has started spawning enemies, display the text telling the player about the firing range.
+            StartCoroutine(SetTextPromptActive(1));
         }
 
         // If the second door isn't open, check if enough enemies have been eliminated. If enough have, open the door.
@@ -151,6 +166,9 @@ public class TutorialManager : MonoBehaviour
             tutorialDoors[1].GetComponent<Animator>().SetBool("OpenDoor", true);
             secondDoorOpen = true;
             canDoubleJump = true;
+
+            // Firing range is complete, so display the firing range complete text.
+            StartCoroutine(SetTextPromptActive(2));
         }        
     }
 
@@ -193,6 +211,8 @@ public class TutorialManager : MonoBehaviour
     // Function that runs the power outage items.
     public void PowerOutage()
     {
+        // Turn on text that says power is out, play audio, and say that audio has started.
+        tutorialTextPrompts[5].SetActive(true);
         powerGoesOut.Play();
         powerOutAudioStarted = true;
     }
@@ -235,6 +255,71 @@ public class TutorialManager : MonoBehaviour
         foreach (GameObject passageObject in passageEntrance)
         {
             passageObject.SetActive(false);
+        }
+    }
+
+    // Sets a text prompt in the tutorial that tells a player what to do active and then turns it off after a set amount of time.
+    public IEnumerator SetTextPromptActive(int textPosition)
+    {
+        // Ensure there is no text currently on the screen to prevent any overlap.
+        foreach (GameObject textPrompt in tutorialTextPrompts)
+        {
+            textPrompt.SetActive(false);
+        }
+
+        // Turn on the text, wait for a set amount of time, then turn the text off.
+        tutorialTextPrompts[textPosition].SetActive(true);
+
+        // If the tutorial text prompt called is the firing range text prompt, wait for a longer time because it has more text than the other prompts.
+        if (tutorialTextPrompts[textPosition] == tutorialTextPrompts[1])
+        {
+            float waitTime = 10f;
+            yield return new WaitForSeconds(waitTime);
+        }
+        // If not the firing range text prompt, wait for the set time.
+        else
+        {
+            yield return new WaitForSeconds(promptOnScreenTime);
+        }
+
+        // Check to make sure the text is still active before turning it off.
+        if (tutorialTextPrompts[textPosition].activeSelf)
+        {
+            tutorialTextPrompts[textPosition].SetActive(false);
+        }
+    }
+
+    // Turn off text prompts based on certain actions.
+    void TurnOffTextPrompt()
+    {
+        // If the shoot key/button is pressed, check for more info.
+        if ((Input.GetKeyDown(WeaponHandler.shootKey) || Input.GetKeyDown(WeaponHandler.shootController)))
+        {
+            // If the firing range text is active, turn it off.
+            if (tutorialTextPrompts[1].activeSelf)
+            {
+                tutorialTextPrompts[1].SetActive(false);
+            }
+            // If the firing range done text is active, turn it off.
+            else if (tutorialTextPrompts[2].activeSelf)
+            {
+                tutorialTextPrompts[2].SetActive(false);
+            }
+            // If the walk into firing range text is active, turn it off.
+            else if (tutorialTextPrompts[6].activeSelf)
+            {
+                tutorialTextPrompts[6].SetActive(false);
+            }
+        }
+        // If the jump key/button is pressed and the double jump text is active, turn it off.
+        else if ((Input.GetKeyDown(PlayerMovement.jumpKey) || Input.GetKeyDown(PlayerMovement.jumpController)) && tutorialTextPrompts[3].activeSelf)
+        {
+            tutorialTextPrompts[3].SetActive(false);
+        }
+        // If the dash key/button is pressed and the dash text is active, turn it off.
+        else if ((Input.GetKeyDown(Dashing.dashKey) || Input.GetKeyDown(Dashing.dashController)) && tutorialTextPrompts[4].activeSelf)
+        {
+            tutorialTextPrompts[4].SetActive(false);
         }
     }
 }

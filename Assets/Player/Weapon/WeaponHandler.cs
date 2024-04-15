@@ -6,8 +6,8 @@ using UnityEngine;
 public class WeaponHandler : MonoBehaviour
 {
     [Header("Keybinds")]
-    public KeyCode shootKey = KeyCode.Mouse0;
-    public KeyCode shootController = KeyCode.JoystickButton5;
+    public static KeyCode shootKey = KeyCode.Mouse0;
+    public static KeyCode shootController = KeyCode.JoystickButton5;
 
     [Header("References")]
     public GameObject Effect;

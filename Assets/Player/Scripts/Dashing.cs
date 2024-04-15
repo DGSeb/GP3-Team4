@@ -32,8 +32,8 @@ public class Dashing : MonoBehaviour
     private float dashCdTimer;
 
     [Header("Input")]
-    public KeyCode dashKey = KeyCode.E;
-    private KeyCode dashController = KeyCode.JoystickButton4;
+    public static KeyCode dashKey = KeyCode.E;
+    public static KeyCode dashController = KeyCode.JoystickButton4;
 
     private void Start()
     {
