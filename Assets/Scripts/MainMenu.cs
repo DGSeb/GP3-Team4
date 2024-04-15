@@ -46,6 +46,11 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject audioSettings;
     [SerializeField] private GameObject settingsScrollView;
     [SerializeField] private AudioMixer master;
+    [SerializeField] private GameObject audioFirstButton;
+
+    [Header("How To Play")]
+    [SerializeField] private GameObject howToPlayScreen;
+    [SerializeField] private GameObject howToPlayExitButton;
 
     void Start()
     {
@@ -113,6 +118,10 @@ public class MainMenu : MonoBehaviour
             else if (leaderboardSelection.activeSelf)
             {
                 ExitLeaderboard();
+            }
+            else if (howToPlayScreen.activeSelf)
+            {
+                ExitHowToPlayScreen();
             }
         }
     }
@@ -287,5 +296,32 @@ public class MainMenu : MonoBehaviour
     {
         settingsScrollView.SetActive(false);
         audioSettings.SetActive(true);
+
+        // Clear any selected object in the event system and set a new selected object.
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(audioFirstButton);
+    }
+
+    // Display the how to play screen.
+    public void DisplayHowToPlayScreen()
+    {
+        buttons.SetActive(false);
+        howToPlayScreen.SetActive(true);
+
+        // Clear any selected object in the event system and set a new selected object.
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(howToPlayExitButton);
+    }
+
+    // Exit the how to play screen.
+    public void ExitHowToPlayScreen()
+    {
+        howToPlayScreen.SetActive(false);
+        settingsMenu.SetActive(false);
+        buttons.SetActive(true);
+
+        // Clear any selected object in the event system and set a new selected object.
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(pauseFirstButton);
     }
 }

@@ -64,8 +64,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI enemiesEliminatedUI; // Reference to enemies eliminated text element.
 
     // Level enemy count variables
-    private int levelOneEnemyCount = 15;
-    private int levelTwoEnemyCount = 28;
+    private int levelOneEnemyCount = 28;
+    private int levelTwoEnemyCount = 15;
     private int levelThreeEnemyCount = 37;
 
     [HideInInspector] public int enemiesRemaining;
@@ -74,8 +74,8 @@ public class GameManager : MonoBehaviour
     // Number of enemies needed to be eliminated to interact with the end object and win.
     private int enemiesToWinLevel;
     private int enemiesToWinTutorial = 12;
-    private int enemiesToWinLevel1 = 14;
-    private int enemiesToWinLevel2 = 15;
+    private int enemiesToWinLevel1 = 15;
+    private int enemiesToWinLevel2 = 14;
     private int enemiesToWinLevel3 = 22;
 
 
@@ -86,11 +86,6 @@ public class GameManager : MonoBehaviour
     private float timeSaved = 1.8f;
 
     private float colorFlashTime = 0.2f;
-
-
-    // Bool that determines whether the how to play screen displays before levels.
-    //public static bool displayHowToPlayScreen = true;
-    public GameObject howToPlayScreen;
 
     // Reference to the crosshair object that is a part of the player UI.
     private RectTransform crosshair;
@@ -196,9 +191,6 @@ public class GameManager : MonoBehaviour
         {
             exitMaterial = exitMaterialRed;
             SwapExitMaterial();
-
-            howToPlayScreen.SetActive(true);
-            Time.timeScale = 0f;
         }
 
         // If the player is not in the tutorial, make sure they can double jump and dash.
@@ -260,13 +252,6 @@ public class GameManager : MonoBehaviour
 
         // Run the check input function to see what is being pressed.
         CheckInput();
-        
-        // If the how to play screen is active and the player presses a key, turn off the how to play screen and set time to normal speed.
-        if (howToPlayScreen.activeSelf && Input.anyKeyDown)
-        {
-            howToPlayScreen.SetActive(false);
-            Time.timeScale = 1.0f;
-        }
 
         // Run function that updates the FPS on screen if the bool is true.
         if (displayFPS)
