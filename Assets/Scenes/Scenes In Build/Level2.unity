@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 3.537827, g: 5.831078, b: 8.451936, a: 1}
+  m_IndirectSpecularColor: {r: 3.5404935, g: 5.799134, b: 8.294999, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6668,12 +6668,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4749554862943079416, guid: e741da65a10d2344a87b17289e4fcbd5,
     type: 3}
   m_PrefabInstance: {fileID: 1652516996}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &213687142 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8510745051380897050, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
-    type: 3}
-  m_PrefabInstance: {fileID: 2106856857}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &214011223 stripped
 Transform:
@@ -17620,7 +17614,7 @@ MonoBehaviour:
   currentTime: 0
   countDown: 0
   hasLimit: 1
-  timerLimit: 240
+  timerLimit: 120
   hasFormat: 1
   format: 4
   currentScene: 
@@ -17629,7 +17623,6 @@ MonoBehaviour:
   enemiesRemaining: 0
   enemiesEliminated: 0
   enoughEnemiesEliminated: 0
-  howToPlayScreen: {fileID: 213687142}
   pauseFirstButton: {fileID: 381267178}
   settingsFirstButton: {fileID: 474966977}
   settingsClosedButton: {fileID: 505373120}
@@ -49693,6 +49686,16 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 674572862}
+    - target: {fileID: 3449164023023225574, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 674572862}
+    - target: {fileID: 3449164023023225574, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: QuitGame
+      objectReference: {fileID: 0}
     - target: {fileID: 4741529963497335175, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
