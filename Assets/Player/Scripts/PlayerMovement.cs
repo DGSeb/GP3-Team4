@@ -607,7 +607,7 @@ public class PlayerMovement : MonoBehaviour
 
             // Add force to the player using the platforms velocity. Also, increase move speed so player can move on platform.
             rb.AddForce(platformVelocity);
-            moveSpeed = 25;
+            //moveSpeed = 25;
 
             // Set the platform as the player's parent.
             transform.parent = collision.transform;
@@ -619,7 +619,7 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("Horizontal moving platform");
             originalParent = transform.parent;
             transform.parent = collision.transform;
-            moveSpeed = 25;
+            //moveSpeed = 25;
         }
     }
 

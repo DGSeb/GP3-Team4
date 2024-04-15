@@ -8,6 +8,14 @@ public class EnemyBehavior : MonoBehaviour
     private Transform player; // Reference to player transform.
     private GameManager gM; // Reference to game manager script.
 
+    //ENEMY AIM ANGLES\\ NICKS AWESOME CODE IF YOU TOUCH IT YOULL DIE
+    [SerializeField] private GameObject spine; // Reference to spine.
+    [SerializeField] private GameObject muzzle; // Reference to weapon muzzle.
+    [SerializeField] private GameObject VFX; // Reference to VFX.
+    [SerializeField] private float aimAngle_X; // X
+    [SerializeField] private float aimAngle_Y; // Y
+    [SerializeField] private float aimAngle_Z; // Z
+
     // Vector3 used for the direction the enemy needs to face to look at the player.
     private Vector3 directionToPlayer;
 
@@ -166,8 +174,11 @@ public class EnemyBehavior : MonoBehaviour
             // The target rotation of the enemy is rotating towards the direction of the player.
             Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
 
+            // Fix for spine orientation
+            targetRotation *= Quaternion.Euler(aimAngle_X, aimAngle_Y, aimAngle_Z);
+
             // Rotate the enemy over time towards the desired area multiplied by a speed variable that can be changed.
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * enemyRotationSpeed);
+            spine.transform.rotation = Quaternion.Lerp(spine.transform.rotation, targetRotation, Time.deltaTime * enemyRotationSpeed);
         }
 
         // If the enemy is at 0 health or, if it somehow occurs, below 0 health, destroy the enemy object.
@@ -194,7 +205,7 @@ public class EnemyBehavior : MonoBehaviour
         // Enable the line renderer component, set the first point on the line to the starting position,
         // set the second point on the line to the ending position, and apply a color.
         lineRenderer.enabled = true;
-        lineRenderer.SetPosition(0, start);
+        lineRenderer.SetPosition(0, muzzle.transform.position);
         lineRenderer.SetPosition(1, end);
         lineRenderer.material.color = color;
     }
@@ -229,6 +240,10 @@ public class EnemyBehavior : MonoBehaviour
             {
                 attackSound.Play();
             }
+
+            //Instantiate fire SFX
+            GameObject effectInstance = Instantiate(VFX, muzzle.transform);
+            Destroy(effectInstance, 5f);
 
             gM.ChangeTimer(timeAddition);
         }
