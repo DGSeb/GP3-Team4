@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
     // Level enemy count variables
     private int levelOneEnemyCount = 28;
     private int levelTwoEnemyCount = 15;
-    private int levelThreeEnemyCount = 37;
+    private int levelThreeEnemyCount = 30;
 
     [HideInInspector] public int enemiesRemaining;
     [HideInInspector] public int enemiesEliminated = 0;
