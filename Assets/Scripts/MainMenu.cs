@@ -39,6 +39,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject leaderboardSelection; // Screen that has selection for which leaderboard to display.
     private Leaderboard leaderboardScript; // reference to the leaderboard script.
     [SerializeField] private GameObject leaderboardSelectionFirstButton; // first button selected when leaderboard selection screen is active.
+    [SerializeField] private GameObject leaderboardExitButton; // Exit button in the leaderboard.
 
     [Header("Audio")]
     // Audio settings items.
@@ -167,6 +168,12 @@ public class MainMenu : MonoBehaviour
         settingsMenu.SetActive(false);
         buttons.SetActive(true);
 
+        if (audioSettings.activeSelf)
+        {
+            audioSettings.SetActive(false);
+            settingsScrollView.SetActive(true);
+        }
+
         // Clear any selected object in the event system and set a new selected object.
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(settingsClosedButton);
@@ -202,6 +209,8 @@ public class MainMenu : MonoBehaviour
     // Display leaderboard selection screen
     public void LeaderboardSelectionScreen()
     {
+        // Turn off the buttons and turn on the leaderboard selection screen.
+        buttons.SetActive(false);
         leaderboardSelection.SetActive(true);
 
         // Clear any selected object in the event system and set a new selected object.
@@ -214,6 +223,10 @@ public class MainMenu : MonoBehaviour
     {
         leaderboardScript.LoadLeaderboard("PBLeaderboardTutorial");
         leaderboard.SetActive(true);
+
+        // Clear any selected object in the event system and set a new selected object.
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(leaderboardExitButton);
     }
 
     // Display level 1 leaderboard
@@ -221,6 +234,10 @@ public class MainMenu : MonoBehaviour
     {
         leaderboardScript.LoadLeaderboard("PBLeaderboardLevel1");
         leaderboard.SetActive(true);
+
+        // Clear any selected object in the event system and set a new selected object.
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(leaderboardExitButton);
     }
 
     // Display level 2 leaderboard
@@ -228,6 +245,10 @@ public class MainMenu : MonoBehaviour
     {
         leaderboardScript.LoadLeaderboard("PBLeaderboardLevel2");
         leaderboard.SetActive(true);
+
+        // Clear any selected object in the event system and set a new selected object.
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(leaderboardExitButton);
     }
 
     // Display level 3 leaderboard
@@ -235,6 +256,10 @@ public class MainMenu : MonoBehaviour
     {
         leaderboardScript.LoadLeaderboard("PBLeaderboardLevel3");
         leaderboard.SetActive(true);
+
+        // Clear any selected object in the event system and set a new selected object.
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(leaderboardExitButton);
     }
 
     // Go back to menu
@@ -248,6 +273,9 @@ public class MainMenu : MonoBehaviour
         {
             leaderboard.SetActive(false);
         }
+
+        // Turn the buttons back on.
+        buttons.SetActive(true);
 
         // Set the main menu first button
         EventSystem.current.SetSelectedGameObject(null);

@@ -627,6 +627,12 @@ public class GameManager : MonoBehaviour
         settingsMenuUI.SetActive(false);
         pauseScreenOneUI.SetActive(true);
 
+        if (audioSettings.activeSelf)
+        {
+            audioSettings.SetActive(false);
+            settingsScrollView.SetActive(true);
+        }
+
         // Clear any selected object in the event system and set a new selected object.
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(settingsClosedButton);

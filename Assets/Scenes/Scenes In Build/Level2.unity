@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 3.5347962, g: 5.7698903, b: 8.19925, a: 1}
+  m_IndirectSpecularColor: {r: 3.537827, g: 5.831078, b: 8.451936, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11061,6 +11061,12 @@ PrefabInstance:
       addedObject: {fileID: 1501599184}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e741da65a10d2344a87b17289e4fcbd5, type: 3}
+--- !u!1 &173199772 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 722276848932588773, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 438312846}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &174757298
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26934,6 +26940,16 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1098243601}
+    - target: {fileID: 4601463445289288819, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4614770047630170549, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4741529963497335175, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -27054,9 +27070,23 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1098243601}
+    - target: {fileID: 7928411105396816747, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7966913665579979730, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4020095165159635509, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 865034762}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a, type: 3}
 --- !u!1 &438312847 stripped
@@ -27152,12 +27182,6 @@ GameObject:
 --- !u!1 &438312858 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4614770047630170549, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
-    type: 3}
-  m_PrefabInstance: {fileID: 438312846}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &438312859 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 722276848932588773, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
     type: 3}
   m_PrefabInstance: {fileID: 438312846}
   m_PrefabAsset: {fileID: 0}
@@ -47517,6 +47541,90 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 297338132}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &865034761
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 865034762}
+  - component: {fileID: 865034763}
+  m_Layer: 0
+  m_Name: timer blue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &865034762
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865034761}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -114.4, y: 0, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1073208309}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &865034763
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865034761}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 257
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 8d66e65c66e29504199ed664979682cd, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: 08388f3c58818564a900080391bdb6e9, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 3.79, y: 4.67}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1001 &865379157
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -58100,6 +58208,12 @@ PrefabInstance:
       addedObject: {fileID: 272647937}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c568d9e3d51e274283e9a6d8bbf5a0b, type: 3}
+--- !u!224 &1073208309 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4020095165159635509, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 438312846}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1074346147
 GameObject:
   m_ObjectHideFlags: 0
@@ -59095,7 +59209,7 @@ MonoBehaviour:
   howToPlayScreen: {fileID: 72495274}
   pauseFirstButton: {fileID: 438312858}
   settingsFirstButton: {fileID: 1634675195}
-  settingsClosedButton: {fileID: 438312859}
+  settingsClosedButton: {fileID: 173199772}
   scrollbar: {fileID: 438312856}
   audioSettings: {fileID: 438312848}
   settingsScrollView: {fileID: 438312847}
