@@ -209,7 +209,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   grounded: 0
-  jumpKey: 32
   sprintKey: 304
   crouchKey: 306
   maxSlopeAngle: 50
@@ -244,7 +243,6 @@ MonoBehaviour:
   disableGravity: 1
   resetVel: 1
   dashCd: 1.5
-  dashKey: 101
 --- !u!114 &2920454816270228540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,8 +255,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d3c988ade9062f4e86868b5f17d9928, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootKey: 323
-  shootController: 335
   Effect: {fileID: 2891902950469376322, guid: 8d1b58de8ac2e8842bf7ca96e0bcc4da, type: 3}
   hitEffect: {fileID: 1488326289111215856, guid: 6af2b621083d4e54f90081b9c4dd7878,
     type: 3}
@@ -280,7 +276,8 @@ AudioSource:
   m_GameObject: {fileID: 4644995246992761061}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -8001498645838596814, guid: 8563d51aa2c34ab4fbab29c3d4f868e0,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 06f29fc5426190b4a90a762d6f8cf165, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.5

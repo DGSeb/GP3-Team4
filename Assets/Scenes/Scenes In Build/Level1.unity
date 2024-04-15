@@ -1986,7 +1986,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh55380
+  m_Name: pb_Mesh1388400
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -12990,12 +12990,6 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
---- !u!1 &381267175 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3029265286844826892, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
-    type: 3}
-  m_PrefabInstance: {fileID: 2106856857}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &381267176 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1543033063330440972, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
@@ -13586,6 +13580,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e565a3f7aab63984b99177a89d2afff4,
     type: 3}
   m_PrefabInstance: {fileID: 471076751}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &474966977 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5606828143783878460, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2106856857}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &476084550 stripped
 GameObject:
@@ -17755,7 +17755,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh54402
+  m_Name: pb_Mesh1387250
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -17970,9 +17970,6 @@ MonoBehaviour:
   hasFormat: 1
   format: 4
   currentScene: 
-  entryContainer: {fileID: 1880561892}
-  entryTemplate: {fileID: 1880561893}
-  leaderboard: {fileID: 1352907734}
   enemiesRemainingUI: {fileID: 1698617856}
   enemiesEliminatedUI: {fileID: 1698617855}
   enemiesRemaining: 0
@@ -17980,9 +17977,12 @@ MonoBehaviour:
   enoughEnemiesEliminated: 0
   howToPlayScreen: {fileID: 213687142}
   pauseFirstButton: {fileID: 381267178}
-  settingsFirstButton: {fileID: 381267175}
+  settingsFirstButton: {fileID: 474966977}
   settingsClosedButton: {fileID: 381267177}
   scrollbar: {fileID: 381267176}
+  audioSettings: {fileID: 1206277062}
+  settingsScrollView: {fileID: 1559945555}
+  master: {fileID: 24100000, guid: 8563d51aa2c34ab4fbab29c3d4f868e0, type: 2}
   enemyDeathSound: {fileID: 674572864}
   playerLoseSound: {fileID: 674572865}
   exitMaterialGreen: {fileID: 2100000, guid: 93177b5f39c98244e93a0cb9833cbc19, type: 2}
@@ -17990,6 +17990,7 @@ MonoBehaviour:
   exit: {fileID: 346941829}
   fpsDisplay: {fileID: 1242080329}
   fpsToggle: {fileID: 1242080330}
+  leaderboard: {fileID: 1352907734}
 --- !u!4 &674572863
 Transform:
   m_ObjectHideFlags: 0
@@ -18014,7 +18015,8 @@ AudioSource:
   m_GameObject: {fileID: 674572861}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -8001498645838596814, guid: 8563d51aa2c34ab4fbab29c3d4f868e0,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 270c4d01243d05e4d99c53046705b5e5, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.5
@@ -18110,7 +18112,8 @@ AudioSource:
   m_GameObject: {fileID: 674572861}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -8001498645838596814, guid: 8563d51aa2c34ab4fbab29c3d4f868e0,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 375e363698d9e8349a145ffdbc11fb52, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.4
@@ -26477,6 +26480,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2101872913}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1206277062 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1269934201545019592, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2106856857}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1210402938 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4425370799125418605, guid: ee9c99bf9c7b227408b94dd6cca66123,
@@ -34334,6 +34343,12 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3885248408432238867, guid: ee9c99bf9c7b227408b94dd6cca66123, type: 3}
+--- !u!1 &1559945555 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5354757988191770691, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2106856857}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1562065058 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2225387520309165793, guid: ee9c99bf9c7b227408b94dd6cca66123,
@@ -37227,7 +37242,8 @@ AudioSource:
   m_GameObject: {fileID: 1672520314}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 2937845110677096001, guid: 8563d51aa2c34ab4fbab29c3d4f868e0,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 793f5434f18e8884e9dc910754be9c8e, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.31
@@ -42006,18 +42022,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2865683362732016885, guid: 66f62df211158c2439c0ec0fca6a1364,
     type: 3}
   m_PrefabInstance: {fileID: 1880451482}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &1880561892 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4779986321191773086, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
-    type: 3}
-  m_PrefabInstance: {fileID: 2106856857}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &1880561893 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8121383405947485942, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
-    type: 3}
-  m_PrefabInstance: {fileID: 2106856857}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1901265691
 PrefabInstance:
@@ -49560,6 +49564,11 @@ PrefabInstance:
       propertyPath: rb
       value: 
       objectReference: {fileID: 65976321}
+    - target: {fileID: 1589347246742339217, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 674572862}
     - target: {fileID: 3405281162565006903, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -49690,11 +49699,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 674572862}
-    - target: {fileID: 7830087775605702676, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ExitSettings
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

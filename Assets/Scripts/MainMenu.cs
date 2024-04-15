@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -39,6 +40,12 @@ public class MainMenu : MonoBehaviour
     private Leaderboard leaderboardScript; // reference to the leaderboard script.
     [SerializeField] private GameObject leaderboardSelectionFirstButton; // first button selected when leaderboard selection screen is active.
 
+    [Header("Audio")]
+    // Audio settings items.
+    [SerializeField] private GameObject audioSettings;
+    [SerializeField] private GameObject settingsScrollView;
+    [SerializeField] private AudioMixer master;
+
     void Start()
     {
         // Ensure that the player can use their mouse cursor on the main menu.
@@ -58,6 +65,11 @@ public class MainMenu : MonoBehaviour
 
         // Set reference to leaderboard script.
         leaderboardScript = leaderboard.GetComponent<Leaderboard>();
+
+        // Set audio levels for the game based on the player prefs audio settings.
+        master.SetFloat("MasterVolume", Mathf.Log10(PlayerPrefs.GetFloat("MasterVolume", 0.5f)) * 20);
+        master.SetFloat("MusicVolume", Mathf.Log10(PlayerPrefs.GetFloat("MusicVolume", 0.5f)) * 20);
+        master.SetFloat("SFXVolume", Mathf.Log10(PlayerPrefs.GetFloat("SFXVolume", 0.5f)) * 20);
     }
 
     void Update()
@@ -240,5 +252,12 @@ public class MainMenu : MonoBehaviour
         // Set the main menu first button
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(leaderboardClosedButton);
+    }
+
+    // Display the audio settings menu.
+    public void DisplayAudioSettings()
+    {
+        settingsScrollView.SetActive(false);
+        audioSettings.SetActive(true);
     }
 }

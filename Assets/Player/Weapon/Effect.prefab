@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &7152920151662761729
 AudioSource:
@@ -43,7 +43,8 @@ AudioSource:
   m_GameObject: {fileID: 2891902950469376322}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -8001498645838596814, guid: 8563d51aa2c34ab4fbab29c3d4f868e0,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 1effcb9d1a3c53745a017f0abb628724, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5

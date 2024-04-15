@@ -38,7 +38,7 @@ Transform:
   - {fileID: 615384858254254057}
   - {fileID: 6287701754460270369}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5345151498043012405
 MeshFilter:
@@ -240,7 +240,8 @@ AudioSource:
   m_GameObject: {fileID: 1851806194372976026}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -8001498645838596814, guid: 8563d51aa2c34ab4fbab29c3d4f868e0,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 05661f8bd954231478a82912cc5122c3, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.5
@@ -336,7 +337,8 @@ AudioSource:
   m_GameObject: {fileID: 1851806194372976026}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -8001498645838596814, guid: 8563d51aa2c34ab4fbab29c3d4f868e0,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 863d527c8c05a394fb51fa1da352b3af, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.5

@@ -9,6 +9,7 @@ using Unity.VisualScripting;
 using System;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 {
@@ -104,7 +105,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Scrollbar scrollbar;
     private float scrollSpeed = 0.0035f;
 
-    [Header("Audio Sources")]
+    // Audio settings items.
+    [SerializeField] private GameObject audioSettings;
+    [SerializeField] private GameObject settingsScrollView;
+
+    [Header("Audio")]
+    [SerializeField] private AudioMixer master;
     [SerializeField] private AudioSource enemyDeathSound;
     [SerializeField] private AudioSource playerLoseSound;
 
@@ -180,6 +186,12 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        // Set audio levels for the game based on the player prefs audio settings.
+        master.SetFloat("MasterVolume", Mathf.Log10(PlayerPrefs.GetFloat("MasterVolume", 0.5f)) * 20);
+        master.SetFloat("MusicVolume", Mathf.Log10(PlayerPrefs.GetFloat("MusicVolume", 0.5f)) * 20);
+        master.SetFloat("SFXVolume", Mathf.Log10(PlayerPrefs.GetFloat("SFXVolume", 0.5f)) * 20);
+
+        // If in the level scenes, set the exit material so that it is red when not enough eliminations, and green when enough eliminations.
         if (currentScene == "Level1" || currentScene == "Level2" || currentScene == "Level3")
         {
             exitMaterial = exitMaterialRed;
@@ -295,11 +307,22 @@ public class GameManager : MonoBehaviour
         }
 
         // If all these keys are pressed, delete the things saved to player prefs. Don't want this to happen unintentionally.
-        if (Input.GetKey(KeyCode.RightAlt) && Input.GetKey(KeyCode.RightControl) && Input.GetKey(KeyCode.RightShift)
-            && Input.GetKey(KeyCode.B) && Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKey(KeyCode.RightAlt) && Input.GetKey(KeyCode.RightControl) && Input.GetKey(KeyCode.RightShift))
         {
-            PlayerPrefs.DeleteAll();
-            Debug.Log("Deleted all player prefs keys!");
+            // If B and P are also pressed, delete all the player prefs keys.
+            if (Input.GetKey(KeyCode.B) && Input.GetKeyDown(KeyCode.P))
+            {
+                PlayerPrefs.DeleteAll();
+                Debug.Log("Deleted all player prefs keys!");
+            }
+            // If only V is pressed, delete all the volume keys.
+            else if (Input.GetKeyDown(KeyCode.V))
+            {
+                PlayerPrefs.DeleteKey("MasterVolume");
+                PlayerPrefs.DeleteKey("MusicVolume");
+                PlayerPrefs.DeleteKey("SFXVolume");
+            }
+            
         }
 
         // While equals is held down, each press of the T key adds 10 seconds to the timer.
@@ -615,6 +638,40 @@ public class GameManager : MonoBehaviour
         enemiesRemainingUI.text = "Enemies Remaining: " + enemiesRemaining;
         enemiesEliminatedUI.text = "Enemies Eliminated: " + enemiesEliminated + " / " + enemiesToWinLevel;
     }
+    
+    // Function that changes the display fps bool based on input in settings menu.
+    public void ShowFPSDisplay()
+    {
+        displayFPS = !displayFPS;
+        fpsDisplay.enabled = displayFPS;
+    }
+
+    // Function that updates the FPS counter on screen.
+    void UpdateFPSDisplay()
+    {
+        // fpsUpdateTimer will equal 0 at the end of the current frame in seconds.
+        fpsUpdateTimer -= Time.unscaledDeltaTime;
+
+        // If fpsUpdateTimer is less than or equal to 0 seconds, display the number of frames. 
+        if (fpsUpdateTimer <= 0f)
+        {
+            // fps 
+            fps = 1f / Time.unscaledDeltaTime;
+
+            // Display the rounded to a whole number fps value on screen.
+            fpsDisplay.text = "FPS: " + Mathf.Round(fps);
+
+            // Set the fpsUpdateTimer back to its original value to begin the cycle again.
+            fpsUpdateTimer = fpsUpdateFrequency;
+        }
+    }
+
+    // Display the audio settings menu.
+    public void DisplayAudioSettings()
+    {
+        settingsScrollView.SetActive(false);
+        audioSettings.SetActive(true);
+    }
 
     // Function called in the EnemyBehavior script when the enemy runs out of health.
     // Decreases the enemies remaining by 1, increases the enemies eliminated by 1, and updates the UI.
@@ -741,33 +798,6 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.LogWarning("Object to swap or new material is null.");
-        }
-    }
-
-    // Function that changes the display fps bool based on input in settings menu.
-    public void ShowFPSDisplay()
-    {
-        displayFPS = !displayFPS;
-        fpsDisplay.enabled = displayFPS;
-    }
-
-    // Function that updates the FPS counter on screen.
-    void UpdateFPSDisplay()
-    {
-        // fpsUpdateTimer will equal 0 at the end of the current frame in seconds.
-        fpsUpdateTimer -= Time.unscaledDeltaTime;
-
-        // If fpsUpdateTimer is less than or equal to 0 seconds, display the number of frames. 
-        if (fpsUpdateTimer <= 0f)
-        {
-            // fps 
-            fps = 1f / Time.unscaledDeltaTime;
-
-            // Display the rounded to a whole number fps value on screen.
-            fpsDisplay.text = "FPS: " + Mathf.Round(fps);
-
-            // Set the fpsUpdateTimer back to its original value to begin the cycle again.
-            fpsUpdateTimer = fpsUpdateFrequency;
         }
     }
 

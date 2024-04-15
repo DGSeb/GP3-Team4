@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class Sliders : MonoBehaviour
 {
     // Reference to the crosshair object that is a part of the player UI.
     public RectTransform crosshair;
+
+    // References to the audio mixers for audio settings.
+    [Header("Audio")]
+    [SerializeField] private AudioMixer master;
 
     void Start()
     {
@@ -50,6 +55,27 @@ public class Sliders : MonoBehaviour
         PlayerPrefs.SetFloat("CrosshairSize", newCrosshairSize);
     }
 
+    // Adjust the master volume (volume of everything in the game).
+    public void AudioMasterAdjustment(float newMasterVolume)
+    {
+        master.SetFloat("MasterVolume", Mathf.Log10(newMasterVolume) * 20);
+        PlayerPrefs.SetFloat("MasterVolume", newMasterVolume);
+    }
+
+    // Adjust the music volume in the game.
+    public void AudioMusicAdjustment(float newMusicVolume)
+    {
+        master.SetFloat("MusicVolume", Mathf.Log10(newMusicVolume) * 20);
+        PlayerPrefs.SetFloat("MusicVolume", newMusicVolume);
+    }
+
+    // Adjust the SFX (sound effects) volume in the game.
+    public void AudioSFXAdjustment(float newSFXVolume)
+    {
+        master.SetFloat("SFXVolume", Mathf.Log10(newSFXVolume) * 20);
+        PlayerPrefs.SetFloat("SFXVolume", newSFXVolume);
+    }
+
     // Function to apply the value of the sensitivity to the slider so that the slider shows the correct position between scenes.
     void SetSliderValue()
     {
@@ -81,6 +107,24 @@ public class Sliders : MonoBehaviour
         else if (this.gameObject.name == "CrosshairSizeSlider")
         {
             this.GameObject().GetComponent<Slider>().value = PlayerPrefs.GetFloat("CrosshairSize", 0.15f);
+        }
+
+        // If master volume slider, set its value to the saved data in the player prefs key. If no value, default to 0.5.
+        else if (this.gameObject.name == "MasterVolumeSlider")
+        {
+            this.GameObject().GetComponent<Slider>().value = PlayerPrefs.GetFloat("MasterVolume", 0.5f);
+        }
+
+        // If music volume slider, set its value to the saved data in the player prefs key. If no value, default to 0.5.
+        else if (this.gameObject.name == "MusicVolumeSlider")
+        {
+            this.GameObject().GetComponent<Slider>().value = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
+        }
+
+        // If SFX volume slider, set its value to the saved data in the player prefs key. If no value, default to 0.5.
+        else if (this.gameObject.name == "SFXVolumeSlider")
+        {
+            this.GameObject().GetComponent<Slider>().value = PlayerPrefs.GetFloat("SFXVolume", 0.5f);
         }
     }
 }
