@@ -12,6 +12,7 @@ TagManager:
   - Exit
   - MovingPlatform
   - HorizontalMovingPlatform
+  - DeathZone
   layers:
   - Default
   - TransparentFX

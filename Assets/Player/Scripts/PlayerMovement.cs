@@ -229,9 +229,6 @@ public class PlayerMovement : MonoBehaviour
             rb.drag = groundDrag;
         else
             rb.drag = 0;
-
-        // Run function that checks whether or not the player is within the map boundaries.
-        BoundaryCheck();
     }
 
     private void MyInput()
@@ -448,16 +445,6 @@ public class PlayerMovement : MonoBehaviour
         keepMomentum= false;    
     }
 
-    // Function to check if the player is out of bounds.
-    void BoundaryCheck()
-    {
-        // If player is below -50 on the y axis, respawn them.
-        if (this.gameObject.transform.position.y < -40)
-        {
-            gM.ReloadScene();
-        }
-    }
-
     // Check what trigger the player walked into.
     private void OnTriggerEnter(Collider other)
     {
@@ -509,6 +496,11 @@ public class PlayerMovement : MonoBehaviour
                         gM.ChangeScene("ResultsScreen");
                     }
                 }
+                break;
+
+            // If player hits an object with the death zone tag, respawn the player.
+            case "DeathZone":
+                gM.ReloadScene();
                 break;
         }
 
