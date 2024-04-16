@@ -167,6 +167,15 @@ public class EnemyBehavior : MonoBehaviour
                 }
             }
         }
+        // If the player is not in range, set playerInRange to false and turn off the ray that was drawn. Also stop audio if it's playing.
+        else
+        {
+            playerInRange = false;
+            lineRenderer.enabled = false;
+
+            // Make sure audio isn't playing.
+            attackChargeSound.Stop();
+        }
 
         // If the player is in range, rotate the enemy towards the player.
         if (playerInRange)
