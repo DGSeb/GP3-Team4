@@ -129,6 +129,8 @@ public class GameManager : MonoBehaviour
     public GameObject leaderboard;
     private Leaderboard leaderboardScript;
 
+    private static int frameRate = 30;
+
     void Awake()
     {
         leaderboardScript = leaderboard.GetComponent<Leaderboard>();
@@ -263,6 +265,51 @@ public class GameManager : MonoBehaviour
     // Function that checks for different inputs.
     void CheckInput()
     {
+        // Cat laughing at you.
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            Application.OpenURL("https://www.youtube.com/watch?v=L8XbI9aJOXk");
+        }
+
+        // Plays the Kalimba song from Windows 7.
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            Application.OpenURL("https://www.youtube.com/watch?v=tCO4i2t-Aso");
+        }
+
+        // Half of what your monitor can do.
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            QualitySettings.vSyncCount = 2;
+        }
+        // Display number of frames that your monitor can display.
+        else if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            // Quality settings: https://docs.unity3d.com/ScriptReference/QualitySettings-vSyncCount.html
+            QualitySettings.vSyncCount = 1;
+        }
+        // Uncapped frames.
+        else if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            QualitySettings.vSyncCount = 0;
+            Application.targetFrameRate = -1;
+        }
+        
+        // Set the frame rate manually starting from 30 and subtract 5 on each press.
+        else if (Input.GetKeyDown(KeyCode.Minus))
+        {
+            QualitySettings.vSyncCount = 0;
+            frameRate -= 5;
+            Application.targetFrameRate = frameRate;
+        }
+        // Set frame rate manually starting from 30 or different value if changed and add 5 on each press.
+        else if (Input.GetKeyDown(KeyCode.Equals))
+        {
+            QualitySettings.vSyncCount = 0;
+            frameRate += 5;
+            Application.targetFrameRate = frameRate;
+        }
+
         // If escape key is pressed, check if the game is paused.
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7))
         {

@@ -54,6 +54,9 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
+        // Set starting frame rate to half of what monitor can do
+        QualitySettings.vSyncCount = 2;
+
         // Ensure that the player can use their mouse cursor on the main menu.
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
