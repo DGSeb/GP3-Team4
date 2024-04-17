@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.10417707, g: 0.29868415, b: 0.43455416, a: 1}
+  m_IndirectSpecularColor: {r: 0.10423352, g: 0.29955152, b: 0.43769938, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1936,12 +1936,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 260a09617dac5aa409d1408a3d50a6ab,
     type: 3}
   m_PrefabInstance: {fileID: 88268725}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &72495274 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8510745051380897050, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
-    type: 3}
-  m_PrefabInstance: {fileID: 438312846}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &74497671
 GameObject:
@@ -11868,7 +11862,7 @@ PrefabInstance:
     - target: {fileID: 7966247278389774229, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8702344198504816843, guid: d515d6fe50e52bc48b3d2ad5ff47bf7a,
         type: 3}
@@ -28041,7 +28035,6 @@ MonoBehaviour:
   enemiesRemaining: 0
   enemiesEliminated: 0
   enoughEnemiesEliminated: 0
-  howToPlayScreen: {fileID: 72495274}
   pauseFirstButton: {fileID: 438312858}
   settingsFirstButton: {fileID: 1371373855}
   settingsClosedButton: {fileID: 438312859}
