@@ -36,9 +36,9 @@ public class PlayerCam : MonoBehaviour
         sensMouseX = PlayerPrefs.GetFloat("MouseXSensitivity", 400f);
         sensMouseY = PlayerPrefs.GetFloat("MouseYSensitivity", 400f);
 
-        // Set the controller X and Y sensitivity floats to the player prefs keys. If no value, x is 225 and y is 100.
-        sensControllerX = PlayerPrefs.GetFloat("ControllerXSensitivity", 225f);
-        sensControllerY = PlayerPrefs.GetFloat("ControllerYSensitivity", 100f);
+        // Set the controller X and Y sensitivity floats to the player prefs keys. If no value, x is 200 and y is 90.
+        sensControllerX = PlayerPrefs.GetFloat("ControllerXSensitivity", 200f);
+        sensControllerY = PlayerPrefs.GetFloat("ControllerYSensitivity", 90f);
     }
 
     private void Start()
