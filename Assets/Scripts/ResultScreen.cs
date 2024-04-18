@@ -76,6 +76,13 @@ public class ResultScreen : MonoBehaviour
         LoadScene(lastScene);
     }
 
+    // Lets the player go to the next level.
+    public void PlayNextLevel()
+    {
+        GameManager.isPlayerActive = true;
+        LoadScene(nextScene);
+    }
+
     // Function that loads the main menu when the main menu button is pressed.
     public void LoadMainMenu()
     {

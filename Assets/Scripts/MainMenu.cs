@@ -52,6 +52,11 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject howToPlayScreen;
     [SerializeField] private GameObject howToPlayExitButton;
 
+    [Header("Level Selection")]
+    [SerializeField] private GameObject levelSelectionScreen;
+    [SerializeField] private GameObject levelSelectionFirstButton;
+    [SerializeField] private GameObject levelSelectedExitButton;
+
     void Start()
     {
         // Set starting frame rate to half of what monitor can do
@@ -135,65 +140,96 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
-    // Function to play the game.
+    // Brings up the level selection menu.
     public void PlayGame()
     {
-        GameManager.isPlayerActive = true;
-        LoadScene("Level1");
+        // Turn off buttons UI and turn on the level selection screen.
+        buttons.SetActive(false);
+        levelSelectionScreen.SetActive(true);
+
+        // Set the first selected button of the level selection screen for it to be navigable on controller and keyboard.
+        SetSelectedUIButton(levelSelectionFirstButton);
     }
 
     // Function to exit the game when they are super angry.
     public void RageQuit()
     {
         Application.Quit();
-        print("SO ANGYYYYY");
+        //print("SO ANGYYYYY");
     }
     
-    // Function to play the tutorial.
+    // Load tutorial scene.
     public void PlayTutorial()
     {
-        GameManager.isPlayerActive = true;
         LoadScene("Tutorial");
+    }
+
+    // Load level 1 scene.
+    public void PlayLevel1()
+    {
+        LoadScene("Level1");
+    }
+
+    // Load level 2 scene.
+    public void PlayLevel2()
+    {
+        LoadScene("Level2");
+    }
+
+    // Load level 3 scene.
+    public void PlayLevel3()
+    {
+        LoadScene("Level3");
+    }
+
+    // Exit the level selection screen
+    public void ExitLevelSelection()
+    {
+        levelSelectionScreen.SetActive(false);
+        buttons.SetActive(true);
+
+        SetSelectedUIButton(levelSelectedExitButton);
     }
 
     // Function to play the old and smaller tutorial.
     public void PlaySmallTutorial()
     {
-        GameManager.isPlayerActive = true;
         LoadScene("Tutorial (Small Version)");
     }
 
     // Function to turn on the settings menu.
     public void ActivateSettings()
     {
+        // Turn off buttons UI and turn on settings UI.
         buttons.SetActive(false);
         settingsMenu.SetActive(true);
 
-        // Clear any selected object in the event system and set a new selected object.
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(settingsFirstButton);
+        // Set the first selected button in the settings menu to make it navigable on controller and keyboard.
+        SetSelectedUIButton(settingsFirstButton);
     }
 
     // Function to turn off the settings menu.
     public void ExitSettings()
     {
+        // Turn off settings UI, and turn on buttons UI.
         settingsMenu.SetActive(false);
         buttons.SetActive(true);
 
+        // If the audio settings are currently active, turn off the audio settings and turn the settings scroll view back on.
         if (audioSettings.activeSelf)
         {
             audioSettings.SetActive(false);
             settingsScrollView.SetActive(true);
         }
 
-        // Clear any selected object in the event system and set a new selected object.
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(settingsClosedButton);
+        // Set the first button selected when closing the settings menu to make the menu navigable on controller and keyboard.
+        SetSelectedUIButton(settingsClosedButton);
     }
 
     // Function that changes the display fps bool based on input in settings menu.
     public void ShowFPSDisplay()
     {
+        // Set the bool to the opposite of what it currently is and set the enabled status of the fps display to the value of the bool.
         GameManager.displayFPS = !GameManager.displayFPS;
         fpsDisplay.enabled = GameManager.displayFPS;
     }
@@ -225,53 +261,52 @@ public class MainMenu : MonoBehaviour
         buttons.SetActive(false);
         leaderboardSelection.SetActive(true);
 
-        // Clear any selected object in the event system and set a new selected object.
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(leaderboardSelectionFirstButton);
+        // Set the first selected leaderboard selection button to make the leaderboard selection screen navigable on controller and keyboard.
+        SetSelectedUIButton(leaderboardSelectionFirstButton);
     }
 
     // Display tutorial leaderboard
     public void LeaderboardTutorial()
     {
+        // Load the tutorial leaderboard entries and turn the leaderboard on.
         leaderboardScript.LoadLeaderboard("PBLeaderboardTutorial");
         leaderboard.SetActive(true);
 
-        // Clear any selected object in the event system and set a new selected object.
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(leaderboardExitButton);
+        // Set the first selected button to the exit button so the leaderboard can be exited on controller and keyboard.
+        SetSelectedUIButton(leaderboardExitButton);
     }
 
     // Display level 1 leaderboard
     public void LeaderboardLevel1()
     {
+        // Load the level 1 leaderboard entries and turn the leaderboard on.
         leaderboardScript.LoadLeaderboard("PBLeaderboardLevel1");
         leaderboard.SetActive(true);
 
-        // Clear any selected object in the event system and set a new selected object.
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(leaderboardExitButton);
+        // Set the first selected button to the exit button so the leaderboard can be exited on controller and keyboard.
+        SetSelectedUIButton(leaderboardExitButton);
     }
 
     // Display level 2 leaderboard
     public void LeaderboardLevel2()
     {
+        // Load the level 2 leaderboard entries and turn the leaderboard on.
         leaderboardScript.LoadLeaderboard("PBLeaderboardLevel2");
         leaderboard.SetActive(true);
 
-        // Clear any selected object in the event system and set a new selected object.
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(leaderboardExitButton);
+        // Set the first selected button to the exit button so the leaderboard can be exited on controller and keyboard.
+        SetSelectedUIButton(leaderboardExitButton);
     }
 
     // Display level 3 leaderboard
     public void LeaderboardLevel3()
     {
+        // Load the level 3 leaderboard entries and turn the leaderboard on.
         leaderboardScript.LoadLeaderboard("PBLeaderboardLevel3");
         leaderboard.SetActive(true);
 
-        // Clear any selected object in the event system and set a new selected object.
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(leaderboardExitButton);
+        // Set the first selected button to the exit button so the leaderboard can be exited on controller and keyboard.
+        SetSelectedUIButton(leaderboardExitButton);
     }
 
     // Go back to menu
@@ -289,42 +324,49 @@ public class MainMenu : MonoBehaviour
         // Turn the buttons back on.
         buttons.SetActive(true);
 
-        // Set the main menu first button
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(leaderboardClosedButton);
+        // Set the selected UI button to the settings closed button.
+        SetSelectedUIButton(leaderboardClosedButton);
     }
 
     // Display the audio settings menu.
     public void DisplayAudioSettings()
     {
+        // Turn off the scrollview and turn on the audio settings menu.
         settingsScrollView.SetActive(false);
         audioSettings.SetActive(true);
 
-        // Clear any selected object in the event system and set a new selected object.
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(audioFirstButton);
+        // Set the selected button to the first button in the audio menu.
+        SetSelectedUIButton(audioFirstButton);
     }
 
     // Display the how to play screen.
     public void DisplayHowToPlayScreen()
     {
+        // Turn off the buttons and turn on the how to play screen.
         buttons.SetActive(false);
         howToPlayScreen.SetActive(true);
 
-        // Clear any selected object in the event system and set a new selected object.
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(howToPlayExitButton);
+        // Set the selected button to the exit button.
+        SetSelectedUIButton(howToPlayExitButton);
     }
 
     // Exit the how to play screen.
     public void ExitHowToPlayScreen()
     {
+        // Turn off the how to play screen and the settings menu. Then, turn on the buttons.
         howToPlayScreen.SetActive(false);
         settingsMenu.SetActive(false);
         buttons.SetActive(true);
 
+        // Set the button selected to the settings button.
+        SetSelectedUIButton(settingsClosedButton);
+    }
+
+    // Sets the currentlt selected UI button
+    void SetSelectedUIButton(GameObject selectedButton)
+    {
         // Clear any selected object in the event system and set a new selected object.
         EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(pauseFirstButton);
+        EventSystem.current.SetSelectedGameObject(selectedButton);
     }
 }

@@ -232,7 +232,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (currentTime > 0.2f && !isPlayerActive)
+        if (currentTime > 0.2f && !isPlayerActive && !gameIsPaused)
         {
             isPlayerActive = true;
         }
