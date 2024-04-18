@@ -14,6 +14,9 @@ public class ResultScreen : MonoBehaviour
     // String that stores the scene the player was in before they went to the results screen.
     public static string lastScene;
 
+    // String that stores the next scene the player will go to, which is used for the next level button.
+    public static string nextScene;
+
     // Bools that say whether the player lost or won the game. These will then determine what displays on the results screen.
     public static bool lost;
     public static bool won;

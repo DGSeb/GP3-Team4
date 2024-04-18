@@ -64,8 +64,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI enemiesEliminatedUI; // Reference to enemies eliminated text element.
 
     // Level enemy count variables
-    private int levelOneEnemyCount = 28;
-    private int levelTwoEnemyCount = 15;
+    private int levelOneEnemyCount = 25;
+    private int levelTwoEnemyCount = 28;
     private int levelThreeEnemyCount = 30;
 
     [HideInInspector] public int enemiesRemaining;
@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
     private int enemiesToWinLevel;
     private int enemiesToWinTutorial = 12;
     private int enemiesToWinLevel1 = 15;
-    private int enemiesToWinLevel2 = 14;
+    private int enemiesToWinLevel2 = 15;
     private int enemiesToWinLevel3 = 22;
 
 
@@ -232,6 +232,11 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (currentTime > 0.2f && !isPlayerActive)
+        {
+            isPlayerActive = true;
+        }
+
         // ? : operator says do item on left side of : if true and do item on right side of : if false.
         // Set the current time to currentTime - deltaTime if it's counting down.
         // If not counting down, add deltaTime to the currentTime.
@@ -266,7 +271,7 @@ public class GameManager : MonoBehaviour
     void CheckInput()
     {
         // Cat laughing at you.
-        if (Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.F4))
         {
             Application.OpenURL("https://www.youtube.com/watch?v=L8XbI9aJOXk");
         }
@@ -433,6 +438,7 @@ public class GameManager : MonoBehaviour
     // Function to reload the scene the player is currently in / respawn them at the start.
     public void ReloadScene()
     {
+        isPlayerActive = false;
         ChangeScene(currentScene);
     }
 

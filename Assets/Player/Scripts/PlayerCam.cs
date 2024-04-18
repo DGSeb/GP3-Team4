@@ -51,32 +51,35 @@ public class PlayerCam : MonoBehaviour
 
     private void Update()
     {
-        // Get mouse input
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensMouseX;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensMouseY;
+        if (GameManager.isPlayerActive)
+        {
+            // Get mouse input
+            float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensMouseX;
+            float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensMouseY;
 
-        // Get controller input
-        float controllerX = Input.GetAxisRaw("Controller X") * Time.deltaTime * sensControllerX;
-        float controllerY = Input.GetAxisRaw("Controller Y") * Time.deltaTime * sensControllerY;
+            // Get controller input
+            float controllerX = Input.GetAxisRaw("Controller X") * Time.deltaTime * sensControllerX;
+            float controllerY = Input.GetAxisRaw("Controller Y") * Time.deltaTime * sensControllerY;
 
-        // Set the input for x and y to the mouse plus controller input. This ensures that the subsequent code can remain the same, yet use two kinds of input (mouse and controller).
-        // Only issue is that if you push on controller joystick plus move mouse at the same time, they both move the camera,
-        // but who is gonna be playing with one hand on controller and one hand on mouse fr.
-        float inputX = mouseX + controllerX;
-        float inputY = mouseY + controllerY;
-        
+            // Set the input for x and y to the mouse plus controller input. This ensures that the subsequent code can remain the same, yet use two kinds of input (mouse and controller).
+            // Only issue is that if you push on controller joystick plus move mouse at the same time, they both move the camera,
+            // but who is gonna be playing with one hand on controller and one hand on mouse fr.
+            float inputX = mouseX + controllerX;
+            float inputY = mouseY + controllerY;
 
-        yRotation += inputX;
-        xRotation -= inputY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        // Rotate cam and orientation
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+            yRotation += inputX;
+            xRotation -= inputY;
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, returnSpeed * Time.deltaTime);
-        currentRotation = Vector3.Slerp(currentRotation, targetRotation, snappiness * Time.fixedDeltaTime);
-        transform.localRotation *= Quaternion.Euler(currentRotation);
+            // Rotate cam and orientation
+            transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+            orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+
+            targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, returnSpeed * Time.deltaTime);
+            currentRotation = Vector3.Slerp(currentRotation, targetRotation, snappiness * Time.fixedDeltaTime);
+            transform.localRotation *= Quaternion.Euler(currentRotation);
+        }
     }
 
     public void DoFov(float endValue)

@@ -479,21 +479,20 @@ public class PlayerMovement : MonoBehaviour
                     gM.AddLeaderboardEntry();
                     gM.CheckPB();
 
+                    // Set the run time that will display on the results screen, confirm that the player has won, and change scenes.
+                    gM.SetRunTime();
+                    ResultScreen.won = true;
+                    ResultScreen.lost = false;
+                    gM.ChangeScene("ResultsScreen");
+
                     // Check the current scene to determine which scene to go to.
                     if (gM.currentScene == "Level1")
                     {
-                        gM.ChangeScene("Level2");
+                        ResultScreen.nextScene = "Level2";
                     }
                     else if (gM.currentScene == "Level2")
                     {
-                        gM.ChangeScene("Level3");
-                    }
-                    else if (gM.currentScene == "Level3")
-                    {
-                        gM.SetRunTime();
-                        ResultScreen.won = true;
-                        ResultScreen.lost = false;
-                        gM.ChangeScene("ResultsScreen");
+                        ResultScreen.nextScene = "Level3";
                     }
                 }
                 break;
@@ -558,6 +557,12 @@ public class PlayerMovement : MonoBehaviour
             case "WalkIntoFiringRangeTrigger":
                 StartCoroutine(tM.SetTextPromptActive(6));
                 Destroy(other.gameObject);
+                break;
+
+            // Easter egg.
+            case "Case (14)":
+                Destroy(other.gameObject.GetComponent<Collider>());
+                Application.OpenURL("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
                 break;
         }
     }
