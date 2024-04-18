@@ -301,14 +301,14 @@ public class GameManager : MonoBehaviour
         }
         
         // Set the frame rate manually starting from 30 and subtract 5 on each press.
-        else if (Input.GetKeyDown(KeyCode.Minus))
+        else if (Input.GetKey(KeyCode.Minus) && Input.GetKeyDown(KeyCode.F))
         {
             QualitySettings.vSyncCount = 0;
             frameRate -= 5;
             Application.targetFrameRate = frameRate;
         }
         // Set frame rate manually starting from 30 or different value if changed and add 5 on each press.
-        else if (Input.GetKeyDown(KeyCode.Equals))
+        else if (Input.GetKey(KeyCode.Equals) && Input.GetKeyDown(KeyCode.F))
         {
             QualitySettings.vSyncCount = 0;
             frameRate += 5;

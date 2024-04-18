@@ -125,6 +125,10 @@ public class MainMenu : MonoBehaviour
             }
             else if (leaderboardSelection.activeSelf)
             {
+                ExitLeaderboardSelection();
+            }
+            else if (leaderboard.activeSelf)
+            {
                 ExitLeaderboard();
             }
             else if (howToPlayScreen.activeSelf)
@@ -313,22 +317,24 @@ public class MainMenu : MonoBehaviour
         SetSelectedUIButton(leaderboardExitButton);
     }
 
-    // Go back to menu
+    // Exit the leaderboard and go back to the leaderboard selection screen.
     public void ExitLeaderboard()
     {
-        // Turn off the leaderboard selection menu.
-        leaderboardSelection.SetActive(false);
-        
-        // If the leaderboard is active, turn it off.
-        if (leaderboard.activeSelf)
-        {
-            leaderboard.SetActive(false);
-        }
-
-        // Turn the buttons back on.
-        buttons.SetActive(true);
+        // Turn off the leaderboard and turn on the leaderboard selection menu.
+        leaderboard.SetActive(false);
+        leaderboardSelection.SetActive(true);
 
         // Set the selected UI button to the settings closed button.
+        SetSelectedUIButton(leaderboardSelectionFirstButton);
+    }
+
+    // Exit the leaderboard selection screen and go back the the menu.
+    public void ExitLeaderboardSelection()
+    {
+        // Turn off the leaderboard selection screen and turn on the win or loss UI depending on whether player won or loss.
+        leaderboardSelection.SetActive(false);
+        buttons.SetActive(true);
+
         SetSelectedUIButton(leaderboardClosedButton);
     }
 

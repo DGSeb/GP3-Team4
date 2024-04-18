@@ -40,7 +40,12 @@ public class ResultScreen : MonoBehaviour
     private Leaderboard leaderboardScript; // reference to the leaderboard script.
     [SerializeField] private GameObject leaderboardSelectionFirstButton; // first button selected when leaderboard selection screen is active.
     [SerializeField] private GameObject leaderboardExitButton; // Exit button in the leaderboard.
-    [SerializeField] private GameObject leaderboardClosedButton;
+
+    // Button selected when the leaderboard is closed. As there is one button for win UI and lose UI, set leaderboardCloseButton when checking win state.
+    private GameObject leaderboardClosedButton;
+    [SerializeField] private GameObject wonLeaderboardClosedButton;
+    [SerializeField] private GameObject lostLeaderboardClosedButton;
+
 
     void Start()
     {
@@ -63,6 +68,12 @@ public class ResultScreen : MonoBehaviour
         Cursor.visible = true;
     }
 
+    void Update()
+    {
+        // Check the input given by the player.
+        CheckInput();    
+    }
+
     // Check whether the player won or lost and display the corresponding UI.
     void CheckWinState()
     {
@@ -72,7 +83,11 @@ public class ResultScreen : MonoBehaviour
             wonUI.SetActive(false);
             lostUI.SetActive(true);
 
+            // Set the selected UI button to the lost first button.
             SetSelectedUIButton(lostFirstButton);
+
+            // Set the leaderboard close button to the one for losing the game.
+            leaderboardClosedButton = lostLeaderboardClosedButton;
         }
         // If the player won, ensure the lost UI is off and turn on the won UI.
         else if (won)
@@ -80,7 +95,11 @@ public class ResultScreen : MonoBehaviour
             lostUI.SetActive(false);
             wonUI.SetActive(true);
 
+            // Set the selected UI button to the won first button.
             SetSelectedUIButton(wonFirstButton);
+
+            // Set the closed leaderboard button to the one for winning the game.
+            leaderboardClosedButton = wonLeaderboardClosedButton;
         }
     }
 
@@ -177,22 +196,24 @@ public class ResultScreen : MonoBehaviour
         SetSelectedUIButton(leaderboardExitButton);
     }
 
-    // Go back to menu
+    // Exit the leaderboard and go back to the leaderboard selection screen.
     public void ExitLeaderboard()
     {
-        // Turn off the leaderboard selection menu.
-        leaderboardSelection.SetActive(false);
-
-        // If the leaderboard is active, turn it off.
-        if (leaderboard.activeSelf)
-        {
-            leaderboard.SetActive(false);
-        }
-
-        // Check whether the player won or lost and display the corresponding UI.
-        CheckWinState();
+        // Turn off the leaderboard and turn on the leaderboard selection menu.
+        leaderboard.SetActive(false);
+        leaderboardSelection.SetActive(true);
 
         // Set the selected UI button to the settings closed button.
+        SetSelectedUIButton(leaderboardSelectionFirstButton);
+    }
+
+    // Exit the leaderboard selection screen and go back the the menu.
+    public void ExitLeaderboardSelection()
+    {
+        // Turn off the leaderboard selection screen and turn on the win or loss UI depending on whether player won or loss.
+        leaderboardSelection.SetActive(false);
+        CheckWinState();
+
         SetSelectedUIButton(leaderboardClosedButton);
     }
 
@@ -202,5 +223,22 @@ public class ResultScreen : MonoBehaviour
         // Clear any selected object in the event system and set a new selected object.
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(selectedButton);
+    }
+
+    // Check for player input.
+    void CheckInput()
+    {
+        // If escape is pressed, see what UI is currently active and set it to false.
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1) || Input.GetKeyDown(KeyCode.JoystickButton7))
+        {
+            if (leaderboardSelection.activeSelf)
+            {
+                ExitLeaderboardSelection();
+            }
+            else if (leaderboard.activeSelf)
+            {
+                ExitLeaderboard();
+            }
+        }
     }
 }
