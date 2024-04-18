@@ -562,7 +562,7 @@ public class PlayerMovement : MonoBehaviour
             // Easter egg.
             case "Case (14)":
                 Destroy(other.gameObject.GetComponent<Collider>());
-                Application.OpenURL("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+                Application.OpenURL("https://www.youtube.com/watch?v=dQw4w9WgXcQ&autoplay=1");
                 break;
         }
     }

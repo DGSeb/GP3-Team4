@@ -268,8 +268,9 @@ public class MainMenu : MonoBehaviour
     // Display tutorial leaderboard
     public void LeaderboardTutorial()
     {
-        // Load the tutorial leaderboard entries and turn the leaderboard on.
+        // Load the tutorial leaderboard entries, turn off the selection screen, and turn the leaderboard on.
         leaderboardScript.LoadLeaderboard("PBLeaderboardTutorial");
+        leaderboardSelection.SetActive(false);
         leaderboard.SetActive(true);
 
         // Set the first selected button to the exit button so the leaderboard can be exited on controller and keyboard.
@@ -279,8 +280,9 @@ public class MainMenu : MonoBehaviour
     // Display level 1 leaderboard
     public void LeaderboardLevel1()
     {
-        // Load the level 1 leaderboard entries and turn the leaderboard on.
+        // Load the level 1 leaderboard entries, turn off the selection screen, and turn the leaderboard on.
         leaderboardScript.LoadLeaderboard("PBLeaderboardLevel1");
+        leaderboardSelection.SetActive(false);
         leaderboard.SetActive(true);
 
         // Set the first selected button to the exit button so the leaderboard can be exited on controller and keyboard.
@@ -290,8 +292,9 @@ public class MainMenu : MonoBehaviour
     // Display level 2 leaderboard
     public void LeaderboardLevel2()
     {
-        // Load the level 2 leaderboard entries and turn the leaderboard on.
+        // Load the level 2 leaderboard entries, turn off the selection screen, and turn the leaderboard on.
         leaderboardScript.LoadLeaderboard("PBLeaderboardLevel2");
+        leaderboardSelection.SetActive(false);
         leaderboard.SetActive(true);
 
         // Set the first selected button to the exit button so the leaderboard can be exited on controller and keyboard.
@@ -301,8 +304,9 @@ public class MainMenu : MonoBehaviour
     // Display level 3 leaderboard
     public void LeaderboardLevel3()
     {
-        // Load the level 3 leaderboard entries and turn the leaderboard on.
+        // Load the level 3 leaderboard entries, turn off the selection screen, and turn the leaderboard on.
         leaderboardScript.LoadLeaderboard("PBLeaderboardLevel3");
+        leaderboardSelection.SetActive(false);
         leaderboard.SetActive(true);
 
         // Set the first selected button to the exit button so the leaderboard can be exited on controller and keyboard.

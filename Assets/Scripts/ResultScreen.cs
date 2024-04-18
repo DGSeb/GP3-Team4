@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class ResultScreen : MonoBehaviour
 {
@@ -31,7 +32,39 @@ public class ResultScreen : MonoBehaviour
 
     public static string runTime;
     public static string pBTime;
+
+    // Leaderboard variables.
+    [Header("Leaderboard")]
+    [SerializeField] private GameObject leaderboard; // Leaderboard object.
+    [SerializeField] private GameObject leaderboardSelection; // Screen that has selection for which leaderboard to display.
+    private Leaderboard leaderboardScript; // reference to the leaderboard script.
+    [SerializeField] private GameObject leaderboardSelectionFirstButton; // first button selected when leaderboard selection screen is active.
+    [SerializeField] private GameObject leaderboardExitButton; // Exit button in the leaderboard.
+    [SerializeField] private GameObject leaderboardClosedButton;
+
     void Start()
+    {
+        // Set reference to leaderboard script.
+        leaderboardScript = leaderboard.GetComponent<Leaderboard>();
+
+        // Check if the player won or lost.
+        CheckWinState();
+
+        // If the player won, only need to set the times at the very start.
+        if (won)
+        {
+            // Set the run time and pb time texts to the variable values that correspond with them.
+            runTimeSecondsText.text = runTime;
+            pBTimeText.text = pBTime;
+        }
+
+        // Ensure that the player can use their mouse cursor.
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    // Check whether the player won or lost and display the corresponding UI.
+    void CheckWinState()
     {
         // If the player lost, ensure won UI is off and turn on the lost UI.
         if (lost)
@@ -39,9 +72,7 @@ public class ResultScreen : MonoBehaviour
             wonUI.SetActive(false);
             lostUI.SetActive(true);
 
-            // Clear any selected object in the event system and set a new selected object.
-            EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(lostFirstButton);
+            SetSelectedUIButton(lostFirstButton);
         }
         // If the player won, ensure the lost UI is off and turn on the won UI.
         else if (won)
@@ -49,18 +80,8 @@ public class ResultScreen : MonoBehaviour
             lostUI.SetActive(false);
             wonUI.SetActive(true);
 
-            // Set the run time and pb time texts to the variable values that correspond with them.
-            runTimeSecondsText.text = runTime;
-            pBTimeText.text = pBTime;
-
-            // Clear any selected object in the event system and set a new selected object.
-            EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(wonFirstButton);
+            SetSelectedUIButton(wonFirstButton);
         }
-
-        // Ensure that the player can use their mouse cursor.
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
     }
 
     // Function to load scenes.
@@ -94,5 +115,92 @@ public class ResultScreen : MonoBehaviour
     {
         Application.Quit();
         Debug.Log("I just can't.");
+    }
+
+    // Display leaderboard selection screen
+    public void LeaderboardSelectionScreen()
+    {
+        // Turn off the won and lost UIs and turn on the leaderboard selection screen.
+        wonUI.SetActive(false);
+        lostUI.SetActive(false);
+        leaderboardSelection.SetActive(true);
+
+        // Set the first selected leaderboard selection button to make the leaderboard selection screen navigable on controller and keyboard.
+        SetSelectedUIButton(leaderboardSelectionFirstButton);
+    }
+
+    // Display tutorial leaderboard
+    public void LeaderboardTutorial()
+    {
+        // Load the tutorial leaderboard entries, turn off the selection screen, and turn the leaderboard on.
+        leaderboardScript.LoadLeaderboard("PBLeaderboardTutorial");
+        leaderboardSelection.SetActive(false);
+        leaderboard.SetActive(true);
+
+        // Set the first selected button to the exit button so the leaderboard can be exited on controller and keyboard.
+        SetSelectedUIButton(leaderboardExitButton);
+    }
+
+    // Display level 1 leaderboard
+    public void LeaderboardLevel1()
+    {
+        // Load the level 1 leaderboard entries, turn off the selection screen, and turn the leaderboard on.
+        leaderboardScript.LoadLeaderboard("PBLeaderboardLevel1");
+        leaderboardSelection.SetActive(false);
+        leaderboard.SetActive(true);
+
+        // Set the first selected button to the exit button so the leaderboard can be exited on controller and keyboard.
+        SetSelectedUIButton(leaderboardExitButton);
+    }
+
+    // Display level 2 leaderboard
+    public void LeaderboardLevel2()
+    {
+        // Load the level 2 leaderboard entries, turn off the selection screen, and turn the leaderboard on.
+        leaderboardScript.LoadLeaderboard("PBLeaderboardLevel2");
+        leaderboardSelection.SetActive(false);
+        leaderboard.SetActive(true);
+
+        // Set the first selected button to the exit button so the leaderboard can be exited on controller and keyboard.
+        SetSelectedUIButton(leaderboardExitButton);
+    }
+
+    // Display level 3 leaderboard
+    public void LeaderboardLevel3()
+    {
+        // Load the level 3 leaderboard entries, turn off the selection screen, and turn the leaderboard on.
+        leaderboardScript.LoadLeaderboard("PBLeaderboardLevel3");
+        leaderboardSelection.SetActive(false);
+        leaderboard.SetActive(true);
+
+        // Set the first selected button to the exit button so the leaderboard can be exited on controller and keyboard.
+        SetSelectedUIButton(leaderboardExitButton);
+    }
+
+    // Go back to menu
+    public void ExitLeaderboard()
+    {
+        // Turn off the leaderboard selection menu.
+        leaderboardSelection.SetActive(false);
+
+        // If the leaderboard is active, turn it off.
+        if (leaderboard.activeSelf)
+        {
+            leaderboard.SetActive(false);
+        }
+
+        // Check whether the player won or lost and display the corresponding UI.
+        CheckWinState();
+
+        // Set the selected UI button to the settings closed button.
+        SetSelectedUIButton(leaderboardClosedButton);
+    }
+
+    // Sets the currentlt selected UI button
+    void SetSelectedUIButton(GameObject selectedButton)
+    {
+        // Clear any selected object in the event system and set a new selected object.
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(selectedButton);
     }
 }
