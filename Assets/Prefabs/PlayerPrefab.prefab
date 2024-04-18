@@ -108,7 +108,7 @@ Transform:
   - {fileID: 7381983025445258527}
   - {fileID: 7138508912072643059}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4644995246992761061
 GameObject:
@@ -264,9 +264,9 @@ MonoBehaviour:
   recoilScript: {fileID: 4005345185967632737}
   cooldown: 0.7
   travelSpeedFactor: 0.001
-  recoilX: -20
-  recoilY: 5
-  recoilZ: 5
+  recoilX: -30
+  recoilY: 10
+  recoilZ: 10
 --- !u!82 &3922764328107279623
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3175,7 +3175,7 @@ MonoBehaviour:
   speedCurve: 0
   travelLimit: {x: 0.025, y: 0.01, z: 0.025}
   bobLimit: {x: 0.01, y: 0.01, z: 0.01}
-  multiplier: {x: 0, y: 0, z: 0}
+  multiplier: {x: 1, y: 1, z: 1}
 --- !u!4 &6645913305234465421 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5430aacb53d60244ba2b74f992ab18ef,
