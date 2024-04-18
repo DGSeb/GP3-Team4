@@ -16,6 +16,7 @@ public class WeaponHandler : MonoBehaviour
     public Transform Emitter;
     public Camera playerCam;
     public PlayerCam recoilScript;
+    public Animator weaponAnimator;
 
     [Header("Options")]
     [SerializeField] float cooldown;
@@ -41,6 +42,10 @@ public class WeaponHandler : MonoBehaviour
     {
         //print("Pew!");
         recoilScript.RecoilFire(recoilX, recoilY, recoilZ);
+
+
+        //Trigger the fire animation.
+        weaponAnimator.SetBool("Fired", true);
 
         GameObject effectInstance = Instantiate(Effect, Emitter);
         Destroy(effectInstance, 5f);
@@ -75,6 +80,8 @@ public class WeaponHandler : MonoBehaviour
         }
 
         yield return new WaitForSeconds(waitTime);
+
+        weaponAnimator.SetBool("Fired", false);
 
         canFire = true;
     }
