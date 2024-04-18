@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.10424264, g: 0.29887775, b: 0.43474776, a: 1}
+  m_IndirectSpecularColor: {r: 0.10420759, g: 0.29875854, b: 0.43462378, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -10428,9 +10428,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Something seems very wrong. I'm detecting unusually high levels of radiation
-    from the service tunnels beneath the range. Whatever you do please do not go
-    down there.
+  m_text: Something seems very wrong. I'm detecting something past the doors beneath
+    the range. Whatever you do please do not go down there.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -13627,7 +13626,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Welcome to the simulation recruit! Move in all 4 directions to continue.
+  m_text: Welcome to the simulation recruit! Move in all 4 directions (W, A, S, D)
+    to continue.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -43683,7 +43683,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: You've also been equipped with a state of the art mobility suit. This allows
-    you to double jump. Use it to get to the rafters in front of you.
+    you to double jump by pressing space twice. Use it to get to the rafters in front
+    of you.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -45980,9 +45981,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You're equipped with our standard issue railgun. Move to the window in
-    front of you and eliminate 12 robots. Be sure to move around and jump to catch
-    any that may be hiding.
+  m_text: You're equipped with our standard issue railgun. You can shoot with left
+    click. Move to the window in front of you and eliminate 12 robots.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -46118,7 +46118,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: Your mobility suit is also equipped with a dash which boosts you forward
-    in the direction you are facing. Try it out over this ledge.
+    in the direction you are facing. Try it out by pressing E over this ledge.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
