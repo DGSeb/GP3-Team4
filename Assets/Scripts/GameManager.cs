@@ -18,9 +18,6 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI timerText;
     public GameObject timeLimitReachedText;
     public TextMeshProUGUI pBText;
-    [SerializeField] private GameObject pauseMenuUI;
-    [SerializeField] private GameObject pauseScreenOneUI;
-    [SerializeField] private GameObject settingsMenuUI;
 
     // Settings that control time.
     [Header("Timer Settings")]
@@ -47,9 +44,6 @@ public class GameManager : MonoBehaviour
         HundrethsDecimal,
         ThousandthsDecimal
     }
-
-    // Pause menu bool.
-    public static bool gameIsPaused;
 
     // String to say which scene the player is currently in.
     [HideInInspector] public string currentScene;
@@ -90,20 +84,6 @@ public class GameManager : MonoBehaviour
     // Reference to the crosshair object that is a part of the player UI.
     private RectTransform crosshair;
 
-    // Variables related to allowing the menus to be navigated with keyboard and controller.
-    [Header("Pause Menu Navigation")]
-    public GameObject pauseFirstButton;
-    public GameObject settingsFirstButton;
-    public GameObject settingsClosedButton;
-
-    // Scrollbar movement on controller
-    [SerializeField] private Scrollbar scrollbar;
-    private float scrollSpeed = 0.0035f;
-
-    // Audio settings items.
-    [SerializeField] private GameObject audioSettings;
-    [SerializeField] private GameObject settingsScrollView;
-
     [Header("Audio")]
     [SerializeField] private AudioMixer master;
     [SerializeField] private AudioSource enemyDeathSound;
@@ -115,15 +95,6 @@ public class GameManager : MonoBehaviour
     public Material exitMaterialRed;
     private Material exitMaterial;
     public GameObject exit;
-
-    [Header("FPS")]
-    // FPS variables
-    [SerializeField] private TextMeshProUGUI fpsDisplay;
-    [SerializeField] private Toggle fpsToggle;
-    private float fps;
-    private float fpsUpdateFrequency = 0.125f;
-    private float fpsUpdateTimer;
-    public static bool displayFPS;
 
     [Header("Leaderboard")]
     public GameObject leaderboard;
@@ -208,31 +179,17 @@ public class GameManager : MonoBehaviour
         // Run the UpdatePBText that updates the text displaying the player's PB.
         UpdatePBText();
 
-        // Make sure the pause menu is off.
-        pauseMenuUI.SetActive(false);
-
         // At start, ensure the game is not paused bool is false as the game is not paused.
-        gameIsPaused = false;
+        SettingsMenu.gameIsPaused = false;
 
         // Set the start value of the enemy count values. Enemies remaining is the enemy count of the level.
         // Enemies eliminated is 0 as no eliminations have occurred yet.
         EnemyCountVariablesStartValues();
-
-        // Set the fps timer to the frequency that it will update at.
-        fpsUpdateTimer = fpsUpdateFrequency;
-
-        // Check if display fps is true to determine if it should be displayed
-        if (displayFPS)
-        {
-            fpsToggle.isOn = displayFPS;
-            displayFPS = true;
-            fpsDisplay.enabled = true;
-        }
     }
 
     void Update()
     {
-        if (currentTime > 0.2f && !isPlayerActive && !gameIsPaused)
+        if (currentTime > 0.2f && !isPlayerActive && !SettingsMenu.gameIsPaused)
         {
             isPlayerActive = true;
         }
@@ -259,12 +216,6 @@ public class GameManager : MonoBehaviour
 
         // Run the check input function to see what is being pressed.
         CheckInput();
-
-        // Run function that updates the FPS on screen if the bool is true.
-        if (displayFPS)
-        {
-            UpdateFPSDisplay();
-        }
     }
 
     // Function that checks for different inputs.
@@ -313,28 +264,7 @@ public class GameManager : MonoBehaviour
             QualitySettings.vSyncCount = 0;
             frameRate += 5;
             Application.targetFrameRate = frameRate;
-        }
-
-        // If escape key is pressed, check if the game is paused.
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7))
-        {
-            // If paused, resume the game.
-            if (gameIsPaused)
-            {
-                Resume();
-            }
-            // If not paused, pause the game.
-            else
-            {
-                Pause();
-            }
-        }
-
-        // If B button is pressed and player is in the pause menu, resume the game.
-        if (Input.GetKeyDown(KeyCode.JoystickButton1) && gameIsPaused)
-        {
-            Resume();
-        }    
+        }  
 
         // If the R key is pressed, restart the player in the scene they are currently in.
         // This is very helpful if you want to restart a run or if you fall off into the abyss.
@@ -389,28 +319,6 @@ public class GameManager : MonoBehaviour
         }
 
         //CheckControllerInput();
-
-        // If the settings menu is active, check for controller input to scroll the scroll bar.
-        if (settingsMenuUI.activeSelf)
-        {
-            // Use this for right joystick
-            float controllerInputRight = Input.GetAxis("Controller Y");
-
-            // use this for left joystick.
-            float controllerInputLeft = Input.GetAxis("Vertical");
-
-            // Combine both left and right joystick input so the player can use either on the settings menu.
-            float controllerInput = controllerInputLeft + controllerInputRight;
-
-            // Adjust the speed at which the scorllbar scrolls with input. Use this value for vertical axis.
-            scrollSpeed = 0.0068f;
-
-            // Multiply the controllerInput with the scroll speed and set the scrollbar's value to that.
-            scrollbar.value += controllerInput * scrollSpeed;
-
-            // Clamp the scrollbar's value so it can't go above 1 or below 0.
-            scrollbar.value = Mathf.Clamp01(scrollbar.value);
-        }
     }
 
     // Function to set the text of the timer.
@@ -540,56 +448,58 @@ public class GameManager : MonoBehaviour
     // Update text displaying the player's PB.
     void UpdatePBText()
     {
-        // If in the first scene, set the PB text to the PB for the 1st random level.
-        if (currentScene == "LiamsWackyWonderland")
+        switch(currentScene)
         {
-            // If there is a format, use the format. Otherwise, don't use a format for PB text.
-            pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PB", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PB", timerLimit)}";
-        }
-        // If in the second scene, set the PB text to the PB for the 2nd level.
-        else if (currentScene == "LiamsHighlyPsychoticJoint")
-        {
-            // If there is a format, use the format. Otherwise, don't use a format for PB text.
-            pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PB2", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PB2", timerLimit)}";
-        }
-        // If in the tutorial scene, set the PB text to the PB for the tutorial level.
-        else if (currentScene == "Tutorial")
-        {
-            // If there is a format, use the format. Otherwise, don't use a format for PB text.
-            pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PBTutorial", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PBTutorial", timerLimit)}";
-        }
-        // If in the small/old tutorial scene, set the PB text to the PB for the small/old tutorial level.
-        else if (currentScene == "Tutorial (Small Version)")
-        {
-            // If there is a format, use the format. Otherwise, don't use a format for PB text.
-            pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PBSmallTutorial", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PBSmallTutorial", timerLimit)}";
-        }
-        // If in level 1, set the PB text to the PB for level 1.
-        else if (currentScene == "Level1")
-        {
-            // If there is a format, use the format. Otherwise, don't use a format for PB text.
-            pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PBLevel1", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PBLevel1", timerLimit)}";
+            // If in the first scene, set the PB text to the PB for the 1st random level.
+            case "LiamsWackyWonderland":
+                // If there is a format, use the format. Otherwise, don't use a format for PB text.
+                pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PB", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PB", timerLimit)}";
+                break;
 
-            // Set the text for what the player's PB will be displayed as on the results screen.
-            ResultScreen.pBTime = hasFormat ? PlayerPrefs.GetFloat("PBLevel1", timerLimit).ToString(timeFormats[format]) : PlayerPrefs.GetFloat("PBLevel1", timerLimit).ToString();
-        }
-        // If in level 1, set the PB text to the PB for level 1.
-        else if (currentScene == "Level2")
-        {
-            // If there is a format, use the format. Otherwise, don't use a format for PB text.
-            pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PBLevel2", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PBLevel2", timerLimit)}";
+            // If in the second scene, set the PB text to the PB for the 2nd level.
+            case "LiamsHighlyPsychoticJoint":
+                // If there is a format, use the format. Otherwise, don't use a format for PB text.
+                pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PB2", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PB2", timerLimit)}";
+                break;
 
-            // Set the text for what the player's PB will be displayed as on the results screen.
-            ResultScreen.pBTime = hasFormat ? PlayerPrefs.GetFloat("PBLevel2", timerLimit).ToString(timeFormats[format]) : PlayerPrefs.GetFloat("PBLevel2", timerLimit).ToString();
-        }
-        // If in level 1, set the PB text to the PB for level 1.
-        else if (currentScene == "Level3")
-        {
-            // If there is a format, use the format. Otherwise, don't use a format for PB text.
-            pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PBLevel3", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PBLevel3", timerLimit)}";
+            // If in the tutorial scene, set the PB text to the PB for the tutorial level.
+            case "Tutorial":
+                // If there is a format, use the format. Otherwise, don't use a format for PB text.
+                pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PBTutorial", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PBTutorial", timerLimit)}";
+                break;
 
-            // Set the text for what the player's PB will be displayed as on the results screen.
-            ResultScreen.pBTime = hasFormat ? PlayerPrefs.GetFloat("PBLevel3", timerLimit).ToString(timeFormats[format]) : PlayerPrefs.GetFloat("PBLevel3", timerLimit).ToString();
+            // If in the small/old tutorial scene, set the PB text to the PB for the small/old tutorial level.
+            case "Tutorial (Small Version)":
+                // If there is a format, use the format. Otherwise, don't use a format for PB text.
+                pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PBSmallTutorial", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PBSmallTutorial", timerLimit)}";
+                break;
+
+            // If in level 1, set the PB text to the PB for level 1.
+            case "Level1":
+                // If there is a format, use the format. Otherwise, don't use a format for PB text.
+                pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PBLevel1", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PBLevel1", timerLimit)}";
+
+                // Set the text for what the player's PB will be displayed as on the results screen.
+                ResultScreen.pBTime = hasFormat ? PlayerPrefs.GetFloat("PBLevel1", timerLimit).ToString(timeFormats[format]) : PlayerPrefs.GetFloat("PBLevel1", timerLimit).ToString();
+                break;
+
+            // If in level 2, set the PB text to the PB for level 2.
+            case "level2":
+                // If there is a format, use the format. Otherwise, don't use a format for PB text.
+                pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PBLevel2", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PBLevel2", timerLimit)}";
+
+                // Set the text for what the player's PB will be displayed as on the results screen.
+                ResultScreen.pBTime = hasFormat ? PlayerPrefs.GetFloat("PBLevel2", timerLimit).ToString(timeFormats[format]) : PlayerPrefs.GetFloat("PBLevel2", timerLimit).ToString();
+                break;
+
+            // If in level 3, set the PB text to the PB for level 3.
+            case "Level3":
+                // If there is a format, use the format. Otherwise, don't use a format for PB text.
+                pBText.text = hasFormat ? $"PB: {PlayerPrefs.GetFloat("PBLevel3", timerLimit).ToString(timeFormats[format])}" : $"PB: {PlayerPrefs.GetFloat("PBLevel3", timerLimit)}";
+
+                // Set the text for what the player's PB will be displayed as on the results screen.
+                ResultScreen.pBTime = hasFormat ? PlayerPrefs.GetFloat("PBLevel3", timerLimit).ToString(timeFormats[format]) : PlayerPrefs.GetFloat("PBLevel3", timerLimit).ToString();
+                break;
         }
     }  
     
@@ -598,123 +508,12 @@ public class GameManager : MonoBehaviour
     {
         ResultScreen.runTime = hasFormat ? currentTime.ToString(timeFormats[format]) : currentTime.ToString();
     }
-
-    // Function to resume the game.
-    public void Resume()
-    {
-        // Lock the cursor, make it not visible, turn off the settings menu and pause menu UI, set time back to normal, set player active bool to true,
-        // and set gameIsPaused to false as game is no longer paused.
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        settingsMenuUI.SetActive(false);
-        pauseMenuUI.SetActive(false);
-        gameIsPaused = false;
-        isPlayerActive = true;
-        Time.timeScale = 1.0f;
-    }
-
-    // Function to pause the game.
-    void Pause()
-    {
-        // Stop time, set player active bool to false, unlock player cursor so they can interact with buttons, turn on pause menu UI and its buttons,
-        // and set gameIsPaused to true as game is now paused.
-        Time.timeScale = 0f;
-        isPlayerActive = false;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        pauseMenuUI.SetActive(true);
-        pauseScreenOneUI.SetActive(true);
-        gameIsPaused = true;
-
-        // Clear any selected object in the event system and set a new selected object.
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(pauseFirstButton);
-    }
-
-    // Function to load the menu scene.
-    public void LoadMenu()
-    {
-        // Set time back to normal and load main menu scene.
-        Time.timeScale = 1.0f;
-        ChangeScene("MainMenu");
-        Debug.Log("Loading menu...");
-    }
-
-    // Function to quit the game. 
-    public void QuitGame()
-    {
-        // Quit the application (only works in builds).
-        Debug.Log("Quitting game...");
-        Application.Quit();
-    }
-
-    // Function to turn on the settings menu.
-    public void ActivateSettings()
-    {
-        pauseScreenOneUI.SetActive(false);
-        settingsMenuUI.SetActive(true);
-
-        // Clear any selected object in the event system and set a new selected object.
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(settingsFirstButton);
-    }  
-
-    // Function to exit settings menu and return to pause menu.
-    public void ExitSettings()
-    {
-        settingsMenuUI.SetActive(false);
-        pauseScreenOneUI.SetActive(true);
-
-        if (audioSettings.activeSelf)
-        {
-            audioSettings.SetActive(false);
-            settingsScrollView.SetActive(true);
-        }
-
-        // Clear any selected object in the event system and set a new selected object.
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(settingsClosedButton);
-    }
     
     // Set the UI for how many enemies are left and have been eliminated.
     void SetEnemyUI()
     {
         enemiesRemainingUI.text = "Enemies Remaining: " + enemiesRemaining;
         enemiesEliminatedUI.text = "Enemies Eliminated: " + enemiesEliminated + " / " + enemiesToWinLevel;
-    }
-    
-    // Function that changes the display fps bool based on input in settings menu.
-    public void ShowFPSDisplay()
-    {
-        displayFPS = !displayFPS;
-        fpsDisplay.enabled = displayFPS;
-    }
-
-    // Function that updates the FPS counter on screen.
-    void UpdateFPSDisplay()
-    {
-        // fpsUpdateTimer will equal 0 at the end of the current frame in seconds.
-        fpsUpdateTimer -= Time.unscaledDeltaTime;
-
-        // If fpsUpdateTimer is less than or equal to 0 seconds, display the number of frames. 
-        if (fpsUpdateTimer <= 0f)
-        {
-            // fps 
-            fps = 1f / Time.unscaledDeltaTime;
-
-            // Display the rounded to a whole number fps value on screen.
-            fpsDisplay.text = "FPS: " + Mathf.Round(fps);
-
-            // Set the fpsUpdateTimer back to its original value to begin the cycle again.
-            fpsUpdateTimer = fpsUpdateFrequency;
-        }
-    }
-
-    // Display the audio settings menu.
-    public void DisplayAudioSettings()
-    {
-        settingsScrollView.SetActive(false);
-        audioSettings.SetActive(true);
     }
 
     // Function called in the EnemyBehavior script when the enemy runs out of health.
