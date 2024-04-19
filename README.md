@@ -12,7 +12,7 @@ Controls for KBM:
 - Space to jump
 - Left Click to shoot
 
-Controls for Controller (game has only been test on an Xbox controller):
+Controls for Controller (game has only been tested on an Xbox controller):
 - Left Stick for movement
 - Right Stick for cam movement
 - Left Bumper (LB) to dash
